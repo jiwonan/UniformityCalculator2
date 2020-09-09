@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace UniformityViewer2
 {
-    class DBManager
+    public class DBManager
     {
         static string SERVER_PATH = "Server = 192.168.29.20; Port=3939; Database = letinar_uniform; Uid = user; Pwd = QqN3y29JrK1nPtlk#;Connection Timeout=15";
 
@@ -21,6 +21,11 @@ namespace UniformityViewer2
                 conn.Open();
             }
             else if (conn.State == ConnectionState.Broken)
+            {
+                conn.Close();
+                conn.Open();
+            }
+            else if(conn.State == ConnectionState.Open)
             {
                 conn.Close();
                 conn.Open();

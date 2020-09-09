@@ -1,6 +1,6 @@
 ﻿namespace UniformityViewer2
 {
-    partial class Form1
+    partial class MainViewer
     {
         /// <summary>
         /// 필수 디자이너 변수입니다.
@@ -28,7 +28,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.masterValueListView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -60,14 +59,12 @@
             this.yLabel = new System.Windows.Forms.Label();
             this.radioButton7 = new System.Windows.Forms.RadioButton();
             this.radioButton6 = new System.Windows.Forms.RadioButton();
-            this.ctlHistLegend1 = new UniformityViewer2.ctlHistLegend();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new UniformityViewer2.TempPictureBox();
             this.pinmirrorWidthValueComboBox = new System.Windows.Forms.ComboBox();
             this.mirrorShapeComboBox = new System.Windows.Forms.ComboBox();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -79,11 +76,13 @@
             this.customToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.옵션ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewer를새창으로ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctlHistLegend1 = new UniformityViewer2.ctlHistLegend();
+            this.pictureBox1 = new UniformityViewer2.TempPictureBox();
             this.groupBox1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.contextMenuStrip2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // masterValueListView
@@ -111,6 +110,7 @@
             this.masterValueListView.TabIndex = 0;
             this.masterValueListView.UseCompatibleStateImageBehavior = false;
             this.masterValueListView.View = System.Windows.Forms.View.Details;
+            this.masterValueListView.DoubleClick += new System.EventHandler(this.masterValueListView_DoubleClick);
             // 
             // columnHeader1
             // 
@@ -193,6 +193,7 @@
             this.baseItemComboBox.Name = "baseItemComboBox";
             this.baseItemComboBox.Size = new System.Drawing.Size(117, 20);
             this.baseItemComboBox.TabIndex = 2;
+            this.baseItemComboBox.SelectedIndexChanged += new System.EventHandler(this.baseItemComboBox_SelectedIndexChanged);
             // 
             // baseValueComboBox
             // 
@@ -206,6 +207,7 @@
             this.baseValueComboBox.Name = "baseValueComboBox";
             this.baseValueComboBox.Size = new System.Drawing.Size(117, 20);
             this.baseValueComboBox.TabIndex = 2;
+            this.baseValueComboBox.SelectedIndexChanged += new System.EventHandler(this.baseValueComboBox_SelectedIndexChanged);
             // 
             // yL
             // 
@@ -379,17 +381,6 @@
             this.radioButton6.Text = "각도당휘도(MAX)";
             this.radioButton6.UseVisualStyleBackColor = true;
             // 
-            // ctlHistLegend1
-            // 
-            this.ctlHistLegend1.HistMat = null;
-            this.ctlHistLegend1.Location = new System.Drawing.Point(894, 17);
-            this.ctlHistLegend1.MaxVal = 0D;
-            this.ctlHistLegend1.MinimumSize = new System.Drawing.Size(100, 100);
-            this.ctlHistLegend1.MinVal = 0D;
-            this.ctlHistLegend1.Name = "ctlHistLegend1";
-            this.ctlHistLegend1.Size = new System.Drawing.Size(100, 600);
-            this.ctlHistLegend1.TabIndex = 11;
-            // 
             // radioButton5
             // 
             this.radioButton5.AutoSize = true;
@@ -442,15 +433,6 @@
             this.label3.Size = new System.Drawing.Size(89, 12);
             this.label3.TabIndex = 1;
             this.label3.Text = "핀미러가로크기";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(288, 17);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(600, 600);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
             // 
             // pinmirrorWidthValueComboBox
             // 
@@ -546,7 +528,27 @@
             this.viewer를새창으로ToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.viewer를새창으로ToolStripMenuItem.Text = "Viewer를 새창으로";
             // 
-            // Form1
+            // ctlHistLegend1
+            // 
+            this.ctlHistLegend1.HistMat = null;
+            this.ctlHistLegend1.Location = new System.Drawing.Point(894, 17);
+            this.ctlHistLegend1.MaxVal = 0D;
+            this.ctlHistLegend1.MinimumSize = new System.Drawing.Size(100, 100);
+            this.ctlHistLegend1.MinVal = 0D;
+            this.ctlHistLegend1.Name = "ctlHistLegend1";
+            this.ctlHistLegend1.Size = new System.Drawing.Size(100, 600);
+            this.ctlHistLegend1.TabIndex = 11;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(288, 17);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(600, 600);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
+            // 
+            // MainViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -555,19 +557,18 @@
             this.Controls.Add(this.masterValueListView);
             this.Controls.Add(this.menuStrip1);
             this.DoubleBuffered = true;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "MainViewer";
             this.Text = "뷰어뷰어뷰어뷰어~";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.contextMenuStrip2.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
