@@ -12,26 +12,25 @@ namespace UniformityCalculator2
 {
     public class ImageManager
     {
-        DBMaster dbMaster;
-        DBDetail dbDetail;
 
-        private static ImageManager mInstance;
+        private static ImageManager mInstance = null;
 
-        public static ImageManager Instance {
-            get {
-                return mInstance;
-            }
-        }
-
-        public ImageManager(DBMaster dBMaster, DBDetail dBDetail)
+        public static ImageManager GetInstance()
         {
-            this.dbMaster = dBMaster;
-            this.dbDetail = dBDetail;
+            if (mInstance == null)
+            {
+                mInstance = new ImageManager();
+            }
 
-            mInstance = new ImageManager(this.dbMaster, this.dbDetail);
+            return mInstance;
         }
+
         public void ProcessMirror(object obj)
         {
+
+            DBMaster dbMaster = new DBMaster();
+            DBDetail dbDetail = new DBDetail();
+
             DataInput dataInput = (DataInput)obj;
 
             double lightEffi = dataInput.LightEffi;
@@ -50,7 +49,7 @@ namespace UniformityCalculator2
                 {
                     for (decimal pinmirrorWidth = pinmirrorHeight + (decimal)dataInput.PinWidthStart; pinmirrorWidth <= pinmirrorHeight + (decimal)dataInput.PinWidthEnd; pinmirrorWidth += (decimal)dataInput.PinWidthGap)
                     {
-                        double pinmirrorGap = GetPinMirrorGap((double)lightEffi, new SizeF((float)pinmirrorWidth, (float)pinmirrorHeight));
+                        double pinmirrorGap = CalcValues.GetPinMirrorGap((double)lightEffi, new SizeF((float)pinmirrorWidth, (float)pinmirrorHeight));
 
                         using (Mat kernel = KernelManager.GetKernel((decimal)pinmirrorWidth, (decimal)pinmirrorHeight, (decimal)innerArea, kernelType))
                         {
@@ -414,25 +413,7 @@ namespace UniformityCalculator2
 
                 return m.Clone();
             }
-        }
-
-
-        public double GetPinMirrorGap(double lightEffi, SizeF pinmrSize)
-        {
-            return GetPinMirrorGap(lightEffi, pinmrSize.Height);
-        }
-
-        public double GetPinMirrorGap(double lightEffi, double pinmrHeight)
-        {
-            return (pinmrHeight / 2) * Math.Sqrt((2 / Math.Sqrt(3) * (Math.PI / (lightEffi / 100))));
-        }
-
-        //lightEffi는 퍼센트
-        //2 / Math.Sqrt(3) * (Math.PI / (lightEffi / 100))
-        public double GetLightEffi(double pinmrSize, double pinmrGap)
-        {
-            return Math.PI / ((Math.Sqrt(3) / 2) * Math.Pow(pinmrGap / (pinmrSize / 2), 2)) * 100;
-        }
+        }        
 
     }
 }

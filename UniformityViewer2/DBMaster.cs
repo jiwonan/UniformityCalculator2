@@ -147,5 +147,30 @@ namespace UniformityViewer2
 
             }
         }
+
+        public Tuple<int, double> GetSelectedPinLinesAndInnerPercent(int master)
+        {
+
+            var con = GetConnection();
+
+            int lines = -1;
+            double innerPercent = 0;
+
+            using (MySqlCommand cmd = new MySqlCommand(SELECT_MASTER_ONE, con))
+            {
+                cmd.Parameters.AddWithValue("@idx", master);
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    lines = reader.GetInt32(2);
+                    innerPercent = reader.GetDouble(16);
+                    break;
+                }
+            }
+
+            return new Tuple<int, double>(lines, innerPercent);
+        }
     }
 }

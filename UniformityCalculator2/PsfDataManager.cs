@@ -11,7 +11,7 @@ namespace UniformityCalculator2
     {
         private const int DATA_SIZE = 820;
 
-        public static Mat psfData { get; private set; }
+        public static Mat psfData { get; private set; } = null;
 
         public static void LoadPsfData()
         {
@@ -44,6 +44,9 @@ namespace UniformityCalculator2
                 ret.SetTo(Scalar.Black);
                 mask.SetTo(Scalar.Black);
                 mask.Ellipse(new Point(DATA_SIZE / 2, DATA_SIZE / 2), new OpenCvSharp.Size(PupilSizeInPixel / 2, PupilSizeInPixel / 2), 0, 0, 360, Scalar.White, -1);
+
+                if (psfData == null) LoadPsfData();
+
                 psfData.CopyTo(ret, mask);
 
                 return ret.Clone();

@@ -24,7 +24,7 @@ namespace UniformityCalculator2
 
             dbMaster = new DBMaster();
 
-            imageManager = new ImageManager(dbMaster, new DBDetail());
+            imageManager = new ImageManager();
 
             ThreadPool.SetMinThreads(1, 1);
             ThreadPool.SetMaxThreads(Environment.ProcessorCount / 2, Environment.ProcessorCount / 2);

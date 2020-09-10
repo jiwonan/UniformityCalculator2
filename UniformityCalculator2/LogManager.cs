@@ -6,7 +6,7 @@ namespace UniformityCalculator2
 {
     public static class LogManager
     {
-        private static TextBox logBox;
+        private static TextBox logBox = null;
 
         public static void setTextBox(TextBox textBox)
         {
@@ -16,6 +16,8 @@ namespace UniformityCalculator2
         public static void SetLog(string msg)
         {
             int threadId = Thread.CurrentThread.ManagedThreadId;
+
+            if (logBox == null) return;
 
             if (logBox.InvokeRequired)
             {

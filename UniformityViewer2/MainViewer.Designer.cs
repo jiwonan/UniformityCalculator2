@@ -284,6 +284,7 @@
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Max-Avg";
             this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.Click += new System.EventHandler(this.radioButton_Click);
             // 
             // radioButton2
             // 
@@ -294,6 +295,7 @@
             this.radioButton2.TabIndex = 4;
             this.radioButton2.Text = "Min-Avg";
             this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.Click += new System.EventHandler(this.radioButton_Click);
             // 
             // radioButton3
             // 
@@ -304,6 +306,7 @@
             this.radioButton3.TabIndex = 4;
             this.radioButton3.Text = "표준편차";
             this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.Click += new System.EventHandler(this.radioButton_Click);
             // 
             // groupBox1
             // 
@@ -370,6 +373,7 @@
             this.radioButton7.TabIndex = 12;
             this.radioButton7.Text = "각도당휘도(AVG)";
             this.radioButton7.UseVisualStyleBackColor = true;
+            this.radioButton7.Click += new System.EventHandler(this.radioButton_Click);
             // 
             // radioButton6
             // 
@@ -380,6 +384,7 @@
             this.radioButton6.TabIndex = 12;
             this.radioButton6.Text = "각도당휘도(MAX)";
             this.radioButton6.UseVisualStyleBackColor = true;
+            this.radioButton6.Click += new System.EventHandler(this.radioButton_Click);
             // 
             // radioButton5
             // 
@@ -390,6 +395,7 @@
             this.radioButton5.TabIndex = 10;
             this.radioButton5.Text = "Max-Avg, 표준편차 기하평균";
             this.radioButton5.UseVisualStyleBackColor = true;
+            this.radioButton5.Click += new System.EventHandler(this.radioButton_Click);
             // 
             // radioButton4
             // 
@@ -400,6 +406,7 @@
             this.radioButton4.TabIndex = 10;
             this.radioButton4.Text = "Max-Avg, 표준편차 산술평균";
             this.radioButton4.UseVisualStyleBackColor = true;
+            this.radioButton4.Click += new System.EventHandler(this.radioButton_Click);
             // 
             // statusStrip1
             // 
@@ -446,6 +453,7 @@
             this.pinmirrorWidthValueComboBox.Name = "pinmirrorWidthValueComboBox";
             this.pinmirrorWidthValueComboBox.Size = new System.Drawing.Size(117, 20);
             this.pinmirrorWidthValueComboBox.TabIndex = 2;
+            this.pinmirrorWidthValueComboBox.SelectedIndexChanged += new System.EventHandler(this.pinmirrorWidthValueComboBox_SelectedIndexChanged);
             // 
             // mirrorShapeComboBox
             // 
@@ -473,6 +481,7 @@
             this.goTesterToolStripMenuItem.Name = "goTesterToolStripMenuItem";
             this.goTesterToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.goTesterToolStripMenuItem.Text = "Go Tester";
+            this.goTesterToolStripMenuItem.Click += new System.EventHandler(this.goTesterToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 
@@ -511,8 +520,9 @@
             // customToolStripMenuItem
             // 
             this.customToolStripMenuItem.Name = "customToolStripMenuItem";
-            this.customToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.customToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.customToolStripMenuItem.Text = "Custom Test";
+            this.customToolStripMenuItem.Click += new System.EventHandler(this.customToolStripMenuItem_Click);
             // 
             // 옵션ToolStripMenuItem
             // 
@@ -525,8 +535,9 @@
             // viewer를새창으로ToolStripMenuItem
             // 
             this.viewer를새창으로ToolStripMenuItem.Name = "viewer를새창으로ToolStripMenuItem";
-            this.viewer를새창으로ToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.viewer를새창으로ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.viewer를새창으로ToolStripMenuItem.Text = "Viewer를 새창으로";
+            this.viewer를새창으로ToolStripMenuItem.Click += new System.EventHandler(this.viewer를새창으로ToolStripMenuItem_Click);
             // 
             // ctlHistLegend1
             // 
@@ -547,6 +558,8 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             // 
             // MainViewer
             // 
@@ -561,6 +574,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainViewer";
             this.Text = "뷰어뷰어뷰어뷰어~";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainViewer_KeyDown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
