@@ -137,6 +137,7 @@
     <Compile Include="frmTester.Designer.cs">
       <DependentUpon>frmTester.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImageManager.cs" />
     <Compile Include="MainViewer.cs">
       <SubType>Form</SubType>
     </Compile>

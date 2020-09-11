@@ -111,36 +111,59 @@ namespace UniformityViewer2
         }
 
         private void btnSubmit_Click(object sender, EventArgs e)
-        { // 새 함수 
+        {
+            Mat resultMat, mirrorMat;
+            GetImageMat(out resultMat, out mirrorMat);
+
+            Console.WriteLine((double)resultMat.Height / resultMat.Width);
+
+            Viewer.Resize(resultMat.Width, resultMat.Height);
+            Viewer.ShowImage(resultMat);
+            Viewer2.Resize(mirrorMat.Width, mirrorMat.Height);
+            Viewer2.ShowImage(mirrorMat);
+        }
+
+        private Mat GetResultMat(ImageManager.ProcessImageResult ret)
+        {
+            Mat resultMat = CreateAlphaChannel(ret.Result, (double)doubleNumericTextBox1.Value, (double)doubleNumericTextBox2.Value, (double)doubleNumericTextBox3.Value);
+
+            double multi = GetMulti(resultMat);
+
+            return resultMat.Resize(new OpenCvSharp.Size(resultMat.Width * multi, resultMat.Height * multi));
+        }
+
+        private Mat GetMirrorMat(ImageManager.ProcessImageResult ret)
+        {
+            Mat mirrorMat = ret.MirrorImage;
+
+            double multi = GetMulti(mirrorMat);
+            return mirrorMat.Resize(new OpenCvSharp.Size(mirrorMat.Width * multi, mirrorMat.Height * multi));
+        }
+
+        private void GetImageMat(out Mat resultMat, out Mat mirrorMat)
+        {
             double light = (double)leS.Value;
             double pupil = (double)psS.Value;
             double pinmrWidth = (double)pisS.Value;
             double pinmrHeight = (double)pisE.Value;
             double pinmirrorGap = (double)lg.Value;
+
             Mat kernel = KernelManager.GetKernel((decimal)pinmrWidth, (decimal)pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
 
             ImageManager.ProcessImageResult ret = ImageManager.GetInstance().ProcessImage((int)pinLines.Value, pinmirrorGap, pupil, kernel, 0, false, chkInvert.Checked);
             //Viewer.ShowImage(ret.Result);
+            
+            mirrorMat = GetMirrorMat(ret);
 
-            Mat resultMat = CreateAlphaChannel(ret.Result, (double)doubleNumericTextBox1.Value, (double)doubleNumericTextBox2.Value, (double)doubleNumericTextBox3.Value);
-            //Mat resultMat = ret.Result;
-
-            Mat mirrorMat = ret.MirrorImage;
-            double multi = GetMulti(resultMat);
-
-            resultMat = resultMat.Resize(new OpenCvSharp.Size(resultMat.Width * multi, resultMat.Height * multi));
-            multi = GetMulti(mirrorMat);
-            mirrorMat = mirrorMat.Resize(new OpenCvSharp.Size(mirrorMat.Width * multi, mirrorMat.Height * multi));
-
+            resultMat = GetResultMat(ret);
 
             if (string.IsNullOrWhiteSpace(txtImagePath.Text) == false && File.Exists(txtImagePath.Text))
             {
                 Mat img = GetImageMat(resultMat);
 
-
                 Viewer3.Resize(img.Width, img.Height);
                 Viewer3.ShowImage(img);
-            }
+            } // 이미지 파일 여부, 이미지 파일 Show.
 
             resultMat.PutText($"Efficiency : {light}%", new Point(0, 20), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             resultMat.PutText($"pupilSize : {pupil}mm", new Point(0, 40), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
@@ -151,16 +174,8 @@ namespace UniformityViewer2
             resultMat.PutText($"MeanDev : {ret.MeanDev}", new Point(0, 140), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             resultMat.PutText($"LumperDegree(Max) : {ret.LumDegreeMax}", new Point(0, 160), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             resultMat.PutText($"LumperDegree(Avg) : {ret.LumDegreeAvg}", new Point(0, 180), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-
-            Console.WriteLine((double)resultMat.Height / resultMat.Width);
-
-            Viewer.Resize(resultMat.Width, resultMat.Height);
-            Viewer.ShowImage(resultMat);
-            Viewer2.Resize(mirrorMat.Width, mirrorMat.Height);
-            Viewer2.ShowImage(mirrorMat);
         }
 
-      
 
         public Mat CreateAlphaChannel(Mat samplingMat, double eyeRelief, double h_fov, double v_fov)
         {
@@ -256,23 +271,18 @@ namespace UniformityViewer2
 
             var ret = ImageManager.GetInstance().ProcessImage((int)pinLines.Value, pinmirrorGap, pupil, kernel, 0, false);
 
-            Viewer.ShowImage(ret.Result);
+            Viewer.ShowImage(ret.Result); // Original Data
 
-            Mat resultMat = CreateAlphaChannel(ret.Result, (double)doubleNumericTextBox1.Value, (double)doubleNumericTextBox2.Value, (double)doubleNumericTextBox3.Value);
-
-            double multi = GetMulti(resultMat);
-
-            resultMat = resultMat.Resize(new OpenCvSharp.Size(resultMat.Width * multi, resultMat.Height * multi));
-
+            Mat resultMat = GetResultMat(ret);
 
             if (string.IsNullOrWhiteSpace(txtImagePath.Text) == false && File.Exists(txtImagePath.Text))
             {
-                img = GetImageMat(resultMat);
+                img = GetImageMat(resultMat); // 사진 선택.
                 return true;
             }
             else
             {
-                img = null;
+                img = null; // 사진 미선택.
                 return false;
             }
         }
