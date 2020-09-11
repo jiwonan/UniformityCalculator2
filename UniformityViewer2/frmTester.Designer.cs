@@ -47,9 +47,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.doubleNumericTextBox1 = new LetinARUtils.Winforms.DoubleNumericTextBox();
-            this.doubleNumericTextBox2 = new LetinARUtils.Winforms.DoubleNumericTextBox();
-            this.doubleNumericTextBox3 = new LetinARUtils.Winforms.DoubleNumericTextBox();
+            this.eyeReliefTextBox = new LetinARUtils.Winforms.DoubleNumericTextBox();
+            this.horizonFOVTextBox = new LetinARUtils.Winforms.DoubleNumericTextBox();
+            this.verticalFOVTextBox = new LetinARUtils.Winforms.DoubleNumericTextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.doubleNumericTextBox4 = new LetinARUtils.Winforms.DoubleNumericTextBox();
             this.btnSave = new System.Windows.Forms.Button();
@@ -60,9 +60,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.leS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pinLines)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lg)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.doubleNumericTextBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.doubleNumericTextBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.doubleNumericTextBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eyeReliefTextBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.horizonFOVTextBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.verticalFOVTextBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.doubleNumericTextBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pisE)).BeginInit();
             this.SuspendLayout();
@@ -329,77 +329,77 @@
             this.label7.TabIndex = 15;
             this.label7.Text = "세로FOV";
             // 
-            // doubleNumericTextBox1
+            // eyeReliefTextBox
             // 
-            this.doubleNumericTextBox1.DecimalPlaces = 0;
-            this.doubleNumericTextBox1.InterceptArrowKeys = false;
-            this.doubleNumericTextBox1.Location = new System.Drawing.Point(115, 117);
-            this.doubleNumericTextBox1.Maximum = new decimal(new int[] {
+            this.eyeReliefTextBox.DecimalPlaces = 0;
+            this.eyeReliefTextBox.InterceptArrowKeys = false;
+            this.eyeReliefTextBox.Location = new System.Drawing.Point(115, 117);
+            this.eyeReliefTextBox.Maximum = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            this.doubleNumericTextBox1.Minimum = new decimal(new int[] {
+            this.eyeReliefTextBox.Minimum = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            this.doubleNumericTextBox1.Name = "doubleNumericTextBox1";
-            this.doubleNumericTextBox1.Size = new System.Drawing.Size(100, 21);
-            this.doubleNumericTextBox1.TabIndex = 10;
-            this.doubleNumericTextBox1.Text = "17";
-            this.doubleNumericTextBox1.Value = new decimal(new int[] {
+            this.eyeReliefTextBox.Name = "eyeReliefTextBox";
+            this.eyeReliefTextBox.Size = new System.Drawing.Size(100, 21);
+            this.eyeReliefTextBox.TabIndex = 10;
+            this.eyeReliefTextBox.Text = "17";
+            this.eyeReliefTextBox.Value = new decimal(new int[] {
             17,
             0,
             0,
             0});
             // 
-            // doubleNumericTextBox2
+            // horizonFOVTextBox
             // 
-            this.doubleNumericTextBox2.DecimalPlaces = 0;
-            this.doubleNumericTextBox2.InterceptArrowKeys = false;
-            this.doubleNumericTextBox2.Location = new System.Drawing.Point(115, 144);
-            this.doubleNumericTextBox2.Maximum = new decimal(new int[] {
+            this.horizonFOVTextBox.DecimalPlaces = 0;
+            this.horizonFOVTextBox.InterceptArrowKeys = false;
+            this.horizonFOVTextBox.Location = new System.Drawing.Point(115, 144);
+            this.horizonFOVTextBox.Maximum = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            this.doubleNumericTextBox2.Minimum = new decimal(new int[] {
+            this.horizonFOVTextBox.Minimum = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            this.doubleNumericTextBox2.Name = "doubleNumericTextBox2";
-            this.doubleNumericTextBox2.Size = new System.Drawing.Size(47, 21);
-            this.doubleNumericTextBox2.TabIndex = 11;
-            this.doubleNumericTextBox2.Text = "20";
-            this.doubleNumericTextBox2.Value = new decimal(new int[] {
+            this.horizonFOVTextBox.Name = "horizonFOVTextBox";
+            this.horizonFOVTextBox.Size = new System.Drawing.Size(47, 21);
+            this.horizonFOVTextBox.TabIndex = 11;
+            this.horizonFOVTextBox.Text = "20";
+            this.horizonFOVTextBox.Value = new decimal(new int[] {
             20,
             0,
             0,
             0});
-            this.doubleNumericTextBox2.ValueChanged += new System.EventHandler(this.doubleNumericTextBox2_ValueChanged);
+            this.horizonFOVTextBox.ValueChanged += new System.EventHandler(this.doubleNumericTextBox2_ValueChanged);
             // 
-            // doubleNumericTextBox3
+            // verticalFOVTextBox
             // 
-            this.doubleNumericTextBox3.DecimalPlaces = 0;
-            this.doubleNumericTextBox3.InterceptArrowKeys = false;
-            this.doubleNumericTextBox3.Location = new System.Drawing.Point(250, 144);
-            this.doubleNumericTextBox3.Maximum = new decimal(new int[] {
+            this.verticalFOVTextBox.DecimalPlaces = 0;
+            this.verticalFOVTextBox.InterceptArrowKeys = false;
+            this.verticalFOVTextBox.Location = new System.Drawing.Point(250, 144);
+            this.verticalFOVTextBox.Maximum = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            this.doubleNumericTextBox3.Minimum = new decimal(new int[] {
+            this.verticalFOVTextBox.Minimum = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            this.doubleNumericTextBox3.Name = "doubleNumericTextBox3";
-            this.doubleNumericTextBox3.Size = new System.Drawing.Size(50, 21);
-            this.doubleNumericTextBox3.TabIndex = 12;
-            this.doubleNumericTextBox3.Text = "20";
-            this.doubleNumericTextBox3.Value = new decimal(new int[] {
+            this.verticalFOVTextBox.Name = "verticalFOVTextBox";
+            this.verticalFOVTextBox.Size = new System.Drawing.Size(50, 21);
+            this.verticalFOVTextBox.TabIndex = 12;
+            this.verticalFOVTextBox.Text = "20";
+            this.verticalFOVTextBox.Value = new decimal(new int[] {
             20,
             0,
             0,
@@ -502,9 +502,9 @@
             this.Controls.Add(this.pisE);
             this.Controls.Add(this.pisS);
             this.Controls.Add(this.doubleNumericTextBox4);
-            this.Controls.Add(this.doubleNumericTextBox3);
-            this.Controls.Add(this.doubleNumericTextBox2);
-            this.Controls.Add(this.doubleNumericTextBox1);
+            this.Controls.Add(this.verticalFOVTextBox);
+            this.Controls.Add(this.horizonFOVTextBox);
+            this.Controls.Add(this.eyeReliefTextBox);
             this.Controls.Add(this.psS);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -524,9 +524,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.leS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pinLines)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lg)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.doubleNumericTextBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.doubleNumericTextBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.doubleNumericTextBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eyeReliefTextBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.horizonFOVTextBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.verticalFOVTextBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.doubleNumericTextBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pisE)).EndInit();
             this.ResumeLayout(false);
@@ -555,9 +555,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private LetinARUtils.Winforms.DoubleNumericTextBox doubleNumericTextBox1;
-        private LetinARUtils.Winforms.DoubleNumericTextBox doubleNumericTextBox2;
-        private LetinARUtils.Winforms.DoubleNumericTextBox doubleNumericTextBox3;
+        private LetinARUtils.Winforms.DoubleNumericTextBox eyeReliefTextBox;
+        private LetinARUtils.Winforms.DoubleNumericTextBox horizonFOVTextBox;
+        private LetinARUtils.Winforms.DoubleNumericTextBox verticalFOVTextBox;
         private System.Windows.Forms.Label label8;
         private LetinARUtils.Winforms.DoubleNumericTextBox doubleNumericTextBox4;
         private System.Windows.Forms.Button btnSave;
