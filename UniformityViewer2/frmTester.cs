@@ -112,12 +112,23 @@ namespace UniformityViewer2
 
         private void btnSubmit_Click(object sender, EventArgs e)
         { // 새 함수 
-            double light, pupil, pinmrWidth, pinmirrorGap, multi;
-            ImageManager.ProcessImageResult ret;
-            Mat resultMat, mirrorMat;
-            Something(out light, out pupil, out pinmrWidth, out pinmirrorGap, out ret, out resultMat, out mirrorMat);
+            double light = (double)leS.Value;
+            double pupil = (double)psS.Value;
+            double pinmrWidth = (double)pisS.Value;
+            double pinmrHeight = (double)pisE.Value;
+            double pinmirrorGap = (double)lg.Value;
+            Mat kernel = KernelManager.GetKernel((decimal)pinmrWidth, (decimal)pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
 
+            ImageManager.ProcessImageResult ret = ImageManager.GetInstance().ProcessImage((int)pinLines.Value, pinmirrorGap, pupil, kernel, 0, false, chkInvert.Checked);
+            //Viewer.ShowImage(ret.Result);
 
+            Mat resultMat = CreateAlphaChannel(ret.Result, (double)doubleNumericTextBox1.Value, (double)doubleNumericTextBox2.Value, (double)doubleNumericTextBox3.Value);
+            //Mat resultMat = ret.Result;
+
+            Mat mirrorMat = ret.MirrorImage;
+            double multi = GetMulti(resultMat);
+
+            resultMat = resultMat.Resize(new OpenCvSharp.Size(resultMat.Width * multi, resultMat.Height * multi));
             multi = GetMulti(mirrorMat);
             mirrorMat = mirrorMat.Resize(new OpenCvSharp.Size(mirrorMat.Width * multi, mirrorMat.Height * multi));
 
@@ -149,26 +160,7 @@ namespace UniformityViewer2
             Viewer2.ShowImage(mirrorMat);
         }
 
-        private void Something(out double light, out double pupil, out double pinmrWidth, out double pinmirrorGap, out ImageManager.ProcessImageResult ret, out Mat resultMat, out Mat mirrorMat) // 공통부분.
-        {
-            light = (double)leS.Value;
-            pupil = (double)psS.Value;
-            pinmrWidth = (double)pisS.Value;
-            double pinmrHeight = (double)pisE.Value;
-            pinmirrorGap = (double)lg.Value;
-            Mat kernel = KernelManager.GetKernel((decimal)pinmrWidth, (decimal)pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
-
-            ret = ImageManager.GetInstance().ProcessImage((int)pinLines.Value, pinmirrorGap, pupil, kernel, 0, false, chkInvert.Checked);
-            //Viewer.ShowImage(ret.Result);
-
-            resultMat = CreateAlphaChannel(ret.Result, (double)doubleNumericTextBox1.Value, (double)doubleNumericTextBox2.Value, (double)doubleNumericTextBox3.Value);
-            //Mat resultMat = ret.Result;
-
-            mirrorMat = ret.MirrorImage;
-            double multi = GetMulti(resultMat);
-
-            resultMat = resultMat.Resize(new OpenCvSharp.Size(resultMat.Width * multi, resultMat.Height * multi));
-        }
+      
 
         public Mat CreateAlphaChannel(Mat samplingMat, double eyeRelief, double h_fov, double v_fov)
         {
