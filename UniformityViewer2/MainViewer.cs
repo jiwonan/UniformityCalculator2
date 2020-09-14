@@ -280,7 +280,7 @@ namespace UniformityViewer2
             yLabel.Location = new System.Drawing.Point(yE.Right - yLabel.Width, (int)(yLoc / heightValue) + pictureBox1.Top);
 
 
-            double pinmirrorGap = UniformityCalculator2.CalcValues.GetPinMirrorGap(detailInfo.Light, detailInfo.pinMirrorSize.Height);
+            double pinmirrorGap = CalcValues.GetPinMirrorGap(detailInfo.Light, detailInfo.pinMirrorSize.Height);
 
             toolStripStatusLabel1.Text = $"광효율:{detailInfo.Light}% 동공크기:{detailInfo.Pupil}mm 핀미러크기:{detailInfo.pinMirrorSize}mm  핀미러간격:{pinmirrorGap}mm Max-Avg:{MaxAvg:0.0000} Min-Avg:{MinAvg:0.0000} 표준편차:{MeanDev:0.0000} 각도당휘도(Max):{LumDegreeMax:0.0000} 각도당휘도(Avg):{LumDegreeAvg:0.0000}";
         }

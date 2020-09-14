@@ -24,16 +24,21 @@ namespace UniformityCalculator2
             {
                 mForm.Invoke(new MethodInvoker(() =>
                 {
-                    mProgressBar.Value += amt;
-
-                    if (mProgressBar.Value == mProgressBar.Maximum)
-                    {
-                        LogManager.SetLog("작업이 완료되었습니다");
-                    }
+                    Add(amt);
 
                 }));
             }
             else
+            {
+                Add(amt);
+            }
+        }
+
+        static readonly object obj = new object();
+
+        private static void Add(int amt)
+        {
+            lock(obj)
             {
                 mProgressBar.Value += amt;
 
@@ -51,6 +56,7 @@ namespace UniformityCalculator2
                 (((MasterInputValue.PinMirrorWidthEnd - MasterInputValue.PinMirrorWidthStart) / MasterInputValue.PinMirrorWidthGap) + 1) *
                 (((MasterInputValue.PinMirrorHeightEnd - MasterInputValue.PinMirrorHeightStart) / MasterInputValue.PinMirrorHeightGap) + 1) *
                 checkCount); // 작업 개수.
+
             mProgressBar.Maximum += 1;
             mProgressBar.Value = 0;
         }

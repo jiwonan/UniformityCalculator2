@@ -24,6 +24,11 @@ namespace UniformityCalculator2
 
         public void InsertDetail(DataInput dataInput, double width, double height, bool lastJob, ref int cnt, ref StringBuilder sb)
         {
+            InsertDetail(dataInput, width, height, lastJob, ref cnt, ref sb, QRY_MAX_COUNT);
+        }
+
+        public void InsertDetail(DataInput dataInput, double width, double height, bool lastJob, ref int cnt, ref StringBuilder sb, int max_cnt)
+        {
             try
             {
                 if (cnt == 0)
@@ -66,5 +71,7 @@ namespace UniformityCalculator2
                 LogManager.SetLog(err.Message);
             }
         }
+
+
     }
 }

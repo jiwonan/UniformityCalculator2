@@ -9,6 +9,18 @@ namespace UniformityViewer2
 {
     public class ImageManager
     {
+        private static ImageManager mInstance = null;
+
+        public static ImageManager GetInstance()
+        {
+            if (mInstance == null)
+            {
+                mInstance = new ImageManager();
+            }
+
+            return mInstance;
+        }
+
         public void ProcessImage(Mat kernel, Mat psf, int lineCount, double pinmirrorGap)
         {
             // SetLog("Start Processing");
@@ -136,7 +148,7 @@ namespace UniformityViewer2
             pts[5] = tmpPts[2];
 
             Mat downAlphaMirrorImage = null;
-            using (Mat psfMat = PsfDataManager.LoadPsfData(pupilSize))
+            using (Mat psfMat = PsfManager.LoadPsfData(pupilSize))
             {
 
                 downAlphaMirrorImage = 0.01 * mirrorImage;

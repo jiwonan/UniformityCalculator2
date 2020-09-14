@@ -18,7 +18,7 @@ namespace UniformityViewer2
             }
         }
 
-        public Mat GetResultMat(UniformityCalculator2.ImageManager.ProcessImageResult ret, double eyeRelief, double horizonFov, double verticalFov)
+        public Mat GetResultMat(ImageManager.ProcessImageResult ret, double eyeRelief, double horizonFov, double verticalFov)
         {
             Mat resultMat = CreateAlphaChannel(ret.Result, (double)eyeRelief, (double)horizonFov, (double)verticalFov);
 
@@ -27,7 +27,7 @@ namespace UniformityViewer2
             return resultMat.Resize(new Size(resultMat.Width * multi, resultMat.Height * multi));
         }
 
-        public Mat GetMirrorMat(UniformityCalculator2.ImageManager.ProcessImageResult ret)
+        public Mat GetMirrorMat(ImageManager.ProcessImageResult ret)
         {
             Mat mirrorMat = ret.MirrorImage;
 
@@ -82,8 +82,8 @@ namespace UniformityViewer2
         private Mat CreateAlphaChannel(Mat samplingMat, double eyeRelief, double h_fov, double v_fov)
         {
             //이거는 결과화면으로 나갈 Mat의 크기다
-            double TotalWidth = 2 * (Math.Tan((h_fov / 2) * Math.PI / 180) * eyeRelief) / UniformityCalculator2.CalcValues.MMperPixel;
-            double TotalHeight = 2 * (Math.Tan((v_fov / 2) * Math.PI / 180) * eyeRelief) / UniformityCalculator2.CalcValues.MMperPixel;
+            double TotalWidth = 2 * (Math.Tan((h_fov / 2) * Math.PI / 180) * eyeRelief) / CalcValues.MMperPixel;
+            double TotalHeight = 2 * (Math.Tan((v_fov / 2) * Math.PI / 180) * eyeRelief) / CalcValues.MMperPixel;
 
             //ret보다 크면서 가로/세로가 samplingMat의 홀수배인 Mat를 만든다
             int widthMultiplier = (int)(TotalWidth / samplingMat.Width) + 1;

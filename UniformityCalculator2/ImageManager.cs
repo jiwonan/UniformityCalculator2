@@ -58,10 +58,15 @@ namespace UniformityCalculator2
 
                         dbDetail.InsertDetail(dataInput, (double)pinmirrorWidth, (double)pinmirrorHeight, false, ref cnt, ref sb);
 
-                        if (ProgressManager.GetProgressBar().Value == ProgressManager.GetProgressBar().Maximum)
+                        if (ProgressManager.GetProgressBar().Value == ProgressManager.GetProgressBar().Maximum) // 실행 X.
                         {
                             dbDetail.InsertDetail(dataInput, (double)pinmirrorWidth, (double)pinmirrorHeight, true, ref cnt, ref sb);
                             dbMaster.FinishMaster(masterIdx);
+                        }
+
+                        if(ProgressManager.GetProgressBar().Maximum - ProgressManager.GetProgressBar().Value < 10)
+                        {
+
                         }
                     }
                     GC.Collect();
