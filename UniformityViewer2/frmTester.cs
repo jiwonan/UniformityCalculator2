@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using UniformityCalculator2;
+// using UniformityCalculator2;
 using Point = OpenCvSharp.Point;
 
 namespace UniformityViewer2
@@ -165,9 +165,9 @@ namespace UniformityViewer2
             double pinmrHeight = (double)pisE.Value;
             double pinmirrorGap = (double)lg.Value;
 
-            Mat kernel = KernelManager.GetKernel((decimal)pinmrWidth, (decimal)pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
+            Mat kernel = UniformityCalculator2.KernelManager.GetKernel((decimal)pinmrWidth, (decimal)pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
 
-            ImageManager.ProcessImageResult ret = ImageManager.GetInstance().ProcessImage((int)pinLines.Value, pinmirrorGap, pupil, kernel, 0, false, chkInvert.Checked);
+            UniformityCalculator2.ImageManager.ProcessImageResult ret = UniformityCalculator2.ImageManager.GetInstance().ProcessImage((int)pinLines.Value, pinmirrorGap, pupil, kernel, 0, false, chkInvert.Checked);
             //Viewer.ShowImage(ret.Result);
 
             resultMat = ImageProcessor.Instance.GetResultMat(ret, (double)eyeReliefTextBox.Value, (double)horizonFOVTextBox.Value, (double)verticalFOVTextBox.Value);
@@ -200,9 +200,9 @@ namespace UniformityViewer2
             double pinmrHeight = (double)pisE.Value;
             double pinmirrorGap = (double)lg.Value;
 
-            Mat kernel = KernelManager.GetKernel((decimal)pinmrWidth, (decimal)pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
+            Mat kernel = UniformityCalculator2.KernelManager.GetKernel((decimal)pinmrWidth, (decimal)pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
 
-            var ret = ImageManager.GetInstance().ProcessImage((int)pinLines.Value, pinmirrorGap, pupil, kernel, 0, false);
+            var ret = UniformityCalculator2.ImageManager.GetInstance().ProcessImage((int)pinLines.Value, pinmirrorGap, pupil, kernel, 0, false);
 
             Viewer.ShowImage(ret.Result); // Original Data
 
