@@ -11,7 +11,7 @@ namespace UniformityCalculator2
     {
         private const int DATA_SIZE = 820;
 
-        public static Mat psfData { get; private set; } = null;
+        private static Mat psfData { get; set; } = null;
 
         public static void LoadPsfData()
         {

@@ -60,6 +60,7 @@ namespace UniformityViewer2
 
             return img;
         }
+
         private double GetMulti(Mat m)
         {
             double multi;
@@ -79,6 +80,7 @@ namespace UniformityViewer2
 
             return multi;
         }
+
         private Mat CreateAlphaChannel(Mat samplingMat, double eyeRelief, double h_fov, double v_fov)
         {
             //이거는 결과화면으로 나갈 Mat의 크기다

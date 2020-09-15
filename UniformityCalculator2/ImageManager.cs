@@ -57,22 +57,17 @@ namespace UniformityCalculator2
                         }
 
                         dbDetail.InsertDetail(dataInput, (double)pinmirrorWidth, (double)pinmirrorHeight, false, ref cnt, ref sb);
-
-                        if (ProgressManager.GetProgressBar().Value == ProgressManager.GetProgressBar().Maximum) // 실행 X.
-                        {
-                            dbDetail.InsertDetail(dataInput, (double)pinmirrorWidth, (double)pinmirrorHeight, true, ref cnt, ref sb);
-                            dbMaster.FinishMaster(masterIdx);
-                        }
-
-                        if(ProgressManager.GetProgressBar().Maximum - ProgressManager.GetProgressBar().Value < 10)
-                        {
-
-                        }
                     }
                     GC.Collect();
                 }
 
                 dbDetail.InsertDetail(cnt, sb);
+
+                /*if (ProgressManager.GetProgressBar().Value == ProgressManager.GetProgressBar().Maximum) // 1.
+                {
+                    dbMaster.FinishMaster(masterIdx);
+                }*/
+
                 sb.Clear();
 
             }
@@ -87,7 +82,7 @@ namespace UniformityCalculator2
         /// <param name="pupilSize"></param>
         /// <param name="jobId"></param>
         /// <returns></returns>
-        public void ProcessImage(Mat kernel, Mat psf, int lineCount, double pinmirrorGap, ref DataInput dataInput)
+        private void ProcessImage(Mat kernel, Mat psf, int lineCount, double pinmirrorGap, ref DataInput dataInput)
         {
             // SetLog("Start Processing");
 
@@ -181,7 +176,7 @@ namespace UniformityCalculator2
 
 
 
-        public ProcessImageResult ProcessImage(int lineCount, double pinGap, double pupilSize, Mat kernel, int jobId = 0, bool drawCenterArea = true, bool invertMirror = false)
+        private ProcessImageResult ProcessImage(int lineCount, double pinGap, double pupilSize, Mat kernel, int jobId = 0, bool drawCenterArea = true, bool invertMirror = false)
         {
             // LogManager.SetLog("Start Processing");
 

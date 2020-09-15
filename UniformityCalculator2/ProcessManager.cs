@@ -32,27 +32,29 @@ namespace UniformityCalculator2
 
         public static bool STOP_PROCESS { get; private set; }
 
-        public void Start()
+        public int Start()
         {
             STOP_PROCESS = false;
             sw.Start();
-            ReadyforWork();
+            return ReadyforWork();
         }
 
         //Queue<Mat> psfMatList = new Queue<Mat>();
 
-        private void ReadyforWork()
+        private int ReadyforWork()
         {
 
             ProgressManager.SetProps(GetCheckCount());
 
             int masterIdx = dbMaster.CreateMaster(GetUseType());
 
+            // masterIdx.
+            // Tick
 
             if (masterIdx == -1)
             {
                 Stop();
-                return;
+                return -1;
             }
 
             unsafe
@@ -68,10 +70,11 @@ namespace UniformityCalculator2
                             , PinMirrorShape.Circle, (double)MasterInputValue.InnerPercent, MasterInputValue.PinmirrorLines);
 
                         SetThreads(obj);
-
                     }
                 }
             }
+
+            return masterIdx;
         }
 
         private void SetThreads(DataInput obj)

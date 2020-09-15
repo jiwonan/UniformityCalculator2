@@ -28,6 +28,8 @@ namespace UniformityCalculator2
         #endregion*/
 
         ProcessManager processManager;
+        DBDetail detail = new DBDetail();
+        DBMaster master = new DBMaster();
 
         public Form1()
         {
@@ -51,12 +53,33 @@ namespace UniformityCalculator2
                 , (double)piwS.Value, (double)piwE.Value, (double)piwG.Value, (double)pihS.Value, (double)pihE.Value, (double)pihG.Value
                 , (int)pinLines.Value, (double)innerPercent.Value);
 
-                processManager.Start();
+                masterIdx = processManager.Start();
+
+                if (masterIdx != -1) timer1.Enabled = true;
+                else return;
             }
             else
             {
                 processManager.Stop();
                 btnStart.Text = "작업시작";
+
+                timer1.Enabled = false;
+            }
+        }
+
+        int masterIdx;
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            // Get Count From DBDetail.
+
+            int cnt = detail.GetDetailCount(masterIdx);
+
+            Console.WriteLine(cnt);
+
+            if(ProgressManager.GetProgressBar().Maximum == cnt)
+            {
+                master.FinishMaster(masterIdx);
             }
         }
     }

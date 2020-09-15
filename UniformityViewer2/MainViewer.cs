@@ -118,6 +118,8 @@ namespace UniformityViewer2
         {
             if (masterValueListView.SelectedItems.Count == 0) return;
 
+            pictureBox1.Image = null;
+
             groupBox1.Enabled = true;
 
             int masterIdx = int.Parse(masterValueListView.SelectedItems[0].Text);

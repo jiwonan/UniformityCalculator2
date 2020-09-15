@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace UniformityCalculator2
 {
@@ -51,13 +52,12 @@ namespace UniformityCalculator2
 
         public static void SetProps(int checkCount)
         {
-            mProgressBar.Maximum = (int)((((MasterInputValue.PupilSizeEnd - MasterInputValue.PupilSizeStart) / MasterInputValue.PupilSizeGap) + 1) *
-                (((MasterInputValue.LightEfficiencyEnd - MasterInputValue.LightEfficiencyStart) / MasterInputValue.LightEfficiencyGap) + 1) *
-                (((MasterInputValue.PinMirrorWidthEnd - MasterInputValue.PinMirrorWidthStart) / MasterInputValue.PinMirrorWidthGap) + 1) *
-                (((MasterInputValue.PinMirrorHeightEnd - MasterInputValue.PinMirrorHeightStart) / MasterInputValue.PinMirrorHeightGap) + 1) *
+            mProgressBar.Maximum = (int)(((((decimal)MasterInputValue.PupilSizeEnd - (decimal)MasterInputValue.PupilSizeStart) / (decimal)MasterInputValue.PupilSizeGap) + 1) *
+                ((((decimal)MasterInputValue.LightEfficiencyEnd - (decimal)MasterInputValue.LightEfficiencyStart) / (decimal)MasterInputValue.LightEfficiencyGap) + 1) *
+                ((((decimal)MasterInputValue.PinMirrorWidthEnd - (decimal)MasterInputValue.PinMirrorWidthStart) / (decimal)MasterInputValue.PinMirrorWidthGap) + 1) *
+                ((((decimal)MasterInputValue.PinMirrorHeightEnd - (decimal)MasterInputValue.PinMirrorHeightStart) / (decimal)MasterInputValue.PinMirrorHeightGap) + 1) *
                 checkCount); // 작업 개수.
 
-            mProgressBar.Maximum += 1;
             mProgressBar.Value = 0;
         }
     }

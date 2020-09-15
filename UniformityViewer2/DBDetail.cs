@@ -33,6 +33,7 @@ namespace UniformityViewer2
         }
         
     }
+
     public struct DetailInfo
     {
         public int Idx;
@@ -46,6 +47,7 @@ namespace UniformityViewer2
         public double lumperdegree;
         public double lumperdegree_Avg;
         public int ShapeType;
+
         public DetailInfo(MySqlDataReader reader)
         {
             Idx = reader.GetInt32(0);
