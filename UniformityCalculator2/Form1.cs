@@ -63,6 +63,7 @@ namespace UniformityCalculator2
                 processManager.Stop();
                 btnStart.Text = "작업시작";
 
+                ProgressManager.GetProgressBar().Value = 0;
                 timer1.Enabled = false;
             }
         }
@@ -71,16 +72,20 @@ namespace UniformityCalculator2
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            // Get Count From DBDetail.
+            CheckDetailCount();
+        }
 
+        private void CheckDetailCount()
+        {
             int cnt = detail.GetDetailCount(masterIdx);
 
             Console.WriteLine(cnt);
 
-            if(ProgressManager.GetProgressBar().Maximum == cnt)
+            if (ProgressManager.GetProgressBar().Maximum == cnt)
             {
                 master.FinishMaster(masterIdx);
             }
         }
+
     }
 }

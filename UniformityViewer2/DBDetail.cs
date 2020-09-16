@@ -15,6 +15,8 @@ namespace UniformityViewer2
         public DetailInfo GetDetailInfo(int selectedMaster, int detailIdx)
         {
             var con = GetConnection();
+             // con.BeginTransaction().
+
             using (MySqlCommand cmd = new MySqlCommand(GET_DETAIL_DATA, con))
             {
                 cmd.Parameters.AddWithValue("@selectedMaster", selectedMaster);

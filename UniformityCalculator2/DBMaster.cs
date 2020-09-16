@@ -14,30 +14,32 @@ namespace UniformityCalculator2
         {
             try
             {
-                var con = GetConnection();
-                using (MySqlCommand cmd = new MySqlCommand(INSERT_MASTER, con))
+                using (var con = GetConnection())
                 {
-                    cmd.Parameters.AddWithValue("@pinlines", MasterInputValue.PinmirrorLines);
-                    cmd.Parameters.AddWithValue("@light_s", MasterInputValue.LightEfficiencyStart);
-                    cmd.Parameters.AddWithValue("@light_e", MasterInputValue.LightEfficiencyEnd);
-                    cmd.Parameters.AddWithValue("@light_g", MasterInputValue.LightEfficiencyGap);
-                    cmd.Parameters.AddWithValue("@pupil_s", MasterInputValue.PupilSizeStart);
-                    cmd.Parameters.AddWithValue("@pupil_e", MasterInputValue.PupilSizeEnd);
-                    cmd.Parameters.AddWithValue("@pupil_g", MasterInputValue.PupilSizeGap);
-                    cmd.Parameters.AddWithValue("@pin_s", MasterInputValue.PinMirrorHeightStart);
-                    cmd.Parameters.AddWithValue("@pin_e", MasterInputValue.PinMirrorHeightEnd);
-                    cmd.Parameters.AddWithValue("@pin_g", MasterInputValue.PinMirrorHeightGap);
-                    cmd.Parameters.AddWithValue("@pin_s2", MasterInputValue.PinMirrorWidthStart);
-                    cmd.Parameters.AddWithValue("@pin_e2", MasterInputValue.PinMirrorWidthEnd);
-                    cmd.Parameters.AddWithValue("@pin_g2", MasterInputValue.PinMirrorWidthGap);
-                    cmd.Parameters.AddWithValue("@innerPercent", MasterInputValue.InnerPercent);
-                    cmd.Parameters.AddWithValue("@usetype", userType);
+                    using (MySqlCommand cmd = new MySqlCommand(INSERT_MASTER, con))
+                    {
+                        cmd.Parameters.AddWithValue("@pinlines", MasterInputValue.PinmirrorLines);
+                        cmd.Parameters.AddWithValue("@light_s", MasterInputValue.LightEfficiencyStart);
+                        cmd.Parameters.AddWithValue("@light_e", MasterInputValue.LightEfficiencyEnd);
+                        cmd.Parameters.AddWithValue("@light_g", MasterInputValue.LightEfficiencyGap);
+                        cmd.Parameters.AddWithValue("@pupil_s", MasterInputValue.PupilSizeStart);
+                        cmd.Parameters.AddWithValue("@pupil_e", MasterInputValue.PupilSizeEnd);
+                        cmd.Parameters.AddWithValue("@pupil_g", MasterInputValue.PupilSizeGap);
+                        cmd.Parameters.AddWithValue("@pin_s", MasterInputValue.PinMirrorHeightStart);
+                        cmd.Parameters.AddWithValue("@pin_e", MasterInputValue.PinMirrorHeightEnd);
+                        cmd.Parameters.AddWithValue("@pin_g", MasterInputValue.PinMirrorHeightGap);
+                        cmd.Parameters.AddWithValue("@pin_s2", MasterInputValue.PinMirrorWidthStart);
+                        cmd.Parameters.AddWithValue("@pin_e2", MasterInputValue.PinMirrorWidthEnd);
+                        cmd.Parameters.AddWithValue("@pin_g2", MasterInputValue.PinMirrorWidthGap);
+                        cmd.Parameters.AddWithValue("@innerPercent", MasterInputValue.InnerPercent);
+                        cmd.Parameters.AddWithValue("@usetype", userType);
 
-                    cmd.ExecuteNonQuery();
-                }
-                using (MySqlCommand cmd = new MySqlCommand(LAST_INSERT_ID, con))
-                {
-                    return int.Parse(cmd.ExecuteScalar().ToString()); // idx반환.
+                        cmd.ExecuteNonQuery();
+                    }
+                    using (MySqlCommand cmd = new MySqlCommand(LAST_INSERT_ID, con))
+                    {
+                        return int.Parse(cmd.ExecuteScalar().ToString()); // idx반환.
+                    }
                 }
             }
             catch (Exception err)

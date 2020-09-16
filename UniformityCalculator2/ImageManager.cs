@@ -63,10 +63,10 @@ namespace UniformityCalculator2
 
                 dbDetail.InsertDetail(cnt, sb);
 
-                /*if (ProgressManager.GetProgressBar().Value == ProgressManager.GetProgressBar().Maximum) // 1.
+                if (ProgressManager.GetProgressBar().Maximum == ProgressManager.GetProgressBar().Value)
                 {
                     dbMaster.FinishMaster(masterIdx);
-                }*/
+                }
 
                 sb.Clear();
 

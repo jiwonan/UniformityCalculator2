@@ -16,22 +16,10 @@ namespace UniformityCalculator2
 
             qry = qry.Substring(0, qry.Length - 1) + ";";
 
-            using (MySqlConnection con = new MySqlConnection(SERVER_PATH))
-            using (MySqlCommand cmd = new MySqlCommand(qry, con))
-            {
-                con.Open();
-                cmd.ExecuteNonQueryAsync();
-            }
-            LogManager.SetLog($"Detail 입력됨({cnt}건)");
-            ProgressManager.AddProgress(cnt);
+            Insert(qry, cnt);
         }
 
-        public void InsertDetail(DataInput dataInput, double width, double height, bool lastJob, ref int cnt, ref StringBuilder sb)
-        {
-            InsertDetail(dataInput, width, height, lastJob, ref cnt, ref sb, QRY_MAX_COUNT);
-        }
-
-        public void InsertDetail(DataInput dataInput, double width, double height, bool lastJob, ref int cnt, ref StringBuilder sb, int max_cnt) // 
+        public void InsertDetail(DataInput dataInput, double width, double height, bool lastJob, ref int cnt, ref StringBuilder sb) // 
         {
             try
             {
@@ -42,7 +30,7 @@ namespace UniformityCalculator2
                 }
 
                 //SetLog($"Detail 준비({cnt})");
-                if (cnt < max_cnt)
+                if (cnt < QRY_MAX_COUNT)
                 {
                     //cmd.Parameters.Clear();
                     sb.AppendLine($" (NULL, {dataInput.MasterIdx}, " +
@@ -52,23 +40,13 @@ namespace UniformityCalculator2
                         $"{(int)dataInput.MirrorShape}, {width})");
 
                     cnt++;
-                    if (cnt < max_cnt && lastJob == false) sb.Append(",");
+                    if (cnt < QRY_MAX_COUNT && lastJob == false) sb.Append(",");
                     else sb.Append(";");
                 }
 
-                if (cnt == max_cnt || lastJob)
+                if (cnt == QRY_MAX_COUNT || lastJob)
                 {
-
-                    // InsertDetail(cnt, sb);
-
-                    using (MySqlConnection con = new MySqlConnection(SERVER_PATH))
-                    using (MySqlCommand cmd = new MySqlCommand(sb.ToString(), con))
-                    {
-                        con.Open();
-                        cmd.ExecuteNonQueryAsync();
-                    }
-                    ProgressManager.AddProgress(max_cnt);
-                    LogManager.SetLog($"Detail 입력됨({cnt}건)");
+                    Insert(sb.ToString(), cnt);
                     cnt = 0;
                 }
             }
@@ -78,6 +56,19 @@ namespace UniformityCalculator2
                 LogManager.SetLog(err.Message);
             }
         }
+
+        private void Insert(string qry, int cnt)
+        {
+            using (MySqlConnection con = new MySqlConnection(SERVER_PATH))
+            using (MySqlCommand cmd = new MySqlCommand(qry, con))
+            {
+                con.Open();
+                cmd.ExecuteNonQueryAsync();
+            }
+            LogManager.SetLog($"Detail 입력됨({cnt}건)");
+            ProgressManager.AddProgress(QRY_MAX_COUNT);
+        }
+
 
         private static string GET_DETAIL_COUNT = "SELECT COUNT(master_idx) FROM uniform_detail WHERE master_idx = @selectedMaster";
 
@@ -100,7 +91,6 @@ namespace UniformityCalculator2
 
             return count;
         }
-
 
     }
 }
