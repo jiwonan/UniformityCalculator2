@@ -111,7 +111,7 @@ namespace UniformityViewer2.Viewer
             Mat m = resultMat.Split()[0];
             m *= 255;
             m.ConvertTo(resultMat, MatType.CV_8U);
-            picPsf.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(resultMat);
+            picPsf.Image = resultMat; // OpenCvSharp.Extensions.BitmapConverter.ToBitmap(resultMat);
 
             mtfchart.DrawChart(chartWidth, pinmirrorSize, Math.Truncate(pinmirrorGap * 10) / 10);
 
@@ -119,5 +119,7 @@ namespace UniformityViewer2.Viewer
             m.Dispose();
             mirrorMat.Dispose();
         }
+
+
     }
 }

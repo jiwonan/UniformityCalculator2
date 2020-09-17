@@ -124,6 +124,10 @@
     <Compile Include="DB\DBDetail.cs" />
     <Compile Include="DB\DBMaster.cs" />
     <Compile Include="DB\DBMtfchart.cs" />
+    <Compile Include="LinePictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LineView.cs" />
     <Compile Include="Viewer\frmDataViewer.cs">
       <SubType>Form</SubType>
     </Compile>
