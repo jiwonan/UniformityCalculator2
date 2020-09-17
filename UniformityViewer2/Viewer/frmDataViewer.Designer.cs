@@ -39,6 +39,9 @@
             this.picPsf = new System.Windows.Forms.PictureBox();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.chartWidth = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -53,6 +56,8 @@
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartWidth)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -87,7 +92,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.picPsf);
             this.splitContainer2.Size = new System.Drawing.Size(382, 450);
-            this.splitContainer2.SplitterDistance = 224;
+            this.splitContainer2.SplitterDistance = 223;
             this.splitContainer2.TabIndex = 0;
             // 
             // picPinmirror
@@ -95,7 +100,7 @@
             this.picPinmirror.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picPinmirror.Location = new System.Drawing.Point(0, 0);
             this.picPinmirror.Name = "picPinmirror";
-            this.picPinmirror.Size = new System.Drawing.Size(382, 224);
+            this.picPinmirror.Size = new System.Drawing.Size(382, 223);
             this.picPinmirror.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picPinmirror.TabIndex = 0;
             this.picPinmirror.TabStop = false;
@@ -105,7 +110,7 @@
             this.picPsf.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picPsf.Location = new System.Drawing.Point(0, 0);
             this.picPsf.Name = "picPsf";
-            this.picPsf.Size = new System.Drawing.Size(382, 222);
+            this.picPsf.Size = new System.Drawing.Size(382, 223);
             this.picPsf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picPsf.TabIndex = 1;
             this.picPsf.TabStop = false;
@@ -119,7 +124,7 @@
             // 
             // splitContainer3.Panel1
             // 
-            this.splitContainer3.Panel1.Controls.Add(this.chartWidth);
+            this.splitContainer3.Panel1.Controls.Add(this.tabControl1);
             this.splitContainer3.Size = new System.Drawing.Size(414, 450);
             this.splitContainer3.SplitterDistance = 223;
             this.splitContainer3.TabIndex = 0;
@@ -133,7 +138,7 @@
             this.chartWidth.Dock = System.Windows.Forms.DockStyle.Fill;
             legend1.Name = "Legend1";
             this.chartWidth.Legends.Add(legend1);
-            this.chartWidth.Location = new System.Drawing.Point(0, 0);
+            this.chartWidth.Location = new System.Drawing.Point(3, 3);
             this.chartWidth.Name = "chartWidth";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
@@ -145,12 +150,44 @@
             series2.Name = "MTF_T";
             this.chartWidth.Series.Add(series1);
             this.chartWidth.Series.Add(series2);
-            this.chartWidth.Size = new System.Drawing.Size(414, 223);
+            this.chartWidth.Size = new System.Drawing.Size(400, 191);
             this.chartWidth.TabIndex = 0;
             this.chartWidth.Text = "chart1";
             title1.Name = "Title1";
             title1.Text = "가로기준";
             this.chartWidth.Titles.Add(title1);
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(414, 223);
+            this.tabControl1.TabIndex = 0;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.chartWidth);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(406, 197);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(406, 197);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // frmDataViewer
             // 
@@ -174,6 +211,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartWidth)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -186,5 +225,8 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chartWidth;
         private System.Windows.Forms.PictureBox picPinmirror;
         private System.Windows.Forms.PictureBox picPsf;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }

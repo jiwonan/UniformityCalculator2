@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace UniformityCalculator2
@@ -63,9 +59,9 @@ namespace UniformityCalculator2
                     for (decimal lightEffi = (decimal)Data.MasterInputValue.LightEfficiencyStart; lightEffi <= (decimal)Data.MasterInputValue.LightEfficiencyEnd; lightEffi += (decimal)Data.MasterInputValue.LightEfficiencyGap)
                     {
                         Data.DataInput obj = new Data.DataInput(masterIdx, (double)lightEffi, (double)pupilSize
-                            , (double)Data.MasterInputValue.PinMirrorHeightStart, (double)Data.MasterInputValue.PinMirrorHeightEnd, (double)Data.MasterInputValue.PinMirrorHeightGap
-                            , (double)Data.MasterInputValue.PinMirrorWidthStart, (double)Data.MasterInputValue.PinMirrorWidthEnd, (double)Data.MasterInputValue.PinMirrorWidthGap
-                            , Data.PinMirrorShape.Circle, (double)Data.MasterInputValue.InnerPercent, Data.MasterInputValue.PinmirrorLines);
+                            , Data.MasterInputValue.PinMirrorHeightStart, Data.MasterInputValue.PinMirrorHeightEnd, Data.MasterInputValue.PinMirrorHeightGap
+                            , Data.MasterInputValue.PinMirrorWidthStart, Data.MasterInputValue.PinMirrorWidthEnd, Data.MasterInputValue.PinMirrorWidthGap
+                            , Data.PinMirrorShape.Circle, Data.MasterInputValue.InnerPercent, Data.MasterInputValue.PinmirrorLines);
 
                         SetThreads(obj);
                     }
@@ -79,28 +75,36 @@ namespace UniformityCalculator2
             {
                 obj.MirrorShape = Data.PinMirrorShape.Circle;
                 if (!STOP_PROCESS)
+                {
                     ThreadPool.QueueUserWorkItem(imageManager.ProcessMirror, obj); //쓰레드풀에 넣고 돌림
+                }
             }
 
             if (checkBoxes[1].Checked)
             {
                 obj.MirrorShape = Data.PinMirrorShape.Hexa;
                 if (!STOP_PROCESS)
+                {
                     ThreadPool.QueueUserWorkItem(imageManager.ProcessMirror, obj); //쓰레드풀에 넣고 돌림
+                }
             }
 
             if (checkBoxes[2].Checked)
             {
                 obj.MirrorShape = Data.PinMirrorShape.Circle_Circle;
                 if (!STOP_PROCESS)
+                {
                     ThreadPool.QueueUserWorkItem(imageManager.ProcessMirror, obj); //쓰레드풀에 넣고 돌림
+                }
             }
 
             if (checkBoxes[3].Checked)
             {
                 obj.MirrorShape = Data.PinMirrorShape.Hexa_Circle;
                 if (!STOP_PROCESS)
+                {
                     ThreadPool.QueueUserWorkItem(imageManager.ProcessMirror, obj); //쓰레드풀에 넣고 돌림
+                }
             }
         }
 
@@ -110,7 +114,10 @@ namespace UniformityCalculator2
 
             for (int i = 0; i < checkBoxes.Length; i++)
             {
-                if (checkBoxes[i].Checked) ret++;
+                if (checkBoxes[i].Checked)
+                {
+                    ret++;
+                }
             }
 
             return ret;
@@ -124,10 +131,14 @@ namespace UniformityCalculator2
             for (i = 0; i < checkBoxes.Length; i++)
             {
                 if (checkBoxes[i].Checked)
+                {
                     ret += 1;
-                
+                }
+
                 if (i != checkBoxes.Length)
+                {
                     ret <<= 1;
+                }
             }
 
             return ret;
@@ -140,7 +151,7 @@ namespace UniformityCalculator2
 
             imageManager.endThread = true;
 
-            if(!(ProgressManager.GetProgressBar().Maximum == ProgressManager.GetProgressBar().Value))
+            if (!(ProgressManager.GetProgressBar().Maximum == ProgressManager.GetProgressBar().Value))
             {
                 DB.DBMaster dbMaster = new DB.DBMaster();
 

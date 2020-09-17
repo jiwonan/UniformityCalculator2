@@ -1,10 +1,6 @@
 ﻿using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UniformityViewer2
 {
@@ -28,37 +24,37 @@ namespace UniformityViewer2
 
             if (gubun == 0)
             {
-                targetMat = channels[DB.DataParser.CHANNEL_MAX_AVG];
+                targetMat = channels[DataParser.CHANNEL_MAX_AVG];
             }
             else if (gubun == 1)
             {
-                targetMat = channels[DB.DataParser.CHANNEL_MIN_AVG];
+                targetMat = channels[DataParser.CHANNEL_MIN_AVG];
             }
             else if (gubun == 2)
             {
-                targetMat = channels[DB.DataParser.CHANNEL_MEAN_DEV];
+                targetMat = channels[DataParser.CHANNEL_MEAN_DEV];
             }
             else if (gubun == 3)
             {
-                Mat value1 = channels[DB.DataParser.CHANNEL_MAX_AVG];
-                Mat value2 = channels[DB.DataParser.CHANNEL_MEAN_DEV];
+                Mat value1 = channels[DataParser.CHANNEL_MAX_AVG];
+                Mat value2 = channels[DataParser.CHANNEL_MEAN_DEV];
 
                 targetMat = (value1 + value2) / 2;
             }
             else if (gubun == 4)
             {
-                Mat value1 = channels[DB.DataParser.CHANNEL_MAX_AVG];
-                Mat value2 = channels[DB.DataParser.CHANNEL_MEAN_DEV];
+                Mat value1 = channels[DataParser.CHANNEL_MAX_AVG];
+                Mat value2 = channels[DataParser.CHANNEL_MEAN_DEV];
 
                 Cv2.Sqrt(value1.Mul(value2), targetMat);
             }
             else if (gubun == 5)
             {
-                targetMat = channels[DB.DataParser.CHANNEL_LUMPER_MAX];
+                targetMat = channels[DataParser.CHANNEL_LUMPER_MAX];
             }
             else if (gubun == 6)
             {
-                targetMat = channels[DB.DataParser.CHANNEL_LUMPER_AVG];
+                targetMat = channels[DataParser.CHANNEL_LUMPER_AVG];
             }
 
             double minVal, maxVal;

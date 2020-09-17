@@ -1,6 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.ComponentModel;
 using System.Text;
 
 namespace UniformityCalculator2.DB
@@ -8,7 +7,7 @@ namespace UniformityCalculator2.DB
     public class DBDetail : DBManager
     {
         private static string INSERT_DETAIL = "INSERT INTO uniform_detail VALUES ";
-        
+
         static int QRY_MAX_COUNT = 10;
 
         public void InsertDetail(int cnt, StringBuilder sb)
@@ -22,54 +21,61 @@ namespace UniformityCalculator2.DB
 
         public void InsertDetail(Data.DataInput dataInput, double width, double height, bool lastJob, ref int cnt, ref StringBuilder sb) // 
         {
+
+            if (cnt == 0)
+            {
+                sb.Clear();
+                sb.AppendLine(INSERT_DETAIL);
+            }
+
+            //SetLog($"Detail 준비({cnt})");
+            if (cnt < QRY_MAX_COUNT)
+            {
+                //cmd.Parameters.Clear();
+                sb.AppendLine($" (NULL, {dataInput.MasterIdx}, " +
+                    $"{dataInput.LightEffi}, {dataInput.PupilSize}, {height}, " +
+                    $"{dataInput.MaxAvg}, {dataInput.MinAvg}, {dataInput.MeanDev}, " +
+                    $"{dataInput.LumperDegree}, {dataInput.LumperDegree_Avg}, " +
+                    $"{(int)dataInput.MirrorShape}, {width})");
+
+                cnt++;
+                if (cnt < QRY_MAX_COUNT && lastJob == false)
+                {
+                    sb.Append(",");
+                }
+                else
+                {
+                    sb.Append(";");
+                }
+            }
+
+            if (cnt == QRY_MAX_COUNT || lastJob)
+            {
+                Insert(sb.ToString(), cnt);
+                cnt = 0;
+            }
+        }
+
+        private void Insert(string qry, int cnt)
+        {
             try
             {
-                if (cnt == 0)
+                using (MySqlConnection con = new MySqlConnection(SERVER_PATH))
+                using (MySqlCommand cmd = new MySqlCommand(qry, con))
                 {
-                    sb.Clear();
-                    sb.AppendLine(INSERT_DETAIL);
+                    con.Open();
+                    // con.BeginTransaction();
+                    cmd.ExecuteNonQueryAsync();
+                    con.Close();
                 }
-
-                //SetLog($"Detail 준비({cnt})");
-                if (cnt < QRY_MAX_COUNT)
-                {
-                    //cmd.Parameters.Clear();
-                    sb.AppendLine($" (NULL, {dataInput.MasterIdx}, " +
-                        $"{dataInput.LightEffi}, {dataInput.PupilSize}, {height}, " +
-                        $"{dataInput.MaxAvg}, {dataInput.MinAvg}, {dataInput.MeanDev}, " +
-                        $"{dataInput.LumperDegree}, {dataInput.LumperDegree_Avg}, " +
-                        $"{(int)dataInput.MirrorShape}, {width})");
-
-                    cnt++;
-                    if (cnt < QRY_MAX_COUNT && lastJob == false) sb.Append(",");
-                    else sb.Append(";");
-                }
-
-                if (cnt == QRY_MAX_COUNT || lastJob)
-                {
-                    Insert(sb.ToString(), cnt);
-                    cnt = 0;
-                }
+                LogManager.SetLog($"Detail 입력됨({cnt}건)");
+                ProgressManager.AddProgress(cnt);
             }
             catch (Exception err)
             {
                 LogManager.SetLog("Detail Insert오류");
                 LogManager.SetLog(err.Message);
             }
-        }
-
-        private void Insert(string qry, int cnt)
-        {
-            using (MySqlConnection con = new MySqlConnection(SERVER_PATH))
-            using (MySqlCommand cmd = new MySqlCommand(qry, con))
-            {
-                con.Open();
-                // con.BeginTransaction();
-                   cmd.ExecuteNonQueryAsync();
-                con.Close();
-            }
-            LogManager.SetLog($"Detail 입력됨({cnt}건)");
-            ProgressManager.AddProgress(cnt);
         }
 
         private static string DELETE_DETAIL = "DELETE FROM uniform_detail WHERE master_idx = @masterIdx";
@@ -93,7 +99,10 @@ namespace UniformityCalculator2.DB
                     {
                         var reader = cmd.ExecuteReader();
 
-                        if (reader.Read()) count = reader.GetInt32(0);
+                        if (reader.Read())
+                        {
+                            count = reader.GetInt32(0);
+                        }
 
                         reader.Close();
                     }

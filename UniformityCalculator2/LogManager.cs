@@ -17,12 +17,14 @@ namespace UniformityCalculator2
         {
             int threadId = Thread.CurrentThread.ManagedThreadId;
 
-            if (logBox == null) return;
+            if (logBox == null)
+            {
+                return;
+            }
 
             if (logBox.InvokeRequired)
             {
-                logBox.Invoke(new MethodInvoker(() =>
-                {
+                logBox.Invoke(new MethodInvoker(() => {
                     AddLogText(threadId, msg);
                 }));
             }

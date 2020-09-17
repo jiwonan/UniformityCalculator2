@@ -1,12 +1,6 @@
 ﻿using OpenCvSharp;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Point = OpenCvSharp.Point;
 
@@ -43,12 +37,18 @@ namespace UniformityViewer2.Viewer
         }
         private void FrmDataViewer_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (mInstance == this) mInstance = null;
+            if (mInstance == this)
+            {
+                mInstance = null;
+            }
         }
 
         private void FrmDataViewer_Resize(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Minimized) return;
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                return;
+            }
 
             ResizeSpliter();
         }
@@ -63,7 +63,6 @@ namespace UniformityViewer2.Viewer
 
         public void LoadResultData(DB.DetailInfo detailInfo, Tuple<int, double> lineAndInnerPercent, string shapeType)
         {
-
             double light = 0, pupil = 0;
             SizeF pinmirrorSize;
 
@@ -81,7 +80,6 @@ namespace UniformityViewer2.Viewer
             }
 
             double pinmirrorGap = UniformityCalculator2.Data.CalcValues.GetPinMirrorGap(light, pinmirrorSize);
-
 
 
             Mat kernel = UniformityCalculator2.Image.KernelManager.GetKernel(pinmirrorSize, (decimal)innerPercent, detailInfo.ShapeType);

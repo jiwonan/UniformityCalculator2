@@ -10,7 +10,7 @@ namespace UniformityViewer2
 
         public static ImageProcessor Instance {
             get {
-                if(mInstance == null)
+                if (mInstance == null)
                 {
                     mInstance = new ImageProcessor();
                 }
@@ -89,10 +89,16 @@ namespace UniformityViewer2
 
             //ret보다 크면서 가로/세로가 samplingMat의 홀수배인 Mat를 만든다
             int widthMultiplier = (int)(TotalWidth / samplingMat.Width) + 1;
-            if (widthMultiplier % 2 == 0) widthMultiplier++;
+            if (widthMultiplier % 2 == 0)
+            {
+                widthMultiplier++;
+            }
 
             int heightMultiplier = (int)(TotalHeight / samplingMat.Height) + 1;
-            if (heightMultiplier % 2 == 0) heightMultiplier++;
+            if (heightMultiplier % 2 == 0)
+            {
+                heightMultiplier++;
+            }
 
             using (Mat tmp = new Mat(samplingMat.Height * heightMultiplier, samplingMat.Width * widthMultiplier, samplingMat.Type()))
             {

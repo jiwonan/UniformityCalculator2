@@ -94,7 +94,7 @@ namespace UniformityCalculator2.DB
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 LogManager.SetLog(e.Message);
             }

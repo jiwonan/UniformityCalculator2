@@ -12,7 +12,7 @@ namespace UniformityViewer2.Viewer
     {
         DB.DBMaster master = new DB.DBMaster();
         DB.DBDetail detail = new DB.DBDetail();
-        DB.DataParser parser = new DB.DataParser();
+        DataParser parser = new DataParser();
         ChartRenderer chartRenderer;
 
         public MainViewer()
@@ -46,7 +46,10 @@ namespace UniformityViewer2.Viewer
 
             if (parser.SetData(SelectedMaster, mirrorShapeComboBox.SelectedIndex))
             {
-                if (baseItemComboBox.SelectedIndex >= 0) baseItemComboBox_SelectedIndexChanged(sender, e);
+                if (baseItemComboBox.SelectedIndex >= 0)
+                {
+                    baseItemComboBox_SelectedIndexChanged(sender, e);
+                }
             }
             else
             {
@@ -109,7 +112,10 @@ namespace UniformityViewer2.Viewer
 
         private void masterValueListView_DoubleClick(object sender, EventArgs e)
         {
-            if (masterValueListView.SelectedItems.Count == 0) return;
+            if (masterValueListView.SelectedItems.Count == 0)
+            {
+                return;
+            }
 
             pictureBox1.Image = null;
 
@@ -117,10 +123,19 @@ namespace UniformityViewer2.Viewer
 
             int masterIdx = int.Parse(masterValueListView.SelectedItems[0].Text);
 
-            if (SelectedMaster == masterIdx) return;
-            else SelectedMaster = masterIdx;
+            if (SelectedMaster == masterIdx)
+            {
+                return;
+            }
+            else
+            {
+                SelectedMaster = masterIdx;
+            }
 
-            foreach (ListViewItem item in masterValueListView.Items) item.BackColor = Color.White;
+            foreach (ListViewItem item in masterValueListView.Items)
+            {
+                item.BackColor = Color.White;
+            }
 
             masterValueListView.SelectedItems[0].BackColor = Color.Red;
 
@@ -135,8 +150,15 @@ namespace UniformityViewer2.Viewer
         private void baseItemComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             baseValueComboBox.Items.Clear();
-            if (SelectedMaster == -1) return;
-            if (baseItemComboBox.SelectedIndex == -1) return;
+            if (SelectedMaster == -1)
+            {
+                return;
+            }
+
+            if (baseItemComboBox.SelectedIndex == -1)
+            {
+                return;
+            }
 
             master.CallValueList(baseItemComboBox.SelectedIndex, SelectedMaster, baseValueComboBox);
             SetupChart(baseItemComboBox.SelectedIndex);
@@ -146,9 +168,13 @@ namespace UniformityViewer2.Viewer
 
         public void LoadChart()
         {
-            if (baseItemComboBox.SelectedIndex == -1 || baseValueComboBox.SelectedIndex == -1 || mirrorShapeComboBox.SelectedIndex == -1 || pinmirrorWidthValueComboBox.SelectedIndex == -1) return;
+            if (baseItemComboBox.SelectedIndex == -1 || baseValueComboBox.SelectedIndex == -1 || mirrorShapeComboBox.SelectedIndex == -1 || pinmirrorWidthValueComboBox.SelectedIndex == -1)
+            {
+                return;
+            }
+
             Mat m = parser.GetChart(baseItemComboBox.SelectedIndex, double.Parse(baseValueComboBox.Text), double.Parse(pinmirrorWidthValueComboBox.Text.Replace("+", "")));
-            
+
             SelectedMat = chartRenderer.LoadChart(m, GetSelectedRadioIndex(), pictureBox1);
         }
 
@@ -220,11 +246,17 @@ namespace UniformityViewer2.Viewer
         {
             System.Drawing.Point lastClickedPoint = e.Location;
 
-            if (pictureBox1.Image == null) return;
+            if (pictureBox1.Image == null)
+            {
+                return;
+            }
 
             Mat m = parser.GetChart(baseItemComboBox.SelectedIndex, double.Parse(baseValueComboBox.Text), double.Parse(pinmirrorWidthValueComboBox.Text.Replace("+", "")));
 
-            if (m == null) return;
+            if (m == null)
+            {
+                return;
+            }
 
             double widthValue, heightValue, xLoc, yLoc;
 
@@ -238,12 +270,12 @@ namespace UniformityViewer2.Viewer
         {
             Mat[] channels = m.Split();
 
-            int detailIdx = (int)channels[DB.DataParser.CHANNEL_DETAIL_IDX].At<double>((int)yLoc, (int)xLoc);
-            double MaxAvg = channels[DB.DataParser.CHANNEL_MAX_AVG].At<double>((int)yLoc, (int)xLoc);
-            double MinAvg = channels[DB.DataParser.CHANNEL_MIN_AVG].At<double>((int)yLoc, (int)xLoc);
-            double MeanDev = channels[DB.DataParser.CHANNEL_MEAN_DEV].At<double>((int)yLoc, (int)xLoc);
-            double LumDegreeMax = channels[DB.DataParser.CHANNEL_LUMPER_MAX].At<double>((int)yLoc, (int)xLoc);
-            double LumDegreeAvg = channels[DB.DataParser.CHANNEL_LUMPER_AVG].At<double>((int)yLoc, (int)xLoc);
+            int detailIdx = (int)channels[DataParser.CHANNEL_DETAIL_IDX].At<double>((int)yLoc, (int)xLoc);
+            double MaxAvg = channels[DataParser.CHANNEL_MAX_AVG].At<double>((int)yLoc, (int)xLoc);
+            double MinAvg = channels[DataParser.CHANNEL_MIN_AVG].At<double>((int)yLoc, (int)xLoc);
+            double MeanDev = channels[DataParser.CHANNEL_MEAN_DEV].At<double>((int)yLoc, (int)xLoc);
+            double LumDegreeMax = channels[DataParser.CHANNEL_LUMPER_MAX].At<double>((int)yLoc, (int)xLoc);
+            double LumDegreeAvg = channels[DataParser.CHANNEL_LUMPER_AVG].At<double>((int)yLoc, (int)xLoc);
 
             DB.DetailInfo detailInfo = detail.GetDetailInfo(SelectedMaster, detailIdx);
 
@@ -286,8 +318,8 @@ namespace UniformityViewer2.Viewer
         }
 
         private System.Drawing.Point LastSelectedCoord;
-        
-        
+
+
 
         private void radioButton_Click(object sender, EventArgs e)
         {
@@ -315,7 +347,10 @@ namespace UniformityViewer2.Viewer
 
             Mat m = parser.GetChart(baseItemComboBox.SelectedIndex, double.Parse(baseValueComboBox.Text), double.Parse(pinmirrorWidthValueComboBox.Text.Replace("+", "")));
 
-            if (m == null) return;
+            if (m == null)
+            {
+                return;
+            }
 
             Mat[] channels = m.Split();
 
@@ -323,13 +358,15 @@ namespace UniformityViewer2.Viewer
             {
                 return;
             }
-            int detailIdx = (int)channels[DB.DataParser.CHANNEL_DETAIL_IDX].At<double>(yLoc, xLoc);
+            int detailIdx = (int)channels[DataParser.CHANNEL_DETAIL_IDX].At<double>(yLoc, xLoc);
             LastSelectedCoord = new System.Drawing.Point(xLoc, yLoc);
 
             DB.DetailInfo detailInfo = detail.GetDetailInfo(SelectedMaster, detailIdx);
 
-            if (detailInfo.IsFilled == false) return;
-
+            if (detailInfo.IsFilled == false)
+            {
+                return;
+            }
 
             if (button == MouseButtons.Right)
             {
@@ -359,7 +396,7 @@ namespace UniformityViewer2.Viewer
                         resultViewer = frmDataViewer.GetInstance();
                     }
                     resultViewer.LoadResultData(detailInfo, master.GetSelectedPinLinesAndInnerPercent(SelectedMaster), mirrorShapeComboBox.SelectedIndex == 0 ? "Circle" :
-                                                                                                                       mirrorShapeComboBox.SelectedIndex == 1 ? "Circle_Circle" : 
+                                                                                                                       mirrorShapeComboBox.SelectedIndex == 1 ? "Circle_Circle" :
                                                                                                                        mirrorShapeComboBox.SelectedIndex == 2 ? "Hexa" : "Hexa_Circle");
                     resultViewer.Show();
                 }
@@ -369,7 +406,7 @@ namespace UniformityViewer2.Viewer
                     {
                         resultViewer = frmDataViewer.GetInstance();
                         resultViewer.LoadResultData(detailInfo, master.GetSelectedPinLinesAndInnerPercent(SelectedMaster), mirrorShapeComboBox.SelectedIndex == 0 ? "Circle" :
-                                                                                                                           mirrorShapeComboBox.SelectedIndex == 1 ? "Circle_Circle" : 
+                                                                                                                           mirrorShapeComboBox.SelectedIndex == 1 ? "Circle_Circle" :
                                                                                                                            mirrorShapeComboBox.SelectedIndex == 2 ? "Hexa" : "Hexa_Circle");
                         resultViewer.Show();
                     }
@@ -382,7 +419,11 @@ namespace UniformityViewer2.Viewer
         {
             if (e.KeyCode == Keys.A || e.KeyCode == Keys.D || e.KeyCode == Keys.W || e.KeyCode == Keys.S)
             {
-                if (baseItemComboBox.SelectedIndex == -1 || baseValueComboBox.SelectedIndex == -1 || mirrorShapeComboBox.SelectedIndex == -1 || pinmirrorWidthValueComboBox.SelectedIndex == -1) return;
+                if (baseItemComboBox.SelectedIndex == -1 || baseValueComboBox.SelectedIndex == -1 || mirrorShapeComboBox.SelectedIndex == -1 || pinmirrorWidthValueComboBox.SelectedIndex == -1)
+                {
+                    return;
+                }
+
                 Mat m = parser.GetChart(baseItemComboBox.SelectedIndex, double.Parse(baseValueComboBox.Text), double.Parse(pinmirrorWidthValueComboBox.Text.Replace("+", "")));
 
                 int xLoc = LastSelectedCoord.X;
@@ -410,7 +451,7 @@ namespace UniformityViewer2.Viewer
                 pictureBox1.GetImageRatio(m, xLoc, yLoc, out widthValue, out heightValue);
 
                 DrawInfo(m, xLoc, yLoc, widthValue, heightValue);
-                pictureBox1.DrawSelectedRect(m, (int)xLoc, (int)yLoc, widthValue, heightValue, SelectedMat);
+                pictureBox1.DrawSelectedRect(m, xLoc, yLoc, widthValue, heightValue, SelectedMat);
                 //DrawSelectedRect(m, xLoc, yLoc);
             }
             else
@@ -423,7 +464,10 @@ namespace UniformityViewer2.Viewer
         {
             double xLoc, yLoc;
 
-            if (pictureBox1.Image == null) return;
+            if (pictureBox1.Image == null)
+            {
+                return;
+            }
 
             Mat m = parser.GetChart(baseItemComboBox.SelectedIndex, double.Parse(baseValueComboBox.Text), double.Parse(pinmirrorWidthValueComboBox.Text.Replace("+", "")));
 
@@ -446,7 +490,11 @@ namespace UniformityViewer2.Viewer
 
         private void goTesterToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (tmpContextData.IsFilled == false) return;
+            if (tmpContextData.IsFilled == false)
+            {
+                return;
+            }
+
             frmTester.Instance.SetData(tmpContextData.ShapeType, tmpContextData.Light, master.GetSelectedPinLinesAndInnerPercent(tmpContextData.MasterIdx).Item1, tmpContextData.Pupil, tmpContextData.pinMirrorSize);
             frmTester.Instance.Show();
         }

@@ -13,7 +13,7 @@ namespace UniformityCalculator2
 
         private static Mat psfData { get; set; } = null;
 
-        public static void LoadPsfData()
+        private static void LoadPsfData()
         {
             double[,] UniformatyData = new double[DATA_SIZE, DATA_SIZE];
 
@@ -36,7 +36,10 @@ namespace UniformityCalculator2
         {
             int PupilSizeInPixel = (int)(pupilSize / Data.CalcValues.MMperPixel);
 
-            if (PupilSizeInPixel > DATA_SIZE) PupilSizeInPixel = DATA_SIZE;
+            if (PupilSizeInPixel > DATA_SIZE)
+            {
+                PupilSizeInPixel = DATA_SIZE;
+            }
 
             using (Mat ret = new Mat(DATA_SIZE, DATA_SIZE, MatType.CV_64F))
             using (Mat mask = new Mat(DATA_SIZE, DATA_SIZE, MatType.CV_8U))
@@ -45,7 +48,10 @@ namespace UniformityCalculator2
                 mask.SetTo(Scalar.Black);
                 mask.Ellipse(new Point(DATA_SIZE / 2, DATA_SIZE / 2), new OpenCvSharp.Size(PupilSizeInPixel / 2, PupilSizeInPixel / 2), 0, 0, 360, Scalar.White, -1);
 
-                if (psfData == null) LoadPsfData();
+                if (psfData == null)
+                {
+                    LoadPsfData();
+                }
 
                 psfData.CopyTo(ret, mask);
 

@@ -120,7 +120,7 @@
     <Compile Include="Controls\ctlHistLegend.Designer.cs">
       <DependentUpon>ctlHistLegend.cs</DependentUpon>
     </Compile>
-    <Compile Include="DB\DataParser.cs" />
+    <Compile Include="DataParser.cs" />
     <Compile Include="DB\DBDetail.cs" />
     <Compile Include="DB\DBMaster.cs" />
     <Compile Include="DB\DBMtfchart.cs" />

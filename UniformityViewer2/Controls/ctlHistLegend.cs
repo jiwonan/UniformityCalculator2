@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using OpenCvSharp;
+﻿using OpenCvSharp;
 using OpenCvSharp.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace UniformityViewer2.Controls
 {
@@ -21,7 +17,11 @@ namespace UniformityViewer2.Controls
                 return mMaxval;
             }
             set {
-                if (IsCustomMinMaxValue) return;
+                if (IsCustomMinMaxValue)
+                {
+                    return;
+                }
+
                 mMaxval = value;
             }
         }
@@ -30,7 +30,11 @@ namespace UniformityViewer2.Controls
                 return mMinval;
             }
             set {
-                if (IsCustomMinMaxValue) return;
+                if (IsCustomMinMaxValue)
+                {
+                    return;
+                }
+
                 mMinval = value;
             }
         }
@@ -57,7 +61,10 @@ namespace UniformityViewer2.Controls
             ////toolTip1.Hide(this);
             //toolTip1.Show($"Value : {data.Key : 0.00} / Count : {data.Value} / Rate : {(double)data.Value / totalCount * 100 : 0.00}%", this, int.MaxValue);
 
-            if (e.Y < 10 || e.Y > this.ClientRectangle.Height - 10) return;
+            if (e.Y < 10 || e.Y > this.ClientRectangle.Height - 10)
+            {
+                return;
+            }
 
             mousePt = e.Location;
             this.Invalidate();
@@ -87,7 +94,11 @@ namespace UniformityViewer2.Controls
                 double val = row * (MaxVal - MinVal) / HistMat.Rows + MinVal;
                 int mydata = (int)(HistMat.At<float>(0, row));
 
-                if (histData.ContainsKey(val)) continue;
+                if (histData.ContainsKey(val))
+                {
+                    continue;
+                }
+
                 histData.Add(val, mydata);
             }
 
@@ -111,7 +122,10 @@ namespace UniformityViewer2.Controls
             newMat = newMat.Normalize(255, 0, NormTypes.MinMax);
 
             Mat mask = newMat.Clone();
-            if (newMat.Empty()) return;
+            if (newMat.Empty())
+            {
+                return;
+            }
 
             Cv2.ApplyColorMap(newMat, newMat, ColormapTypes.Jet);
 
@@ -145,7 +159,11 @@ namespace UniformityViewer2.Controls
             if (mousePt != System.Drawing.Point.Empty)
             {
                 double x = HistMat.Height * (mousePt.Y - 10) / (this.ClientSize.Height - 20);
-                if (x >= HistMat.Rows) x = HistMat.Rows - 1;
+                if (x >= HistMat.Rows)
+                {
+                    x = HistMat.Rows - 1;
+                }
+
                 data = histData.ElementAt((int)x);
                 g.DrawString($"- {data.Key: 0.00}", this.Font, Brushes.Black, new PointF(this.ClientSize.Width - s.Width, mousePt.Y - s.Height / 2));
             }

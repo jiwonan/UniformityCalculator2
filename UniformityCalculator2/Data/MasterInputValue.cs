@@ -32,8 +32,8 @@
             LightEfficiencyGap = lightEfficiencyGap;
 
             PupilSizeStart = pupilSizeStart;
-            PupilSizeEnd= pupilSizeEnd;
-            PupilSizeGap= pupilSizeGap;
+            PupilSizeEnd = pupilSizeEnd;
+            PupilSizeGap = pupilSizeGap;
 
             PinMirrorWidthStart = pinMirrorWidthStart;
             PinMirrorWidthEnd = pinMirrorWidthEnd;

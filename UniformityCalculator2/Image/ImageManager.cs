@@ -2,12 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Ubiety.Dns.Core.Records.General;
 using Point = OpenCvSharp.Point;
 
 namespace UniformityCalculator2.Image
@@ -63,7 +58,7 @@ namespace UniformityCalculator2.Image
 
                         double pinmirrorGap = Data.CalcValues.GetPinMirrorGap((double)lightEffi, new SizeF((float)pinmirrorWidth, (float)pinmirrorHeight));
 
-                        using (Mat kernel = KernelManager.GetKernel((decimal)pinmirrorWidth, (decimal)pinmirrorHeight, (decimal)innerArea, kernelType))
+                        using (Mat kernel = KernelManager.GetKernel(pinmirrorWidth, pinmirrorHeight, (decimal)innerArea, kernelType))
                         {
                             ProcessImage(kernel, psfMat, lineCount, pinmirrorGap, ref dataInput);
                         }
@@ -240,9 +235,13 @@ namespace UniformityCalculator2.Image
             Mat resultMat;
 
             if (!drawCenterArea)
+            {
                 resultMat = downAlphaMirrorImage[new Rect(pts[0].X, pts[0].Y, pts[1].X - pts[0].X, pts[4].Y - pts[0].Y)].Clone();
+            }
             else
+            {
                 resultMat = downAlphaMirrorImage.Clone();
+            }
 
             //Mat resultMat = downAlphaMirrorImage.Clone();
 
@@ -370,7 +369,7 @@ namespace UniformityCalculator2.Image
 
                 Point drawingPoint = new Point();
 
-                int centerLine = (int)lineCount / 2 + 1;
+                int centerLine = lineCount / 2 + 1;
 
                 for (int row = 1; row <= lineCount; row++)
                 {
@@ -422,7 +421,7 @@ namespace UniformityCalculator2.Image
 
                 return m.Clone();
             }
-        }        
+        }
 
     }
 }

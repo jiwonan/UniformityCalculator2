@@ -1,10 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UniformityViewer2.DB
 {
@@ -32,8 +28,54 @@ namespace UniformityViewer2.DB
 
             return new DetailInfo();
         }
-        
+
+        private static string GET_DETAIL_DATA = "SELECT * FROM uniform_detail WHERE master_idx = @idx AND shapetype = @shapetype ORDER BY (pinWidth - pinHeight), idx";
+
+        public IEnumerable<DataParser.ResultData> GetDetailData(int masterIdx, int shapeType)
+        {
+            var con = GetConnection();
+
+            MySqlDataReader reader;
+            using (MySqlCommand cmd = new MySqlCommand(GET_DETAIL_DATA, con))
+            {
+                cmd.Parameters.AddWithValue("@idx", masterIdx);
+                cmd.Parameters.AddWithValue("@shapetype", shapeType);
+                reader = cmd.ExecuteReader();
+            }
+
+            while (reader.Read())
+            {
+                int detail = reader.GetInt32(0);
+                int master = reader.GetInt32(1);
+                double light = reader.GetDouble(2);
+                double pupil = reader.GetDouble(3);
+                double pinmrHeight = reader.GetDouble(4);
+                double maxavg = reader.GetDouble(5);
+                double minavg = reader.GetDouble(6);
+                double meandev = reader.GetDouble(7);
+                double lumdegreeMax = reader.GetDouble(8);
+                double lumdegreeAvg = reader.GetDouble(9);
+                int shapetype = reader.GetInt32(10);
+                double pinmrWidth = reader.GetDouble(11);
+
+                DataParser.ResultData data = new DataParser.ResultData(detail, master);
+                data.Light = light;
+                data.Pupil = pupil;
+                data.PinMrWidthDiff = (double)((decimal)pinmrWidth - (decimal)pinmrHeight);
+                data.PinMrHeight = pinmrHeight;
+                data.Maxavg = maxavg;
+                data.Minavg = minavg;
+                data.Meandev = meandev;
+                data.LumDegreeMax = lumdegreeMax;
+                data.LumDegreeAvg = lumdegreeAvg;
+                data.ShapeType = shapetype;
+
+                yield return data;
+            }
+            yield break;
+        }
     }
+
 
     public struct DetailInfo
     {

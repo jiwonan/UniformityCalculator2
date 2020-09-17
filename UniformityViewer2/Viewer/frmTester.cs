@@ -1,14 +1,7 @@
 ﻿using OpenCvSharp;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 // using UniformityCalculator2;
 using Point = OpenCvSharp.Point;
@@ -21,7 +14,11 @@ namespace UniformityViewer2.Viewer
 
         public static frmTester Instance {
             get {
-                if (mInstance == null || mInstance.IsDisposed) mInstance = new frmTester();
+                if (mInstance == null || mInstance.IsDisposed)
+                {
+                    mInstance = new frmTester();
+                }
+
                 return mInstance;
             }
         }
@@ -235,7 +232,10 @@ namespace UniformityViewer2.Viewer
 
         private void leS_ValueChanged(object sender, EventArgs e)
         {
-            if (!radioButton1.Checked) return;
+            if (!radioButton1.Checked)
+            {
+                return;
+            }
 
             double light = (double)leS.Value;
             double pinmr = (double)pisS.Value;
@@ -245,7 +245,10 @@ namespace UniformityViewer2.Viewer
 
         private void lg_ValueChanged(object sender, EventArgs e)
         {
-            if (!radioButton2.Checked) return;
+            if (!radioButton2.Checked)
+            {
+                return;
+            }
 
             double pingap = (double)lg.Value;
             double pinmr = (double)pisS.Value;

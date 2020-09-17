@@ -1,81 +1,49 @@
-﻿using MySql.Data.MySqlClient;
-using OpenCvSharp;
-using System;
+﻿using OpenCvSharp;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace UniformityViewer2.DB
+namespace UniformityViewer2
 {
     public class DataParser : UniformityCalculator2.DB.DBManager
     {
-        private static string GET_DETAIL_DATA = "SELECT * FROM uniform_detail WHERE master_idx = @idx AND shapetype = @shapetype ORDER BY (pinWidth - pinHeight), idx";
-
         //private List<ResultData> datas = new List<ResultData>();
 
         public bool SetData(int masterIdx, int shapeType)
         {
-            if (masterIdx == -1) return false;
+            DB.DBDetail detail = new DB.DBDetail();
+            if (masterIdx == -1)
+            {
+                return false;
+            }
 
             bool ret = false;
 
-            var con = GetConnection();
+            double lastPinWidth = -1;
 
-            using (MySqlCommand cmd = new MySqlCommand(GET_DETAIL_DATA, con))
+            List<ResultData> datas = new List<ResultData>();
+            //ResultData data;
+
+            foreach (var data in detail.GetDetailData(masterIdx, shapeType))
             {
-                cmd.Parameters.AddWithValue("@idx", masterIdx);
-                cmd.Parameters.AddWithValue("@shapetype", shapeType);
-                var reader = cmd.ExecuteReader();
-
-                double lastPinWidth = -1;
-
-                List<ResultData> datas = new List<ResultData>();
-
-                while (reader.Read())
+                if (lastPinWidth == -1)
                 {
-                    ret = true;
-
-                    int detail = reader.GetInt32(0);
-                    int master = reader.GetInt32(1);
-                    double light = reader.GetDouble(2);
-                    double pupil = reader.GetDouble(3);
-                    double pinmrHeight = reader.GetDouble(4);
-                    double maxavg = reader.GetDouble(5);
-                    double minavg = reader.GetDouble(6);
-                    double meandev = reader.GetDouble(7);
-                    double lumdegreeMax = reader.GetDouble(8);
-                    double lumdegreeAvg = reader.GetDouble(9);
-                    int shapetype = reader.GetInt32(10);
-                    double pinmrWidth = reader.GetDouble(11);
-
-                    ResultData data = new ResultData(detail, master);
-                    data.Light = light;
-                    data.Pupil = pupil;
-                    data.PinMrWidthDiff = (double)((decimal)pinmrWidth - (decimal)pinmrHeight);
-                    data.PinMrHeight = pinmrHeight;
-                    data.Maxavg = maxavg;
-                    data.Minavg = minavg;
-                    data.Meandev = meandev;
-                    data.LumDegreeMax = lumdegreeMax;
-                    data.LumDegreeAvg = lumdegreeAvg;
-                    data.ShapeType = shapetype;
-
-                    if (lastPinWidth == -1)
-                    {
-                        lastPinWidth = data.PinMrWidthDiff;
-                    }
-                    else if (lastPinWidth != data.PinMrWidthDiff)
-                    {
-                        ProcessMat(datas, lastPinWidth);
-                        lastPinWidth = data.PinMrWidthDiff;
-                        datas.Clear();
-                    }
-
-                    datas.Add(data);
+                    lastPinWidth = data.PinMrWidthDiff;
                 }
-                if (datas.Count > 0) ProcessMat(datas, lastPinWidth);
+                else if (lastPinWidth != data.PinMrWidthDiff)
+                {
+                    ProcessMat(datas, lastPinWidth);
+                    lastPinWidth = data.PinMrWidthDiff;
+                    datas.Clear();
+                }
+
+                datas.Add(data);
+                ret = true;
+            }
+
+            if (datas.Count > 0)
+            {
+                ProcessMat(datas, lastPinWidth);
             }
 
             return ret;
@@ -104,9 +72,20 @@ namespace UniformityViewer2.DB
                     orderby groupValue.Key ascending
                     select groupValue.Key;
 
-                if (!DataDictionary[IDX_LIGHT/* + (i * 3)*/].ContainsKey(width)) DataDictionary[IDX_LIGHT/* + (i * 3)*/].Add(width, new Dictionary<double, Mat>());
-                if (!DataDictionary[IDX_PUPIL/* + (i * 3)*/].ContainsKey(width)) DataDictionary[IDX_PUPIL/* + (i * 3)*/].Add(width, new Dictionary<double, Mat>());
-                if (!DataDictionary[IDX_PINMR/* + (i * 3)*/].ContainsKey(width)) DataDictionary[IDX_PINMR/* + (i * 3)*/].Add(width, new Dictionary<double, Mat>());
+                if (!DataDictionary[IDX_LIGHT/* + (i * 3)*/].ContainsKey(width))
+                {
+                    DataDictionary[IDX_LIGHT/* + (i * 3)*/].Add(width, new Dictionary<double, Mat>());
+                }
+
+                if (!DataDictionary[IDX_PUPIL/* + (i * 3)*/].ContainsKey(width))
+                {
+                    DataDictionary[IDX_PUPIL/* + (i * 3)*/].Add(width, new Dictionary<double, Mat>());
+                }
+
+                if (!DataDictionary[IDX_PINMR/* + (i * 3)*/].ContainsKey(width))
+                {
+                    DataDictionary[IDX_PINMR/* + (i * 3)*/].Add(width, new Dictionary<double, Mat>());
+                }
 
 
                 //각각 갯수에 해당하는 Mat를 가져야 한다
@@ -233,18 +212,28 @@ namespace UniformityViewer2.DB
             }
             else
             {
-                if (!DataDictionary[gubun].ContainsKey(pinWidthGap)) DataDictionary[gubun].Add(pinWidthGap, new Dictionary<double, Mat>());
+                if (!DataDictionary[gubun].ContainsKey(pinWidthGap))
+                {
+                    DataDictionary[gubun].Add(pinWidthGap, new Dictionary<double, Mat>());
+                }
                 //if (DataDictionary[gubun][pinHeight] == null) DataDictionary[gubun][pinHeight] = new Dictionary<double, Mat>();
                 databag = DataDictionary[gubun][pinWidthGap];
             }
 
-            if (databag == null) return null;
-            if (!databag.ContainsKey(baseValue)) return null;
+            if (databag == null)
+            {
+                return null;
+            }
+
+            if (!databag.ContainsKey(baseValue))
+            {
+                return null;
+            }
 
             return databag[baseValue];
         }
 
-        private class ResultData
+        public class ResultData
         {
             public int DetailIdx { get; private set; }
             public int MasterIdx { get; private set; }

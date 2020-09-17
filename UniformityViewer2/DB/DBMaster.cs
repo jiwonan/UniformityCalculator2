@@ -1,10 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
-using Renci.SshNet.Security.Cryptography;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace UniformityViewer2.DB
@@ -86,13 +81,20 @@ namespace UniformityViewer2.DB
                 }
             }
 
-            if (comboBox.Items.Count > 0) comboBox.SelectedIndex = 0;
+            if (comboBox.Items.Count > 0)
+            {
+                comboBox.SelectedIndex = 0;
+            }
+
             con.Close();
         }
 
         public void CallValueList(int selectedIndex, int SelectedMaster, ComboBox comboBox)
         {
-            if (SelectedMaster == -1) return;
+            if (SelectedMaster == -1)
+            {
+                return;
+            }
 
             var con = GetConnection();
 
@@ -150,7 +152,6 @@ namespace UniformityViewer2.DB
 
         public Tuple<int, double> GetSelectedPinLinesAndInnerPercent(int master)
         {
-
             var con = GetConnection();
 
             int lines = -1;

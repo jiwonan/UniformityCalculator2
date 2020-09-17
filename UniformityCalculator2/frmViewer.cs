@@ -33,8 +33,6 @@ namespace UniformityCalculator2
         {
             InitializeComponent();
 
-            PsfDataManager.LoadPsfData();
-
             LogManager.setTextBox(LogBox);
             ProgressManager.SetProgressBar(this, progressBar1);
 

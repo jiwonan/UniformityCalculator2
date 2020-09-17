@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace UniformityCalculator2
 {
@@ -23,8 +22,7 @@ namespace UniformityCalculator2
         {
             if (mProgressBar.InvokeRequired)
             {
-                mForm.Invoke(new MethodInvoker(() =>
-                {
+                mForm.Invoke(new MethodInvoker(() => {
                     Add(amt);
 
                 }));
@@ -39,7 +37,7 @@ namespace UniformityCalculator2
 
         private static void Add(int amt)
         {
-            lock(obj)
+            lock (obj)
             {
                 try
                 {
