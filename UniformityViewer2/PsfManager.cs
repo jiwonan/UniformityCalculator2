@@ -12,9 +12,9 @@ namespace UniformityViewer2
     {
         private const int DATA_SIZE = 820;
 
-        public static Mat psfData { get; private set; } = null;
+        private static Mat psfData { get; set; } = null;
 
-        public static void LoadPsfData()
+        private static void LoadPsfData()
         {
             double[,] UniformatyData = new double[DATA_SIZE, DATA_SIZE];
 
@@ -29,7 +29,6 @@ namespace UniformityViewer2
                     row++;
                 }
             }
-
             psfData = new Mat(DATA_SIZE, DATA_SIZE, MatType.CV_64F, UniformatyData);
         }
 

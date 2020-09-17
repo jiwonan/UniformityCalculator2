@@ -17,7 +17,7 @@ namespace UniformityCalculator2.Psf
         {
             double[,] UniformatyData = new double[DATA_SIZE, DATA_SIZE];
 
-            using (StreamReader reader = new StreamReader("psfdata.csv"))
+            using (StreamReader reader = new StreamReader("Psf/psfdata.csv"))
             {
                 int row = 0;
 
