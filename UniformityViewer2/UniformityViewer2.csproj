@@ -113,7 +113,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\CalcValues.cs" />
     <Compile Include="ChartRenderer.cs" />
     <Compile Include="Controls\ctlHistLegend.cs">
       <SubType>UserControl</SubType>
@@ -121,9 +120,8 @@
     <Compile Include="Controls\ctlHistLegend.Designer.cs">
       <DependentUpon>ctlHistLegend.cs</DependentUpon>
     </Compile>
-    <Compile Include="Data\DataParser.cs" />
+    <Compile Include="DB\DataParser.cs" />
     <Compile Include="DB\DBDetail.cs" />
-    <Compile Include="DB\DBManager.cs" />
     <Compile Include="DB\DBMaster.cs" />
     <Compile Include="DB\DBMtfchart.cs" />
     <Compile Include="Viewer\frmDataViewer.cs">
@@ -138,9 +136,7 @@
     <Compile Include="Viewer\frmTester.Designer.cs">
       <DependentUpon>frmTester.cs</DependentUpon>
     </Compile>
-    <Compile Include="Image\ImageManager.cs" />
-    <Compile Include="Image\ImageProcessor.cs" />
-    <Compile Include="Image\KernelManager.cs" />
+    <Compile Include="ImageProcessor.cs" />
     <Compile Include="Viewer\MainViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,7 +145,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PsfManager.cs" />
     <Compile Include="Controls\TempPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>

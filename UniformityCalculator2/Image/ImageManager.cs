@@ -42,7 +42,7 @@ namespace UniformityCalculator2.Image
             int lineCount = dataInput.PinLines;
             int masterIdx = dataInput.MasterIdx;
 
-            using (Mat psfMat = Psf.PsfDataManager.LoadPsfData((double)pupilSize))
+            using (Mat psfMat = PsfDataManager.LoadPsfData((double)pupilSize))
             {
                 int cnt = 0;
                 StringBuilder sb = new StringBuilder();
@@ -75,7 +75,7 @@ namespace UniformityCalculator2.Image
 
                 dbDetail.InsertDetail(cnt, sb);
 
-                if (Process.ProgressManager.GetProgressBar().Maximum == Process.ProgressManager.GetProgressBar().Value)
+                if (ProgressManager.GetProgressBar().Maximum == ProgressManager.GetProgressBar().Value)
                 {
                     dbMaster.FinishMaster(masterIdx);
                 }
@@ -103,7 +103,7 @@ namespace UniformityCalculator2.Image
                 if (tmpPts.Count != 6)
                 {
                     //이상한데
-                    Process.LogManager.SetLog("pts Error");
+                    LogManager.SetLog("pts Error");
                     throw new Exception("pts Error");
                 }
 
@@ -185,7 +185,7 @@ namespace UniformityCalculator2.Image
             }
         }
 
-        private ProcessImageResult ProcessImage(int lineCount, double pinGap, double pupilSize, Mat kernel, int jobId = 0, bool drawCenterArea = true, bool invertMirror = false)
+        public ProcessImageResult ProcessImage(int lineCount, double pinGap, double pupilSize, Mat kernel, int jobId = 0, bool drawCenterArea = true, bool invertMirror = false)
         {
             // LogManager.SetLog("Start Processing");
 
@@ -210,7 +210,7 @@ namespace UniformityCalculator2.Image
             if (tmpPts.Count != 6)
             {
                 //이상한데
-                Process.LogManager.SetLog("pts Error");
+                LogManager.SetLog("pts Error");
                 throw new Exception("pts Error");
             }
 
@@ -226,7 +226,7 @@ namespace UniformityCalculator2.Image
             pts[5] = tmpPts[2];
 
             Mat downAlphaMirrorImage = null;
-            using (Mat psfMat = Psf.PsfDataManager.LoadPsfData(pupilSize))
+            using (Mat psfMat = PsfDataManager.LoadPsfData(pupilSize))
             {
 
                 downAlphaMirrorImage = 0.01 * mirrorImage;
@@ -253,7 +253,7 @@ namespace UniformityCalculator2.Image
             if (drawCenterArea)
             {
                 resultMat.Polylines(new Point[1][] { pts }, true, Scalar.Red, 1, LineTypes.AntiAlias); //결과값
-                Process.LogManager.SetLog("Get result image complete");
+                LogManager.SetLog("Get result image complete");
             }
 
             //관심영역으로 자르기
@@ -317,7 +317,7 @@ namespace UniformityCalculator2.Image
                 matRight.Dispose();
                 calcResult.Dispose();
 
-                Process.LogManager.SetLog("Process completed");
+                LogManager.SetLog("Process completed");
                 return new ProcessImageResult(resultMat, mirrorImage, maxavg, minavg, dev, max, avg);
             }
         }

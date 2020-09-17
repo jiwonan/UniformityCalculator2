@@ -9,7 +9,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace UniformityViewer2.DB
 {
-    public class DBMtfchart : DBManager
+    public class DBMtfchart : UniformityCalculator2.DB.DBManager
     {
         public void DrawChart(Chart targetChart, double mtfdistance, double mtfradius, string mtfType)
         {

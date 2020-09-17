@@ -80,13 +80,13 @@ namespace UniformityViewer2.Viewer
                 return;
             }
 
-            double pinmirrorGap = Data.CalcValues.GetPinMirrorGap(light, pinmirrorSize);
+            double pinmirrorGap = UniformityCalculator2.Data.CalcValues.GetPinMirrorGap(light, pinmirrorSize);
 
 
 
-            Mat kernel = Image.KernelManager.GetKernel(pinmirrorSize, (decimal)innerPercent, detailInfo.ShapeType);
+            Mat kernel = UniformityCalculator2.Image.KernelManager.GetKernel(pinmirrorSize, (decimal)innerPercent, detailInfo.ShapeType);
 
-            var ret = Image.ImageManager.GetInstance().ProcessImage(lines, pinmirrorGap, pupil, kernel, -1, true);
+            var ret = UniformityCalculator2.Image.ImageManager.GetInstance().ProcessImage(lines, pinmirrorGap, pupil, kernel, -1, true);
 
             double zoom = 600d / ret.Result.Width * 100;
 

@@ -12,7 +12,7 @@ namespace UniformityViewer2.Viewer
     {
         DB.DBMaster master = new DB.DBMaster();
         DB.DBDetail detail = new DB.DBDetail();
-        Data.DataParser parser = new Data.DataParser();
+        DB.DataParser parser = new DB.DataParser();
         ChartRenderer chartRenderer;
 
         public MainViewer()
@@ -238,12 +238,12 @@ namespace UniformityViewer2.Viewer
         {
             Mat[] channels = m.Split();
 
-            int detailIdx = (int)channels[Data.DataParser.CHANNEL_DETAIL_IDX].At<double>((int)yLoc, (int)xLoc);
-            double MaxAvg = channels[Data.DataParser.CHANNEL_MAX_AVG].At<double>((int)yLoc, (int)xLoc);
-            double MinAvg = channels[Data.DataParser.CHANNEL_MIN_AVG].At<double>((int)yLoc, (int)xLoc);
-            double MeanDev = channels[Data.DataParser.CHANNEL_MEAN_DEV].At<double>((int)yLoc, (int)xLoc);
-            double LumDegreeMax = channels[Data.DataParser.CHANNEL_LUMPER_MAX].At<double>((int)yLoc, (int)xLoc);
-            double LumDegreeAvg = channels[Data.DataParser.CHANNEL_LUMPER_AVG].At<double>((int)yLoc, (int)xLoc);
+            int detailIdx = (int)channels[DB.DataParser.CHANNEL_DETAIL_IDX].At<double>((int)yLoc, (int)xLoc);
+            double MaxAvg = channels[DB.DataParser.CHANNEL_MAX_AVG].At<double>((int)yLoc, (int)xLoc);
+            double MinAvg = channels[DB.DataParser.CHANNEL_MIN_AVG].At<double>((int)yLoc, (int)xLoc);
+            double MeanDev = channels[DB.DataParser.CHANNEL_MEAN_DEV].At<double>((int)yLoc, (int)xLoc);
+            double LumDegreeMax = channels[DB.DataParser.CHANNEL_LUMPER_MAX].At<double>((int)yLoc, (int)xLoc);
+            double LumDegreeAvg = channels[DB.DataParser.CHANNEL_LUMPER_AVG].At<double>((int)yLoc, (int)xLoc);
 
             DB.DetailInfo detailInfo = detail.GetDetailInfo(SelectedMaster, detailIdx);
 
@@ -275,7 +275,7 @@ namespace UniformityViewer2.Viewer
             yLabel.Location = new System.Drawing.Point(yE.Right - yLabel.Width, (int)(yLoc / heightValue) + pictureBox1.Top);
 
 
-            double pinmirrorGap = Data.CalcValues.GetPinMirrorGap(detailInfo.Light, detailInfo.pinMirrorSize.Height);
+            double pinmirrorGap = UniformityCalculator2.Data.CalcValues.GetPinMirrorGap(detailInfo.Light, detailInfo.pinMirrorSize.Height);
 
             toolStripStatusLabel1.Text = $"광효율:{detailInfo.Light}% 동공크기:{detailInfo.Pupil}mm 핀미러크기:{detailInfo.pinMirrorSize}mm  핀미러간격:{pinmirrorGap}mm Max-Avg:{MaxAvg:0.0000} Min-Avg:{MinAvg:0.0000} 표준편차:{MeanDev:0.0000} 각도당휘도(Max):{LumDegreeMax:0.0000} 각도당휘도(Avg):{LumDegreeAvg:0.0000}";
         }
@@ -323,7 +323,7 @@ namespace UniformityViewer2.Viewer
             {
                 return;
             }
-            int detailIdx = (int)channels[Data.DataParser.CHANNEL_DETAIL_IDX].At<double>(yLoc, xLoc);
+            int detailIdx = (int)channels[DB.DataParser.CHANNEL_DETAIL_IDX].At<double>(yLoc, xLoc);
             LastSelectedCoord = new System.Drawing.Point(xLoc, yLoc);
 
             DB.DetailInfo detailInfo = detail.GetDetailInfo(SelectedMaster, detailIdx);

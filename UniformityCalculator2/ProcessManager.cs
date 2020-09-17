@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace UniformityCalculator2.Process
+namespace UniformityCalculator2
 {
     public class ProcessManager
     {

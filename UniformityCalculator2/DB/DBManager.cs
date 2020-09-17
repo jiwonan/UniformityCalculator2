@@ -14,12 +14,26 @@ namespace UniformityCalculator2.DB
 
         protected MySqlConnection GetConnection()
         {
-            if (conn.State != ConnectionState.Open)
+            if (conn.State == ConnectionState.Closed)
+            {
+                conn.Open();
+            }
+            else if (conn.State == ConnectionState.Broken)
+            {
+                conn.Close();
+                conn.Open();
+            }
+            else if (conn.State == ConnectionState.Open)
+            {
+                conn.Close();
+                conn.Open();
+            }
+            /*if (conn.State != ConnectionState.Open)
             {
                 conn.Dispose();
                 conn = new MySqlConnection(SERVER_PATH);
                 conn.Open();
-            }
+            }*/
 
             return conn;
         }

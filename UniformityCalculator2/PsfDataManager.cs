@@ -1,20 +1,19 @@
 ﻿using OpenCvSharp;
 using System;
-using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Point = OpenCvSharp.Point;
 
-namespace UniformityViewer2
+namespace UniformityCalculator2
 {
-    public static class PsfManager
+    public static class PsfDataManager
     {
         private const int DATA_SIZE = 820;
 
         private static Mat psfData { get; set; } = null;
 
-        private static void LoadPsfData()
+        public static void LoadPsfData()
         {
             double[,] UniformatyData = new double[DATA_SIZE, DATA_SIZE];
 
@@ -29,6 +28,7 @@ namespace UniformityViewer2
                     row++;
                 }
             }
+
             psfData = new Mat(DATA_SIZE, DATA_SIZE, MatType.CV_64F, UniformatyData);
         }
 
@@ -52,5 +52,6 @@ namespace UniformityViewer2
                 return ret.Clone();
             }
         }
+
     }
 }

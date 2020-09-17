@@ -53,8 +53,8 @@ namespace UniformityCalculator2.DB
             }
             catch (Exception err)
             {
-                Process.LogManager.SetLog("Detail Insert오류");
-                Process.LogManager.SetLog(err.Message);
+                LogManager.SetLog("Detail Insert오류");
+                LogManager.SetLog(err.Message);
             }
         }
 
@@ -64,11 +64,12 @@ namespace UniformityCalculator2.DB
             using (MySqlCommand cmd = new MySqlCommand(qry, con))
             {
                 con.Open();
-                cmd.ExecuteNonQueryAsync();
+                // con.BeginTransaction();
+                   cmd.ExecuteNonQueryAsync();
                 con.Close();
             }
-            Process.LogManager.SetLog($"Detail 입력됨({cnt}건)");
-            Process.ProgressManager.AddProgress(cnt);
+            LogManager.SetLog($"Detail 입력됨({cnt}건)");
+            ProgressManager.AddProgress(cnt);
         }
 
         private static string DELETE_DETAIL = "DELETE FROM uniform_detail WHERE master_idx = @masterIdx";
@@ -105,7 +106,7 @@ namespace UniformityCalculator2.DB
             }
             catch (Exception e)
             {
-                Process.LogManager.SetLog(e.Message);
+                LogManager.SetLog(e.Message);
             }
         }
 

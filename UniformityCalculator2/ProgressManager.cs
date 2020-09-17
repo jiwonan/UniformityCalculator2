@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace UniformityCalculator2.Process
+namespace UniformityCalculator2
 {
     public static class ProgressManager
     {

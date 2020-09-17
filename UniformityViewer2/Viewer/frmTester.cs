@@ -166,18 +166,18 @@ namespace UniformityViewer2.Viewer
             double pinmrHeight = (double)pisE.Value;
             double pinmirrorGap = (double)lg.Value;
 
-            Mat kernel = Image.KernelManager.GetKernel((decimal)pinmrWidth, (decimal)pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
+            Mat kernel = UniformityCalculator2.Image.KernelManager.GetKernel((decimal)pinmrWidth, (decimal)pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
 
-            Image.ImageManager.ProcessImageResult ret = Image.ImageManager.GetInstance().ProcessImage((int)pinLines.Value, pinmirrorGap, pupil, kernel, 0, false, chkInvert.Checked);
+            UniformityCalculator2.Image.ImageManager.ProcessImageResult ret = UniformityCalculator2.Image.ImageManager.GetInstance().ProcessImage((int)pinLines.Value, pinmirrorGap, pupil, kernel, 0, false, chkInvert.Checked);
             //Viewer.ShowImage(ret.Result);
 
-            resultMat = Image.ImageProcessor.Instance.GetResultMat(ret, (double)eyeReliefTextBox.Value, (double)horizonFOVTextBox.Value, (double)verticalFOVTextBox.Value);
+            resultMat = ImageProcessor.Instance.GetResultMat(ret, (double)eyeReliefTextBox.Value, (double)horizonFOVTextBox.Value, (double)verticalFOVTextBox.Value);
 
-            mirrorMat = Image.ImageProcessor.Instance.GetMirrorMat(ret);
+            mirrorMat = ImageProcessor.Instance.GetMirrorMat(ret);
 
             if (string.IsNullOrWhiteSpace(txtImagePath.Text) == false && File.Exists(txtImagePath.Text))
             {
-                Mat img = Image.ImageProcessor.Instance.GetImageMat(resultMat, txtImagePath.Text);
+                Mat img = ImageProcessor.Instance.GetImageMat(resultMat, txtImagePath.Text);
 
                 Viewer3.Resize(img.Width, img.Height);
                 Viewer3.ShowImage(img);
@@ -201,17 +201,17 @@ namespace UniformityViewer2.Viewer
             double pinmrHeight = (double)pisE.Value;
             double pinmirrorGap = (double)lg.Value;
 
-            Mat kernel = Image.KernelManager.GetKernel((decimal)pinmrWidth, (decimal)pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
+            Mat kernel = UniformityCalculator2.Image.KernelManager.GetKernel((decimal)pinmrWidth, (decimal)pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
 
-            var ret = Image.ImageManager.GetInstance().ProcessImage((int)pinLines.Value, pinmirrorGap, pupil, kernel, 0, false);
+            var ret = UniformityCalculator2.Image.ImageManager.GetInstance().ProcessImage((int)pinLines.Value, pinmirrorGap, pupil, kernel, 0, false);
 
             Viewer.ShowImage(ret.Result); // Original Data
 
-            Mat resultMat = Image.ImageProcessor.Instance.GetResultMat(ret, (double)eyeReliefTextBox.Value, (double)horizonFOVTextBox.Value, (double)verticalFOVTextBox.Value);
+            Mat resultMat = ImageProcessor.Instance.GetResultMat(ret, (double)eyeReliefTextBox.Value, (double)horizonFOVTextBox.Value, (double)verticalFOVTextBox.Value);
 
             if (string.IsNullOrWhiteSpace(txtImagePath.Text) == false && File.Exists(txtImagePath.Text))
             {
-                img = Image.ImageProcessor.Instance.GetImageMat(resultMat, txtImagePath.Text); // 사진 선택.
+                img = ImageProcessor.Instance.GetImageMat(resultMat, txtImagePath.Text); // 사진 선택.
                 return true;
             }
             else
@@ -240,7 +240,7 @@ namespace UniformityViewer2.Viewer
             double light = (double)leS.Value;
             double pinmr = (double)pisS.Value;
 
-            lg.Value = (decimal)Data.CalcValues.GetPinMirrorGap(light, pinmr);
+            lg.Value = (decimal)UniformityCalculator2.Data.CalcValues.GetPinMirrorGap(light, pinmr);
         }
 
         private void lg_ValueChanged(object sender, EventArgs e)
@@ -250,7 +250,7 @@ namespace UniformityViewer2.Viewer
             double pingap = (double)lg.Value;
             double pinmr = (double)pisS.Value;
 
-            leS.Value = (decimal)Data.CalcValues.GetLightEffi(pinmr, pingap);
+            leS.Value = (decimal)UniformityCalculator2.Data.CalcValues.GetLightEffi(pinmr, pingap);
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)

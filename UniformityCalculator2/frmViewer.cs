@@ -27,18 +27,18 @@ namespace UniformityCalculator2
 
         #endregion*/
 
-        Process.ProcessManager processManager;
+        ProcessManager processManager;
 
         public frmViewer()
         {
             InitializeComponent();
 
-            Psf.PsfDataManager.LoadPsfData();
+            PsfDataManager.LoadPsfData();
 
-            Process.LogManager.setTextBox(LogBox);
-            Process.ProgressManager.SetProgressBar(this, progressBar1);
+            LogManager.setTextBox(LogBox);
+            ProgressManager.SetProgressBar(this, progressBar1);
 
-            processManager = new Process.ProcessManager(chkCircle, chkHexa, chkCircleCircle, chkHexacircle);
+            processManager = new ProcessManager(chkCircle, chkHexa, chkCircleCircle, chkHexacircle);
         }
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -60,5 +60,9 @@ namespace UniformityCalculator2
             }
         }
 
+        private void frmViewer_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            processManager.Stop();
+        }
     }
 }

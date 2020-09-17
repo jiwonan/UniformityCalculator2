@@ -8,16 +8,15 @@ using System.Threading.Tasks;
 
 namespace UniformityViewer2.DB
 {
-    public class DBDetail : DBManager
+    public class DBDetail : UniformityCalculator2.DB.DBManager
     {
-        private static string GET_DETAIL_DATA = "SELECT * FROM uniform_detail WHERE master_idx = @selectedMaster AND idx = @detailIdx";
+        private static string GET_DETAIL_INFO = "SELECT * FROM uniform_detail WHERE master_idx = @selectedMaster AND idx = @detailIdx";
 
         public DetailInfo GetDetailInfo(int selectedMaster, int detailIdx)
         {
             var con = GetConnection();
-             // con.BeginTransaction().
 
-            using (MySqlCommand cmd = new MySqlCommand(GET_DETAIL_DATA, con))
+            using (MySqlCommand cmd = new MySqlCommand(GET_DETAIL_INFO, con))
             {
                 cmd.Parameters.AddWithValue("@selectedMaster", selectedMaster);
                 cmd.Parameters.AddWithValue("@detailIdx", detailIdx);

@@ -129,13 +129,13 @@
     </Compile>
     <Compile Include="Image\ImageManager.cs" />
     <Compile Include="Image\KernelManager.cs" />
-    <Compile Include="Process\LogManager.cs" />
+    <Compile Include="LogManager.cs" />
     <Compile Include="Data\MasterInputValue.cs" />
-    <Compile Include="Process\ProcessManager.cs" />
+    <Compile Include="ProcessManager.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Process\ProgressManager.cs" />
+    <Compile Include="ProgressManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Psf\PsfDataManager.cs" />
+    <Compile Include="PsfDataManager.cs" />
     <EmbeddedResource Include="frmViewer.resx">
       <DependentUpon>frmViewer.cs</DependentUpon>
     </EmbeddedResource>

@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UniformityViewer2.Data
+namespace UniformityViewer2.DB
 {
-    public class DataParser : DB.DBManager
+    public class DataParser : UniformityCalculator2.DB.DBManager
     {
         private static string GET_DETAIL_DATA = "SELECT * FROM uniform_detail WHERE master_idx = @idx AND shapetype = @shapetype ORDER BY (pinWidth - pinHeight), idx";
 
@@ -244,7 +244,6 @@ namespace UniformityViewer2.Data
             return databag[baseValue];
         }
 
-
         private class ResultData
         {
             public int DetailIdx { get; private set; }
@@ -270,11 +269,11 @@ namespace UniformityViewer2.Data
         internal void ResetData()
         {
             DataDictionary = new Dictionary<double, Dictionary<double, Mat>>[3]
-        {
-            new Dictionary<double, Dictionary<double, Mat>>(),
-            new Dictionary<double, Dictionary<double, Mat>>(),
-            new Dictionary<double, Dictionary<double, Mat>>()
-        };
+            {
+                new Dictionary<double, Dictionary<double, Mat>>(),
+                new Dictionary<double, Dictionary<double, Mat>>(),
+                new Dictionary<double, Dictionary<double, Mat>>()
+            };
         }
     }
 }

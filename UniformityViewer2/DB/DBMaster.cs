@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace UniformityViewer2.DB
 {
-    public class DBMaster : DBManager
+    public class DBMaster : UniformityCalculator2.DB.DBManager
     {
         private static string SELECT_MASTER = "SELECT * FROM uniform_master WHERE worktype = 1 ORDER BY idx desc";
         private static string SELECT_MASTER_ONE = "SELECT * FROM uniform_master WHERE idx = @idx ORDER BY idx";

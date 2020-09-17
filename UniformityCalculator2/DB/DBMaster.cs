@@ -45,7 +45,7 @@ namespace UniformityCalculator2.DB
             catch (Exception err)
             {
                 MessageBox.Show(err.Message);
-                Process.LogManager.SetLog(err.Message);
+                LogManager.SetLog(err.Message);
             }
             return -1;
         }
@@ -67,7 +67,7 @@ namespace UniformityCalculator2.DB
             }
             catch (Exception err)
             {
-                Process.LogManager.SetLog(err.Message);
+                LogManager.SetLog(err.Message);
             }
         }
 
@@ -96,7 +96,7 @@ namespace UniformityCalculator2.DB
             }
             catch(Exception e)
             {
-                Process.LogManager.SetLog(e.Message);
+                LogManager.SetLog(e.Message);
             }
         }
     }

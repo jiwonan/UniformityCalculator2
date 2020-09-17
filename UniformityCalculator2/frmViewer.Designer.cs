@@ -623,7 +623,7 @@
             this.label10.Size = new System.Drawing.Size(0, 12);
             this.label10.TabIndex = 22;
             // 
-            // Form1
+            // frmViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -642,8 +642,9 @@
             this.Controls.Add(this.chkHexa);
             this.Controls.Add(this.LogBox);
             this.Controls.Add(this.groupBox1);
-            this.Name = "Form1";
+            this.Name = "frmViewer";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmViewer_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pihS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.piwS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pihG)).EndInit();
