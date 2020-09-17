@@ -113,50 +113,53 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CalcValues.cs" />
+    <Compile Include="Data\CalcValues.cs" />
     <Compile Include="ChartRenderer.cs" />
-    <Compile Include="ctlHistLegend.cs">
+    <Compile Include="Controls\ctlHistLegend.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ctlHistLegend.Designer.cs">
+    <Compile Include="Controls\ctlHistLegend.Designer.cs">
       <DependentUpon>ctlHistLegend.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataParser.cs" />
-    <Compile Include="DBDetail.cs" />
-    <Compile Include="DBManager.cs" />
-    <Compile Include="DBMaster.cs" />
-    <Compile Include="DBMtfchart.cs" />
-    <Compile Include="frmDataViewer.cs">
+    <Compile Include="Data\DataParser.cs" />
+    <Compile Include="DB\DBDetail.cs" />
+    <Compile Include="DB\DBManager.cs" />
+    <Compile Include="DB\DBMaster.cs" />
+    <Compile Include="DB\DBMtfchart.cs" />
+    <Compile Include="Viewer\frmDataViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmDataViewer.Designer.cs">
+    <Compile Include="Viewer\frmDataViewer.Designer.cs">
       <DependentUpon>frmDataViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmTester.cs">
+    <Compile Include="Viewer\frmTester.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmTester.Designer.cs">
+    <Compile Include="Viewer\frmTester.Designer.cs">
       <DependentUpon>frmTester.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImageManager.cs" />
-    <Compile Include="ImageProcessor.cs" />
-    <Compile Include="KernelManager.cs" />
-    <Compile Include="MainViewer.cs">
+    <Compile Include="Image\ImageManager.cs" />
+    <Compile Include="Image\ImageProcessor.cs" />
+    <Compile Include="Image\KernelManager.cs" />
+    <Compile Include="Viewer\MainViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainViewer.Designer.cs">
+    <Compile Include="Viewer\MainViewer.Designer.cs">
       <DependentUpon>MainViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PsfManager.cs" />
-    <Compile Include="TempPictureBox.cs">
+    <Compile Include="Controls\TempPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <EmbeddedResource Include="frmTester.resx">
+    <EmbeddedResource Include="Viewer\frmDataViewer.resx">
+      <DependentUpon>frmDataViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewer\frmTester.resx">
       <DependentUpon>frmTester.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainViewer.resx">
+    <EmbeddedResource Include="Viewer\MainViewer.resx">
       <DependentUpon>MainViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -182,6 +185,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

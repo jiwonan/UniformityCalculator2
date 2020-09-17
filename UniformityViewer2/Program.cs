@@ -16,7 +16,7 @@ namespace UniformityViewer2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainViewer());
+            Application.Run(new Viewer.MainViewer());
         }
     }
 }

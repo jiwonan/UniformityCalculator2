@@ -10,13 +10,13 @@ namespace UniformityViewer2
 {
     public class ChartRenderer
     {
-        private ctlHistLegend mChart;
-        public ChartRenderer(ctlHistLegend chart)
+        private Controls.ctlHistLegend mChart;
+        public ChartRenderer(Controls.ctlHistLegend chart)
         {
             this.mChart = chart;
         }
 
-        public Mat LoadChart(Mat m, int gubun, TempPictureBox pictureBox)
+        public Mat LoadChart(Mat m, int gubun, Controls.TempPictureBox pictureBox)
         {
             if (m == null) { return null; }
 
@@ -28,37 +28,37 @@ namespace UniformityViewer2
 
             if (gubun == 0)
             {
-                targetMat = channels[DataParser.CHANNEL_MAX_AVG];
+                targetMat = channels[Data.DataParser.CHANNEL_MAX_AVG];
             }
             else if (gubun == 1)
             {
-                targetMat = channels[DataParser.CHANNEL_MIN_AVG];
+                targetMat = channels[Data.DataParser.CHANNEL_MIN_AVG];
             }
             else if (gubun == 2)
             {
-                targetMat = channels[DataParser.CHANNEL_MEAN_DEV];
+                targetMat = channels[Data.DataParser.CHANNEL_MEAN_DEV];
             }
             else if (gubun == 3)
             {
-                Mat value1 = channels[DataParser.CHANNEL_MAX_AVG];
-                Mat value2 = channels[DataParser.CHANNEL_MEAN_DEV];
+                Mat value1 = channels[Data.DataParser.CHANNEL_MAX_AVG];
+                Mat value2 = channels[Data.DataParser.CHANNEL_MEAN_DEV];
 
                 targetMat = (value1 + value2) / 2;
             }
             else if (gubun == 4)
             {
-                Mat value1 = channels[DataParser.CHANNEL_MAX_AVG];
-                Mat value2 = channels[DataParser.CHANNEL_MEAN_DEV];
+                Mat value1 = channels[Data.DataParser.CHANNEL_MAX_AVG];
+                Mat value2 = channels[Data.DataParser.CHANNEL_MEAN_DEV];
 
                 Cv2.Sqrt(value1.Mul(value2), targetMat);
             }
             else if (gubun == 5)
             {
-                targetMat = channels[DataParser.CHANNEL_LUMPER_MAX];
+                targetMat = channels[Data.DataParser.CHANNEL_LUMPER_MAX];
             }
             else if (gubun == 6)
             {
-                targetMat = channels[DataParser.CHANNEL_LUMPER_AVG];
+                targetMat = channels[Data.DataParser.CHANNEL_LUMPER_AVG];
             }
 
             double minVal, maxVal;
