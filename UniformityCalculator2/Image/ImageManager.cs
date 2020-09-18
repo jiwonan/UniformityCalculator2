@@ -133,7 +133,7 @@ namespace UniformityCalculator2.Image
                 {
 
                     mask.SetTo(Scalar.Black);
-                    mask.FillPoly(new Point[1][] { pts }, Scalar.White, LineTypes.AntiAlias); //마스크 영역 생성
+                    mask.FillPoly(new Point[1][] { pts }, Scalar.Red, LineTypes.AntiAlias); //마스크 영역 생성
 
                     double min, max;
                     Point minPt, maxPt;
@@ -331,7 +331,6 @@ namespace UniformityCalculator2.Image
             public double MeanDev;
             public double LumDegreeMax;
             public double LumDegreeAvg;
-
 
             public ProcessImageResult(Mat resultMat, Mat mirrorImage, double maxavg, double minavg, double dev, double max, double avg) : this()
             {

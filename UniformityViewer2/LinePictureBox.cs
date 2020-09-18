@@ -17,7 +17,7 @@ namespace UniformityViewer2
             get { return mImage; }
             set {
                 if (value == null) return;
-                mImage = value;
+                mImage = value.Clone();
 
                 using (Mat m = new Mat())
                 {
@@ -28,7 +28,7 @@ namespace UniformityViewer2
             }
         }
 
-        List<LineView> lineControls;
+        List<LineView> controls;
 
         public delegate void OnLineMoveDelegate(object sender, LineView.LineType lineType, int position);
         public event OnLineMoveDelegate OnLineMove;
@@ -40,14 +40,14 @@ namespace UniformityViewer2
             this.MouseUp += LinePictureBox_MouseUp;
             this.MouseDoubleClick += LinePictureBox_MouseDoubleClick;
 
-            lineControls = new List<LineView>();
-            lineControls.Add(new LineVertical(this));
-            lineControls.Add(new LineHorizon(this));
+            controls = new List<LineView>();
+            controls.Add(new LineVertical(this));
+            controls.Add(new LineHorizon(this));
         }
 
         private void LinePictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            foreach (var control in lineControls)
+            foreach (var control in controls)
             {
                 control.OnMouseDoubleClick(e);
             }
@@ -57,7 +57,7 @@ namespace UniformityViewer2
         {
             if (this.Image == null) return;
 
-            foreach (var control in lineControls)
+            foreach (var control in controls)
             {
                 control.OnMouseUp(e);
             }
@@ -67,7 +67,7 @@ namespace UniformityViewer2
         {
             if (this.Image == null) return;
 
-            foreach (var control in lineControls)
+            foreach (var control in controls)
             {
                 control.OnMouseDown(e);
             }
@@ -77,7 +77,7 @@ namespace UniformityViewer2
         {
             if (this.Image == null) return;
 
-            foreach (var control in lineControls)
+            foreach (var control in controls)
             {
                 control.OnMouseMove(e);
             }
@@ -106,7 +106,7 @@ namespace UniformityViewer2
 
             Graphics g = pe.Graphics;
 
-            foreach (var control in lineControls)
+            foreach (var control in controls)
             {
                 control.Draw(g);
             }
@@ -118,7 +118,7 @@ namespace UniformityViewer2
 
             if (this.Image == null) return;
 
-            foreach (var control in lineControls)
+            foreach (var control in controls)
             {
                 control.Resize();
             }
@@ -131,15 +131,11 @@ namespace UniformityViewer2
             this.Invalidate();
         }
 
-
         public void TabLine(LineView.LineType type, double gap, int count, int length, double pos, int num)
         {
-            foreach (var control in lineControls)
+            foreach (var control in controls)
             {
-                if (control is LineView)
-                {
-                    ((LineView)control).TabLine(type, gap, count, length, pos, num);
-                }
+                control.TabLine(type, gap, count, length, pos, num);
             }
         }
 
@@ -147,8 +143,8 @@ namespace UniformityViewer2
         {
             Rectangle rect = GetImageRect();
 
-            int lineV = ((LineVertical)lineControls[0]).GetLineCoordinate() - rect.X;
-            int lineH = ((LineHorizon)lineControls[1]).GetLineCoordinate() - rect.Y;
+            int lineV = ((LineVertical)controls[0]).GetLineCoordinate() - rect.X;
+            int lineH = ((LineHorizon)controls[1]).GetLineCoordinate() - rect.Y;
 
             return $"V : {Math.Round(lineV * UniformityCalculator2.Data.CalcValues.MMperPixel, 2)}mm, H : {Math.Round(lineH * UniformityCalculator2.Data.CalcValues.MMperPixel, 2)}mm |";
         }

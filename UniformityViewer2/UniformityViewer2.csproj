@@ -17,7 +17,7 @@
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -114,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChartRenderer.cs" />
+    <Compile Include="CtlChartRenderer.cs" />
     <Compile Include="Controls\ctlHistLegend.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -128,6 +130,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="LineView.cs" />
+    <Compile Include="MMperLightChartHorizon.cs" />
+    <Compile Include="MMperLightChartRenderer.cs" />
+    <Compile Include="MMperLightChartVertical.cs" />
     <Compile Include="Viewer\frmDataViewer.cs">
       <SubType>Form</SubType>
     </Compile>

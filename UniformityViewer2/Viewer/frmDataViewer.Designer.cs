@@ -33,24 +33,24 @@
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.picPinmirror = new System.Windows.Forms.PictureBox();
-            this.picPsf = new UniformityViewer2.LinePictureBox();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.chartTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.chartWidth = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.MMperLightChartHorizon = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.MMperLightChartVertical = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.picPsf = new UniformityViewer2.LinePictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -60,7 +60,6 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picPinmirror)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPsf)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.SuspendLayout();
@@ -68,9 +67,10 @@
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartWidth)).BeginInit();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MMperLightChartHorizon)).BeginInit();
             this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MMperLightChartVertical)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picPsf)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -117,16 +117,6 @@
             this.picPinmirror.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picPinmirror.TabIndex = 0;
             this.picPinmirror.TabStop = false;
-            // 
-            // picPsf
-            // 
-            this.picPsf.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picPsf.Location = new System.Drawing.Point(0, 0);
-            this.picPsf.Name = "picPsf";
-            this.picPsf.Size = new System.Drawing.Size(382, 223);
-            this.picPsf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picPsf.TabIndex = 1;
-            this.picPsf.TabStop = false;
             // 
             // splitContainer3
             // 
@@ -195,7 +185,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.chart2);
+            this.tabPage2.Controls.Add(this.MMperLightChartHorizon);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -204,9 +194,27 @@
             this.tabPage2.Text = "Horizon Chart";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // MMperLightChartHorizon
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.MMperLightChartHorizon.ChartAreas.Add(chartArea2);
+            this.MMperLightChartHorizon.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend2.Name = "Legend1";
+            this.MMperLightChartHorizon.Legends.Add(legend2);
+            this.MMperLightChartHorizon.Location = new System.Drawing.Point(3, 3);
+            this.MMperLightChartHorizon.Name = "MMperLightChartHorizon";
+            this.MMperLightChartHorizon.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.MMperLightChartHorizon.Series.Add(series3);
+            this.MMperLightChartHorizon.Size = new System.Drawing.Size(400, 191);
+            this.MMperLightChartHorizon.TabIndex = 0;
+            this.MMperLightChartHorizon.Text = "chart2";
+            // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.chart1);
+            this.tabPage3.Controls.Add(this.MMperLightChartVertical);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -215,39 +223,34 @@
             this.tabPage3.Text = "Vertical Chart";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // chart1
+            // MMperLightChartVertical
             // 
             chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
-            this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MMperLightChartVertical.ChartAreas.Add(chartArea3);
+            this.MMperLightChartVertical.Dock = System.Windows.Forms.DockStyle.Fill;
             legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
-            this.chart1.Location = new System.Drawing.Point(3, 3);
-            this.chart1.Name = "chart1";
+            this.MMperLightChartVertical.Legends.Add(legend3);
+            this.MMperLightChartVertical.Location = new System.Drawing.Point(3, 3);
+            this.MMperLightChartVertical.Name = "MMperLightChartVertical";
+            this.MMperLightChartVertical.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
             series4.ChartArea = "ChartArea1";
             series4.Legend = "Legend1";
             series4.Name = "Series1";
-            this.chart1.Series.Add(series4);
-            this.chart1.Size = new System.Drawing.Size(400, 191);
-            this.chart1.TabIndex = 0;
-            this.chart1.Text = "chart1";
+            this.MMperLightChartVertical.Series.Add(series4);
+            this.MMperLightChartVertical.Size = new System.Drawing.Size(400, 191);
+            this.MMperLightChartVertical.TabIndex = 0;
+            this.MMperLightChartVertical.Text = "chart1";
             // 
-            // chart2
+            // picPsf
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea2);
-            this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.chart2.Legends.Add(legend2);
-            this.chart2.Location = new System.Drawing.Point(3, 3);
-            this.chart2.Name = "chart2";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chart2.Series.Add(series3);
-            this.chart2.Size = new System.Drawing.Size(400, 191);
-            this.chart2.TabIndex = 0;
-            this.chart2.Text = "chart2";
+            this.picPsf.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picPsf.Image = null;
+            this.picPsf.Location = new System.Drawing.Point(0, 0);
+            this.picPsf.Name = "picPsf";
+            this.picPsf.Size = new System.Drawing.Size(382, 223);
+            this.picPsf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picPsf.TabIndex = 1;
+            this.picPsf.TabStop = false;
             // 
             // frmDataViewer
             // 
@@ -266,7 +269,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picPinmirror)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPsf)).EndInit();
             this.splitContainer3.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
@@ -274,9 +276,10 @@
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartWidth)).EndInit();
             this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.MMperLightChartHorizon)).EndInit();
             this.tabPage3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MMperLightChartVertical)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picPsf)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -293,7 +296,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chartWidth;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart MMperLightChartHorizon;
+        private System.Windows.Forms.DataVisualization.Charting.Chart MMperLightChartVertical;
     }
 }

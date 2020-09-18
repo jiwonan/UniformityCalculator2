@@ -13,13 +13,13 @@ namespace UniformityViewer2.Viewer
         DB.DBMaster master = new DB.DBMaster();
         DB.DBDetail detail = new DB.DBDetail();
         DataParser parser = new DataParser();
-        ChartRenderer chartRenderer;
+        CtlChartRenderer chartRenderer;
 
         public MainViewer()
         {
             InitializeComponent();
 
-            chartRenderer = new ChartRenderer(ctlHistLegend1);
+            chartRenderer = new CtlChartRenderer(ctlHistLegend1);
 
             master.LoadMasterData(masterValueListView);
 

@@ -1,5 +1,6 @@
 ﻿using OpenCvSharp;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using Point = OpenCvSharp.Point;
@@ -13,6 +14,7 @@ namespace UniformityViewer2.Viewer
         public static bool HasInstance => mInstance != null;
 
         DB.DBMtfchart mtfchart = new DB.DBMtfchart();
+        List<ChartRenderer> charts;
 
         public static frmDataViewer GetInstance()
         {
@@ -34,7 +36,31 @@ namespace UniformityViewer2.Viewer
 
             //4분할 화면 유지
             ResizeSpliter();
+
+            charts = new List<ChartRenderer>();
+
+            picPsf.OnLineMove += PicPsf_OnLineMove;
         }
+
+        private void PicPsf_OnLineMove(object sender, LineView.LineType lineType, int position)
+        {
+            foreach (var chart in charts)
+            {
+                chart.DrawChart(sender, position, lineType);
+            }
+        }
+
+        private void CreateCharts(Mat lightImage)
+        {
+            charts.Clear();
+
+            charts.Add(new MMperLightChartHorizon(MMperLightChartHorizon, lightImage));
+            charts.Add(new MMperLightChartVertical(MMperLightChartVertical, lightImage));
+
+            charts[0].DrawChart(picPsf, picPsf.Height / 2, LineView.LineType.Horizon);
+            charts[1].DrawChart(picPsf, picPsf.Width / 2, LineView.LineType.Vertical);
+        }
+
         private void FrmDataViewer_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (mInstance == this)
@@ -81,7 +107,6 @@ namespace UniformityViewer2.Viewer
 
             double pinmirrorGap = UniformityCalculator2.Data.CalcValues.GetPinMirrorGap(light, pinmirrorSize);
 
-
             Mat kernel = UniformityCalculator2.Image.KernelManager.GetKernel(pinmirrorSize, (decimal)innerPercent, detailInfo.ShapeType);
 
             var ret = UniformityCalculator2.Image.ImageManager.GetInstance().ProcessImage(lines, pinmirrorGap, pupil, kernel, -1, true);
@@ -92,6 +117,19 @@ namespace UniformityViewer2.Viewer
 
             Mat resultMat = ret.Result[roi].Resize(new OpenCvSharp.Size(600, 600));
             Mat mirrorMat = ret.MirrorImage[roi].Resize(new OpenCvSharp.Size(600, 600));
+
+            
+            mirrorMat.ConvertTo(mirrorMat, MatType.CV_8U);
+            picPinmirror.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(mirrorMat);
+
+            Mat m = resultMat.Split()[0];
+            m *= 255;
+            m.ConvertTo(resultMat, MatType.CV_8U);
+
+            mtfchart.DrawChart(chartWidth, pinmirrorSize, Math.Truncate(pinmirrorGap * 10) / 10);
+            
+            picPsf.Image = resultMat;
+            CreateCharts(resultMat.Clone());
 
             resultMat.PutText($"Zoom : {zoom:0.00}%", new Point(0, 20), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             resultMat.PutText($"ShapeType : {shapeType}", new Point(0, 40), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
@@ -104,16 +142,8 @@ namespace UniformityViewer2.Viewer
             resultMat.PutText($"LumperDegree(Max) : {ret.LumDegreeMax}", new Point(0, 180), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             resultMat.PutText($"LumperDegree(Avg) : {ret.LumDegreeAvg}", new Point(0, 200), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             resultMat.PutText($"Real Efficiency : {light * (pinmirrorSize.Width / pinmirrorSize.Height)}%", new Point(0, 220), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-
-            mirrorMat.ConvertTo(mirrorMat, MatType.CV_8U);
-            picPinmirror.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(mirrorMat);
-
-            Mat m = resultMat.Split()[0];
-            m *= 255;
-            m.ConvertTo(resultMat, MatType.CV_8U);
-            picPsf.Image = resultMat; // OpenCvSharp.Extensions.BitmapConverter.ToBitmap(resultMat);
-
-            mtfchart.DrawChart(chartWidth, pinmirrorSize, Math.Truncate(pinmirrorGap * 10) / 10);
+            
+            picPsf.Image = resultMat;
 
             resultMat.Dispose();
             m.Dispose();

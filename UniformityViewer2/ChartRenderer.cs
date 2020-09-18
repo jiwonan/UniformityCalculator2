@@ -1,119 +1,99 @@
 ﻿using OpenCvSharp;
-using OpenCvSharp.Extensions;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace UniformityViewer2
 {
-    public class ChartRenderer
+    public abstract class ChartRenderer
     {
-        private Controls.ctlHistLegend mChart;
-        public ChartRenderer(Controls.ctlHistLegend chart)
+        protected Mat mLightImage;
+        protected Chart mChart;
+        protected LineView.LineType mLineType;
+
+        protected Dictionary<int, Series> seriesData = new Dictionary<int, Series>();
+
+        public ChartRenderer(Chart chart, Mat lightImage, LineView.LineType lineType)
         {
             this.mChart = chart;
+            this.mLightImage = lightImage;
+            this.mLineType = lineType;
         }
 
-        public Mat LoadChart(Mat m, int gubun, Controls.TempPictureBox pictureBox)
+        public void CreateChart()
         {
-            if (m == null) { return null; }
+            mChart.ChartAreas.Clear();
+            mChart.Series.Clear();
 
-            Mat[] channels = m.Split();
+            mChart.ChartAreas.Add("Draw");
 
-            Mat origin = new Mat();
+            SetChartMinMax();
 
-            Mat targetMat = new Mat(); // = channels[idx];
+            mChart.ChartAreas["Draw"].AxisX.Interval = 1;
+            mChart.ChartAreas["Draw"].AxisX.MajorGrid.LineColor = Color.Gray;
+            mChart.ChartAreas["Draw"].AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
 
-            if (gubun == 0)
-            {
-                targetMat = channels[DataParser.CHANNEL_MAX_AVG];
-            }
-            else if (gubun == 1)
-            {
-                targetMat = channels[DataParser.CHANNEL_MIN_AVG];
-            }
-            else if (gubun == 2)
-            {
-                targetMat = channels[DataParser.CHANNEL_MEAN_DEV];
-            }
-            else if (gubun == 3)
-            {
-                Mat value1 = channels[DataParser.CHANNEL_MAX_AVG];
-                Mat value2 = channels[DataParser.CHANNEL_MEAN_DEV];
+            mChart.ChartAreas["Draw"].AxisY.Interval = 10;
+            mChart.ChartAreas["Draw"].AxisY.MajorGrid.LineColor = Color.Gray;
+            mChart.ChartAreas["Draw"].AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
+        }
 
-                targetMat = (value1 + value2) / 2;
-            }
-            else if (gubun == 4)
-            {
-                Mat value1 = channels[DataParser.CHANNEL_MAX_AVG];
-                Mat value2 = channels[DataParser.CHANNEL_MEAN_DEV];
+        public void DrawChart(object sender, int position, LineView.LineType type)
+        {
 
-                Cv2.Sqrt(value1.Mul(value2), targetMat);
-            }
-            else if (gubun == 5)
+            if (mLineType != type) return;
+
+            int searchPos = CalcSearchPos(sender, position);
+
+            if (!seriesData.ContainsKey(searchPos))
             {
-                targetMat = channels[DataParser.CHANNEL_LUMPER_MAX];
-            }
-            else if (gubun == 6)
-            {
-                targetMat = channels[DataParser.CHANNEL_LUMPER_AVG];
+                Series data;
+
+                data = new Series();
+                data.ChartType = SeriesChartType.Line;
+
+                seriesData.Add(searchPos, GetSeriesData(data, searchPos));
             }
 
-            double minVal, maxVal;
+            mChart.Series.Clear();
+            mChart.Series.Add(seriesData[searchPos]);
+        }
 
-            int orginHeight = targetMat.Height;
+        public void ClearChart()
+        {
+            mChart.Series.Clear();
+            seriesData.Clear();
+        }
 
-            if (mChart.IsCustomMinMaxValue)
+        protected abstract void SetChartMinMax();
+
+        protected abstract Series GetSeriesData(Series data, int searchPos);
+
+        protected abstract int GetLength();
+
+
+        private int CalcSearchPos(object sender, int position)
+        {
+            Rectangle rect = ((LinePictureBox)sender).GetImageRect();
+
+            if (mLineType == LineView.LineType.Vertical)
             {
-                targetMat = targetMat.Threshold(mChart.MaxVal, mChart.MaxVal, ThresholdTypes.Trunc);
-                targetMat = targetMat.Threshold(mChart.MinVal, mChart.MinVal, ThresholdTypes.Tozero);
+                int originalCols = mLightImage.Cols - 1;
+                int resizedCols = rect.Width;
 
-                //CustomValue를 사용하는경우
-                //Colormap을 적용했을때 색상 일관성을 위해
-                //맨아래 한줄을 추가하고 MaxValue값을 지정해둔다
-                targetMat = targetMat.Resize(new OpenCvSharp.Size(targetMat.Width, targetMat.Height + 1));
-                targetMat[new Rect(0, orginHeight, targetMat.Width, 1)].SetTo(new Scalar(mChart.MaxVal));
+                return (int)((double)originalCols / resizedCols * (position - rect.X));
             }
-
-            targetMat.Normalize(255, 0, NormTypes.MinMax);
-            targetMat.ConvertTo(origin, MatType.CV_32FC1);
-
-            Cv2.MinMaxLoc(targetMat, out minVal, out maxVal);
-
-            if (minVal == 0 && maxVal == 0)
+            else
             {
-                pictureBox.Image.Dispose();
-                pictureBox.Image = null;
-                pictureBox.Invalidate();
+                int originalRows = mLightImage.Rows - 1;
+                int resizedRows = rect.Height;
 
-                return null;
+                return (int)((double)originalRows / resizedRows * (position - rect.Y));
             }
-
-            mChart.MaxVal = maxVal;
-            mChart.MinVal = minVal;
-
-            Mat hist = new Mat();
-            int[] histSize = { 100 };
-
-            minVal = Math.Min(mChart.MinVal, mChart.MaxVal);
-            maxVal = Math.Max(mChart.MinVal, mChart.MaxVal);
-
-            Rangef[] ranges = { new Rangef((float)minVal, (float)maxVal + 0.001f) };
-
-            Cv2.CalcHist(new Mat[] { origin }, new int[] { 0 }, null, hist, 1, histSize, ranges);
-
-            mChart.HistMat = hist;
-
-            mChart.Invalidate();
-
-            Mat target = new Mat();
-
-            targetMat.Normalize(255, 0, NormTypes.MinMax).ConvertTo(origin, MatType.CV_8U);
-
-            Cv2.ApplyColorMap(origin, target, ColormapTypes.Jet);
-
-            target = target[new Rect(0, 0, target.Width, orginHeight)].Resize(new OpenCvSharp.Size(pictureBox.Width, pictureBox.Height), 0, 0, InterpolationFlags.Area);
-
-            pictureBox.Image = target.ToBitmap();
-            return target.Clone();
         }
     }
 }
