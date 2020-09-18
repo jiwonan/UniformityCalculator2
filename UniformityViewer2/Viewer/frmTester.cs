@@ -97,7 +97,7 @@ namespace UniformityViewer2.Viewer
             Mat resultMat, mirrorMat;
             GetImageMat(out resultMat, out mirrorMat);
 
-            Console.WriteLine((double)resultMat.Height / resultMat.Width);
+            // Console.WriteLine((double)resultMat.Height / resultMat.Width);
 
             this.Viewer.Resize(resultMat.Width, resultMat.Height);
             this.Viewer.ShowImage(resultMat);
@@ -155,17 +155,31 @@ namespace UniformityViewer2.Viewer
             }
         }
 
+        public struct PinInfo
+        {
+            public double light;
+            public double pupil;
+            public double pinmrWidth;
+            public double pinmrHeight;
+            public double pinmrGap;
+
+            public PinInfo(double light, double pupil, double width, double height, double gap)
+            {
+                this.light = light;
+                this.pupil = pupil;
+                pinmrWidth = width;
+                pinmrHeight = height;
+                pinmrGap = gap;
+            }
+        }
+
         private void GetImageMat(out Mat resultMat, out Mat mirrorMat)
         {
-            double light = (double)leS.Value;
-            double pupil = (double)psS.Value;
-            double pinmrWidth = (double)pisS.Value;
-            double pinmrHeight = (double)pisE.Value;
-            double pinmirrorGap = (double)lg.Value;
+            PinInfo info = new PinInfo((double)leS.Value, (double)psS.Value, (double)pisS.Value, (double)pisE.Value, (double)lg.Value);
 
-            Mat kernel = UniformityCalculator2.Image.KernelManager.GetKernel((decimal)pinmrWidth, (decimal)pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
+            Mat kernel = UniformityCalculator2.Image.KernelManager.GetKernel((decimal)info.pinmrWidth, (decimal)info.pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
 
-            UniformityCalculator2.Image.ImageManager.ProcessImageResult ret = UniformityCalculator2.Image.ImageManager.GetInstance().ProcessImage((int)pinLines.Value, pinmirrorGap, pupil, kernel, 0, false, chkInvert.Checked);
+            UniformityCalculator2.Image.ImageManager.ProcessImageResult ret = UniformityCalculator2.Image.ImageManager.GetInstance().ProcessImage((int)pinLines.Value, info.pinmrGap, info.pupil, kernel, 0, false, chkInvert.Checked);
             //Viewer.ShowImage(ret.Result);
 
             resultMat = ImageProcessor.Instance.GetResultMat(ret, (double)eyeReliefTextBox.Value, (double)horizonFOVTextBox.Value, (double)verticalFOVTextBox.Value);
@@ -180,6 +194,10 @@ namespace UniformityViewer2.Viewer
                 Viewer3.ShowImage(img);
             } // 이미지 파일 여부, 이미지 파일 Show.
 
+            frmDataViewer.GetInstance().LoadResultData(mirrorMat, resultMat, ret, info);
+            frmDataViewer.GetInstance().Show();
+/*
+
             resultMat.PutText($"Efficiency : {light}%", new Point(0, 20), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             resultMat.PutText($"pupilSize : {pupil}mm", new Point(0, 40), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             resultMat.PutText($"pinmirrorSize : {pinmrWidth}mm", new Point(0, 60), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
@@ -188,19 +206,16 @@ namespace UniformityViewer2.Viewer
             resultMat.PutText($"Min-Avg : {ret.MinAvg}", new Point(0, 120), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             resultMat.PutText($"MeanDev : {ret.MeanDev}", new Point(0, 140), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             resultMat.PutText($"LumperDegree(Max) : {ret.LumDegreeMax}", new Point(0, 160), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"LumperDegree(Avg) : {ret.LumDegreeAvg}", new Point(0, 180), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            resultMat.PutText($"LumperDegree(Avg) : {ret.LumDegreeAvg}", new Point(0, 180), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);*/
         }
 
         private bool SaveImage(out Mat img)
         {
-            double pupil = (double)psS.Value;
-            double pinmrWidth = (double)pisS.Value;
-            double pinmrHeight = (double)pisE.Value;
-            double pinmirrorGap = (double)lg.Value;
+            PinInfo info = new PinInfo(0, (double)psS.Value, (double)pisS.Value, (double)pisE.Value, (double)lg.Value);
 
-            Mat kernel = UniformityCalculator2.Image.KernelManager.GetKernel((decimal)pinmrWidth, (decimal)pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
+            Mat kernel = UniformityCalculator2.Image.KernelManager.GetKernel((decimal)info.pinmrWidth, (decimal)info.pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
 
-            var ret = UniformityCalculator2.Image.ImageManager.GetInstance().ProcessImage((int)pinLines.Value, pinmirrorGap, pupil, kernel, 0, false);
+            var ret = UniformityCalculator2.Image.ImageManager.GetInstance().ProcessImage((int)pinLines.Value, info.pinmrGap, info.pupil, kernel, 0, false);
 
             Viewer.ShowImage(ret.Result); // Original Data
 

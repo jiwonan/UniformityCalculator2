@@ -81,7 +81,6 @@ namespace UniformityViewer2.Viewer
 
         private void ResizeSpliter()
         {
-
             splitContainer1.SplitterDistance = splitContainer1.Width / 2;
             splitContainer2.SplitterDistance = splitContainer2.Height / 2;
             splitContainer3.SplitterDistance = splitContainer3.Height / 2;
@@ -159,6 +158,47 @@ namespace UniformityViewer2.Viewer
             mirrorMat.Dispose();
         }
 
+        
+
+        public void LoadResultData(Mat mirrorMat, Mat resultMat, UniformityCalculator2.Image.ImageManager.ProcessImageResult ret, frmTester.PinInfo info)
+        {
+            mirrorMat.ConvertTo(mirrorMat, MatType.CV_8U);
+            picPinmirror.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(mirrorMat);
+
+            Mat show = resultMat.Clone();
+
+            Mat m = resultMat.Split()[0];
+            m *= 255;
+            m.ConvertTo(resultMat, MatType.CV_8U);
+
+            mtfchart.DrawChart(chartWidth, new SizeF((float)info.pinmrWidth, (float)info.pinmrHeight), Math.Truncate(info.pinmrGap * 10) / 10);
+            picPsf.Image = resultMat.Resize(new OpenCvSharp.Size(600, 600));
+
+            CreateCharts(resultMat.Clone());
+
+            show = UniformityCalculator2.Image.ImageManager.GetInstance().DrawHexagon(show).Resize(new OpenCvSharp.Size(600, 600));
+
+            m = show.Split()[0];
+            m *= 255;
+            m.ConvertTo(show, MatType.CV_8U);
+
+            show.PutText($"Efficiency : {info.light}%", new Point(0, 20), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"pupilSize : {info.pupil}mm", new Point(0, 40), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"pinmirrorSize : {info.pinmrWidth}mm", new Point(0, 60), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"pinmirror_Gap : {info.pinmrGap}mm", new Point(0, 80), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"Max-Avg : {ret.MaxAvg}", new Point(0, 100), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"Min-Avg : {ret.MinAvg}", new Point(0, 120), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"MeanDev : {ret.MeanDev}", new Point(0, 140), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"LumperDegree(Max) : {ret.LumDegreeMax}", new Point(0, 160), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"LumperDegree(Avg) : {ret.LumDegreeAvg}", new Point(0, 180), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+
+            picPsf.Image = show;
+
+            resultMat.Dispose();
+            show.Dispose();
+            m.Dispose();
+            mirrorMat.Dispose();
+        }
 
     }
 }
