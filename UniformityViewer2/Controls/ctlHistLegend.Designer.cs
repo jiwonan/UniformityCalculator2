@@ -56,14 +56,14 @@
             this.최소값설정ToolStripMenuItem.Name = "최소값설정ToolStripMenuItem";
             this.최소값설정ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.최소값설정ToolStripMenuItem.Text = "최소값설정";
-            // this.최소값설정ToolStripMenuItem.Click += new System.EventHandler(this.최소값설정ToolStripMenuItem_Click);
+            this.최소값설정ToolStripMenuItem.Click += new System.EventHandler(this.최소값설정ToolStripMenuItem_Click);
             // 
             // 최대값설정ToolStripMenuItem
             // 
             this.최대값설정ToolStripMenuItem.Name = "최대값설정ToolStripMenuItem";
             this.최대값설정ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.최대값설정ToolStripMenuItem.Text = "최대값설정";
-            // this.최대값설정ToolStripMenuItem.Click += new System.EventHandler(this.최대값설정ToolStripMenuItem_Click);
+            this.최대값설정ToolStripMenuItem.Click += new System.EventHandler(this.최대값설정ToolStripMenuItem_Click);
             // 
             // ctlHistLegend
             // 

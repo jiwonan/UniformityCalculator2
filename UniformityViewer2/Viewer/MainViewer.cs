@@ -35,7 +35,7 @@ namespace UniformityViewer2.Viewer
 
         private void CtlHistLegend1_OnMinMaxValueChanged()
         {
-            throw new NotImplementedException();
+            LoadChart();
         }
 
         private void MirrorShapeComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -119,6 +119,8 @@ namespace UniformityViewer2.Viewer
 
             pictureBox1.Image = null;
 
+            // chartRenderer.ClearChart(); 
+
             groupBox1.Enabled = true;
 
             int masterIdx = int.Parse(masterValueListView.SelectedItems[0].Text);
@@ -143,6 +145,8 @@ namespace UniformityViewer2.Viewer
 
             parser.ResetData();
             parser.SetData(masterIdx, 0);
+
+            baseItemComboBox.SelectedIndex = -1;
 
             master.LoadPinHeight(pinmirrorWidthValueComboBox, SelectedMaster);
         }
@@ -319,8 +323,6 @@ namespace UniformityViewer2.Viewer
 
         private System.Drawing.Point LastSelectedCoord;
 
-
-
         private void radioButton_Click(object sender, EventArgs e)
         {
             baseValueComboBox_SelectedIndexChanged(sender, e);
@@ -328,22 +330,22 @@ namespace UniformityViewer2.Viewer
 
         DB.DetailInfo tmpContextData;
 
-        private void ShowDetail(MouseButtons button)
+        private void ShowDetail(MouseButtons button, System.Drawing.Point Loc)
         {
-            ShowDetail(LastSelectedCoord.X, LastSelectedCoord.Y, button);
+            ShowDetail(LastSelectedCoord.X, LastSelectedCoord.Y, button, Loc);
         }
 
         private void ShowDetail(int xLoc, int yLoc)
         {
-            ShowDetail(xLoc, yLoc, MouseButtons.Left, false);
+            ShowDetail(xLoc, yLoc, MouseButtons.Left, System.Drawing.Point.Empty, false);
         }
 
-        private void ShowDetail(int xLoc, int yLoc, MouseButtons button, bool show = true)
+        private void ShowDetail(int xLoc, int yLoc, MouseButtons button, System.Drawing.Point curMouse, bool show = true)
         {
-            if (baseItemComboBox.SelectedIndex == -1 || baseValueComboBox.SelectedIndex == -1 || mirrorShapeComboBox.SelectedIndex == -1)
+/*            if (baseItemComboBox.SelectedIndex == -1 || baseValueComboBox.SelectedIndex == -1 || mirrorShapeComboBox.SelectedIndex == -1)
             {
                 return;
-            }
+            }*/
 
             Mat m = parser.GetChart(baseItemComboBox.SelectedIndex, double.Parse(baseValueComboBox.Text), double.Parse(pinmirrorWidthValueComboBox.Text.Replace("+", "")));
 
@@ -379,7 +381,7 @@ namespace UniformityViewer2.Viewer
                 }
 
                 tmpContextData = detailInfo;
-                contextMenuStrip2.Show(pictureBox1, System.Drawing.Point.Empty);
+                contextMenuStrip2.Show(pictureBox1, curMouse);
             }
             else if (button == MouseButtons.Left)
             {
@@ -473,7 +475,7 @@ namespace UniformityViewer2.Viewer
 
             pictureBox1.GetXYLocation(m, e.Location, out xLoc, out yLoc);
             LastSelectedCoord = new System.Drawing.Point((int)xLoc, (int)yLoc);
-            ShowDetail(e.Button);
+            ShowDetail(e.Button, e.Location);
 
         }
 

@@ -179,6 +179,7 @@ namespace UniformityCalculator2.Image
                 //SetLog("Process completed");
             }
         }
+        private static Point[] pts = new Point[6];
 
         public ProcessImageResult ProcessImage(int lineCount, double pinGap, double pupilSize, Mat kernel, int jobId = 0, bool drawCenterArea = true, bool invertMirror = false)
         {
@@ -212,7 +213,6 @@ namespace UniformityCalculator2.Image
             //개선필요함
             //pts의 순서를 0, 1, 2, 3, 4, 5 에서
             // 0, 1, 3, 5, 4, 2 순으로
-            Point[] pts = new Point[6];
             pts[0] = tmpPts[0];
             pts[1] = tmpPts[1];
             pts[2] = tmpPts[3];
@@ -251,7 +251,8 @@ namespace UniformityCalculator2.Image
 
             if (drawCenterArea)
             {
-                resultMat.Polylines(new Point[1][] { pts }, true, Scalar.Red, 1, LineTypes.AntiAlias); //결과값
+                // resultMat = DrawHexagon(resultMat);
+                // resultMat.Polylines(new Point[1][] { pts }, true, Scalar.Red, 1, LineTypes.AntiAlias); //결과값
                 LogManager.SetLog("Get result image complete");
             }
 
@@ -319,6 +320,13 @@ namespace UniformityCalculator2.Image
                 LogManager.SetLog("Process completed");
                 return new ProcessImageResult(resultMat, mirrorImage, maxavg, minavg, dev, max, avg);
             }
+        }
+
+        public Mat DrawHexagon(Mat result)
+        {
+            result.Polylines(new Point[1][] { pts }, true, Scalar.Red, 1, LineTypes.AntiAlias);
+
+            return result;
         }
 
         public struct ProcessImageResult : IDisposable

@@ -115,5 +115,11 @@ namespace UniformityViewer2
             pictureBox.Image = target.ToBitmap();
             return target.Clone();
         }
+
+        public void ClearChart()
+        {
+            mChart.HistMat = new Mat();
+            mChart.Invalidate();
+        }
     }
 }

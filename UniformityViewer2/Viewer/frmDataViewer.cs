@@ -107,6 +107,7 @@ namespace UniformityViewer2.Viewer
 
             double pinmirrorGap = UniformityCalculator2.Data.CalcValues.GetPinMirrorGap(light, pinmirrorSize);
 
+
             Mat kernel = UniformityCalculator2.Image.KernelManager.GetKernel(pinmirrorSize, (decimal)innerPercent, detailInfo.ShapeType);
 
             var ret = UniformityCalculator2.Image.ImageManager.GetInstance().ProcessImage(lines, pinmirrorGap, pupil, kernel, -1, true);
@@ -127,25 +128,33 @@ namespace UniformityViewer2.Viewer
             m.ConvertTo(resultMat, MatType.CV_8U);
 
             mtfchart.DrawChart(chartWidth, pinmirrorSize, Math.Truncate(pinmirrorGap * 10) / 10);
-            
-            picPsf.Image = resultMat;
+            picPsf.Image = ret.Result[roi].Resize(new OpenCvSharp.Size(600, 600));
+    
             CreateCharts(resultMat.Clone());
 
-            resultMat.PutText($"Zoom : {zoom:0.00}%", new Point(0, 20), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"ShapeType : {shapeType}", new Point(0, 40), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"Efficiency : {light}% pupilSize : {pupil}mm", new Point(0, 60), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"pinmirrorSize : {pinmirrorSize}mm", new Point(0, 80), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"pinmirror_Gap : {pinmirrorGap}mm", new Point(0, 100), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"Max-Avg : {ret.MaxAvg}", new Point(0, 120), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"Min-Avg : {ret.MinAvg}", new Point(0, 140), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"MeanDev : {ret.MeanDev}", new Point(0, 160), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"LumperDegree(Max) : {ret.LumDegreeMax}", new Point(0, 180), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"LumperDegree(Avg) : {ret.LumDegreeAvg}", new Point(0, 200), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"Real Efficiency : {light * (pinmirrorSize.Width / pinmirrorSize.Height)}%", new Point(0, 220), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            
-            picPsf.Image = resultMat;
+
+            Mat show = UniformityCalculator2.Image.ImageManager.GetInstance().DrawHexagon(ret.Result)[roi].Resize(new OpenCvSharp.Size(600, 600));
+
+            m = show.Split()[0];
+            m *= 255;
+            m.ConvertTo(show, MatType.CV_8U);
+
+            show.PutText($"Zoom : {zoom:0.00}%", new Point(0, 20), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"ShapeType : {shapeType}", new Point(0, 40), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"Efficiency : {light}% pupilSize : {pupil}mm", new Point(0, 60), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"pinmirrorSize : {pinmirrorSize}mm", new Point(0, 80), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"pinmirror_Gap : {pinmirrorGap}mm", new Point(0, 100), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"Max-Avg : {ret.MaxAvg}", new Point(0, 120), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"Min-Avg : {ret.MinAvg}", new Point(0, 140), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"MeanDev : {ret.MeanDev}", new Point(0, 160), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"LumperDegree(Max) : {ret.LumDegreeMax}", new Point(0, 180), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"LumperDegree(Avg) : {ret.LumDegreeAvg}", new Point(0, 200), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"Real Efficiency : {light * (pinmirrorSize.Width / pinmirrorSize.Height)}%", new Point(0, 220), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+
+            picPsf.Image = show;
 
             resultMat.Dispose();
+            show.Dispose();
             m.Dispose();
             mirrorMat.Dispose();
         }

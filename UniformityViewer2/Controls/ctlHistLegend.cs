@@ -49,6 +49,11 @@ namespace UniformityViewer2.Controls
             this.MouseMove += CtlHistLegend_MouseMove;
         }
 
+        public void Clear()
+        {
+            HistMat = null;
+        }
+
         private void CtlHistLegend_MouseMove(object sender, MouseEventArgs e)
         {
             //if (histData.Count == 0) return;
