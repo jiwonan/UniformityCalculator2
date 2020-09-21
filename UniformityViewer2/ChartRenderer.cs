@@ -44,7 +44,6 @@ namespace UniformityViewer2
 
         public void DrawChart(object sender, int position, LineView.LineType type)
         {
-
             if (mLineType != type) return;
 
             int searchPos = CalcSearchPos(sender, position);

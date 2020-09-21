@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 // using UniformityCalculator2;
 using Point = OpenCvSharp.Point;
@@ -22,6 +23,8 @@ namespace UniformityViewer2.Viewer
                 return mInstance;
             }
         }
+
+        private bool isNew = false;
 
         public frmTester()
         {
@@ -99,10 +102,10 @@ namespace UniformityViewer2.Viewer
 
             // Console.WriteLine((double)resultMat.Height / resultMat.Width);
 
-            this.Viewer.Resize(resultMat.Width, resultMat.Height);
+            /*this.Viewer.Resize(resultMat.Width, resultMat.Height);
             this.Viewer.ShowImage(resultMat);
             this.Viewer2.Resize(mirrorMat.Width, mirrorMat.Height);
-            this.Viewer2.ShowImage(mirrorMat);
+            this.Viewer2.ShowImage(mirrorMat);*/
         }
 
 
@@ -162,6 +165,7 @@ namespace UniformityViewer2.Viewer
             public double pinmrWidth;
             public double pinmrHeight;
             public double pinmrGap;
+            public SizeF pinmrSize;
 
             public PinInfo(double light, double pupil, double width, double height, double gap)
             {
@@ -170,6 +174,7 @@ namespace UniformityViewer2.Viewer
                 pinmrWidth = width;
                 pinmrHeight = height;
                 pinmrGap = gap;
+                pinmrSize = new SizeF((float)pinmrWidth, (float)pinmrHeight);
             }
         }
 
@@ -194,11 +199,20 @@ namespace UniformityViewer2.Viewer
                 Viewer3.ShowImage(img);
             } // 이미지 파일 여부, 이미지 파일 Show.
 
-            frmDataViewer.GetInstance().LoadResultData(mirrorMat, resultMat, ret, info);
-            frmDataViewer.GetInstance().Show();
-/*
+            frmDataViewer viewer;
 
-            resultMat.PutText($"Efficiency : {light}%", new Point(0, 20), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            if (isNew)
+            {
+                viewer = frmDataViewer.GetInstance();
+            }
+            {
+                viewer = new frmDataViewer();
+            }
+
+            viewer.LoadResultData(mirrorMat.Clone(), resultMat.Clone(), ret, info);
+            viewer.Show();
+
+            /*resultMat.PutText($"Efficiency : {light}%", new Point(0, 20), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             resultMat.PutText($"pupilSize : {pupil}mm", new Point(0, 40), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             resultMat.PutText($"pinmirrorSize : {pinmrWidth}mm", new Point(0, 60), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             resultMat.PutText($"pinmirror_Gap : {pinmirrorGap}mm", new Point(0, 80), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);

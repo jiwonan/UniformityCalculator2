@@ -42,12 +42,15 @@ namespace UniformityViewer2.Viewer
             picPsf.OnLineMove += PicPsf_OnLineMove;
         }
 
+        Mat lightImage;
+
         private void PicPsf_OnLineMove(object sender, LineView.LineType lineType, int position)
         {
             foreach (var chart in charts)
             {
                 chart.DrawChart(sender, position, lineType);
             }
+            // get Row value.
         }
 
         private void CreateCharts(Mat lightImage)
@@ -56,6 +59,9 @@ namespace UniformityViewer2.Viewer
 
             charts.Add(new MMperLightChartHorizon(MMperLightChartHorizon, lightImage));
             charts.Add(new MMperLightChartVertical(MMperLightChartVertical, lightImage));
+
+            charts[0].CreateChart();
+            charts[1].CreateChart();
 
             charts[0].DrawChart(picPsf, picPsf.Height / 2, LineView.LineType.Horizon);
             charts[1].DrawChart(picPsf, picPsf.Width / 2, LineView.LineType.Vertical);
@@ -163,6 +169,7 @@ namespace UniformityViewer2.Viewer
         public void LoadResultData(Mat mirrorMat, Mat resultMat, UniformityCalculator2.Image.ImageManager.ProcessImageResult ret, frmTester.PinInfo info)
         {
             mirrorMat.ConvertTo(mirrorMat, MatType.CV_8U);
+            mirrorMat = mirrorMat.Resize(new OpenCvSharp.Size(600, 600));
             picPinmirror.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(mirrorMat);
 
             Mat show = resultMat.Clone();
@@ -171,12 +178,12 @@ namespace UniformityViewer2.Viewer
             m *= 255;
             m.ConvertTo(resultMat, MatType.CV_8U);
 
-            mtfchart.DrawChart(chartWidth, new SizeF((float)info.pinmrWidth, (float)info.pinmrHeight), Math.Truncate(info.pinmrGap * 10) / 10);
+            mtfchart.DrawChart(chartWidth, info.pinmrSize, Math.Truncate(info.pinmrGap * 10) / 10);
             picPsf.Image = resultMat.Resize(new OpenCvSharp.Size(600, 600));
 
             CreateCharts(resultMat.Clone());
 
-            show = UniformityCalculator2.Image.ImageManager.GetInstance().DrawHexagon(show).Resize(new OpenCvSharp.Size(600, 600));
+            // show = UniformityCalculator2.Image.ImageManager.GetInstance().DrawHexagon(show).Resize(new OpenCvSharp.Size(600, 600));
 
             m = show.Split()[0];
             m *= 255;
@@ -184,13 +191,14 @@ namespace UniformityViewer2.Viewer
 
             show.PutText($"Efficiency : {info.light}%", new Point(0, 20), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             show.PutText($"pupilSize : {info.pupil}mm", new Point(0, 40), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            show.PutText($"pinmirrorSize : {info.pinmrWidth}mm", new Point(0, 60), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"pinmirrorSize : {info.pinmrSize}mm", new Point(0, 60), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             show.PutText($"pinmirror_Gap : {info.pinmrGap}mm", new Point(0, 80), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             show.PutText($"Max-Avg : {ret.MaxAvg}", new Point(0, 100), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             show.PutText($"Min-Avg : {ret.MinAvg}", new Point(0, 120), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             show.PutText($"MeanDev : {ret.MeanDev}", new Point(0, 140), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             show.PutText($"LumperDegree(Max) : {ret.LumDegreeMax}", new Point(0, 160), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
             show.PutText($"LumperDegree(Avg) : {ret.LumDegreeAvg}", new Point(0, 180), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"Real Efficiency : {info.light * (info.pinmrWidth/ info.pinmrHeight)}%", new Point(0, 200), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
 
             picPsf.Image = show;
 
