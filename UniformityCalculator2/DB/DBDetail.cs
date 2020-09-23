@@ -21,7 +21,6 @@ namespace UniformityCalculator2.DB
 
         public void InsertDetail(Data.DataInput dataInput, double width, double height, bool lastJob, ref int cnt, ref StringBuilder sb) 
         {
-            LogManager.SetLog("Detail Insert Start");
 
             if (cnt == 0)
             {

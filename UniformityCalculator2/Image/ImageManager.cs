@@ -28,53 +28,60 @@ namespace UniformityCalculator2.Image
             DB.DBMaster dbMaster = new DB.DBMaster();
             DB.DBDetail dbDetail = new DB.DBDetail();
 
-            Data.DataInput dataInput = (Data.DataInput)obj;
-
-            double lightEffi = dataInput.LightEffi;
-            double pupilSize = dataInput.PupilSize;
-            double innerArea = dataInput.InnerArea;
-            Data.PinMirrorShape kernelType = dataInput.MirrorShape;
-            int lineCount = dataInput.PinLines;
-            int masterIdx = dataInput.MasterIdx;
-
-            using (Mat psfMat = PsfDataManager.LoadPsfData((double)pupilSize))
+            try
             {
-                int cnt = 0;
-                StringBuilder sb = new StringBuilder();
+                Data.DataInput dataInput = (Data.DataInput)obj;
 
-                for (decimal pinmirrorHeight = (decimal)dataInput.PinHeightStart; pinmirrorHeight <= (decimal)dataInput.PinHeightEnd; pinmirrorHeight += (decimal)dataInput.PinHeightGap)
+                double lightEffi = dataInput.LightEffi;
+                double pupilSize = dataInput.PupilSize;
+                double innerArea = dataInput.InnerArea;
+                Data.PinMirrorShape kernelType = dataInput.MirrorShape;
+                int lineCount = dataInput.PinLines;
+                int masterIdx = dataInput.MasterIdx;
+
+                using (Mat psfMat = PsfDataManager.LoadPsfData((double)pupilSize))
                 {
-                    for (decimal pinmirrorWidth = pinmirrorHeight + (decimal)dataInput.PinWidthStart; pinmirrorWidth <= pinmirrorHeight + (decimal)dataInput.PinWidthEnd; pinmirrorWidth += (decimal)dataInput.PinWidthGap)
+                    int cnt = 0;
+                    StringBuilder sb = new StringBuilder();
+
+                    for (decimal pinmirrorHeight = (decimal)dataInput.PinHeightStart; pinmirrorHeight <= (decimal)dataInput.PinHeightEnd; pinmirrorHeight += (decimal)dataInput.PinHeightGap)
                     {
-
-                        if (endThread)
+                        for (decimal pinmirrorWidth = pinmirrorHeight + (decimal)dataInput.PinWidthStart; pinmirrorWidth <= pinmirrorHeight + (decimal)dataInput.PinWidthEnd; pinmirrorWidth += (decimal)dataInput.PinWidthGap)
                         {
-                            // delete detail data.
 
-                            dbDetail.DeleteDetailData(dataInput.MasterIdx);
+                            if (endThread)
+                            {
+                                // delete detail data.
 
-                            return;
+                                dbDetail.DeleteDetailData(dataInput.MasterIdx);
+
+                                return;
+                            }
+
+                            double pinmirrorGap = Data.CalcValues.GetPinMirrorGap((double)lightEffi, new SizeF((float)pinmirrorWidth, (float)pinmirrorHeight));
+
+                            using (Mat kernel = KernelManager.GetKernel(pinmirrorWidth, pinmirrorHeight, (decimal)innerArea, kernelType))
+                            {
+                                ProcessImage(kernel, psfMat, lineCount, pinmirrorGap, ref dataInput);
+                            }
+                            dbDetail.InsertDetail(dataInput, (double)pinmirrorWidth, (double)pinmirrorHeight, false, ref cnt, ref sb);
                         }
-
-                        double pinmirrorGap = Data.CalcValues.GetPinMirrorGap((double)lightEffi, new SizeF((float)pinmirrorWidth, (float)pinmirrorHeight));
-
-                        using (Mat kernel = KernelManager.GetKernel(pinmirrorWidth, pinmirrorHeight, (decimal)innerArea, kernelType))
-                        {
-                            ProcessImage(kernel, psfMat, lineCount, pinmirrorGap, ref dataInput);
-                        }
-                        dbDetail.InsertDetail(dataInput, (double)pinmirrorWidth, (double)pinmirrorHeight, false, ref cnt, ref sb);
+                        GC.Collect();
                     }
-                    GC.Collect();
+
+                    dbDetail.InsertDetail(cnt, sb);
+
+                    if (ProgressManager.GetProgressBar().Maximum == ProgressManager.GetProgressBar().Value)
+                    {
+                        dbMaster.FinishMaster(masterIdx);
+                    }
+
+                    sb.Clear();
                 }
-
-                dbDetail.InsertDetail(cnt, sb);
-
-                if (ProgressManager.GetProgressBar().Maximum == ProgressManager.GetProgressBar().Value)
-                {
-                    dbMaster.FinishMaster(masterIdx);
-                }
-
-                sb.Clear();
+            }
+            catch (Exception err)
+            {
+                LogManager.SetLog(err.Message);
             }
         }
 

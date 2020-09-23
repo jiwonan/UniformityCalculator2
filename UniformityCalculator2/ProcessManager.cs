@@ -42,6 +42,7 @@ namespace UniformityCalculator2
             ProgressManager.SetProps(GetCheckCount());
 
             masterIdx = dbMaster.CreateMaster(GetUseType());
+            LogManager.SetLog("Insert Master Data");
 
             if (masterIdx == -1)
             {
