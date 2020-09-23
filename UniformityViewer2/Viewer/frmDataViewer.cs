@@ -42,8 +42,6 @@ namespace UniformityViewer2.Viewer
             picPsf.OnLineMove += PicPsf_OnLineMove;
         }
 
-        Mat lightImage;
-
         private void PicPsf_OnLineMove(object sender, LineView.LineType lineType, int position)
         {
             foreach (var chart in charts)

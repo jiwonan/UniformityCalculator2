@@ -19,8 +19,9 @@ namespace UniformityCalculator2.DB
             Insert(qry, cnt);
         }
 
-        public void InsertDetail(Data.DataInput dataInput, double width, double height, bool lastJob, ref int cnt, ref StringBuilder sb) // 
+        public void InsertDetail(Data.DataInput dataInput, double width, double height, bool lastJob, ref int cnt, ref StringBuilder sb) 
         {
+            LogManager.SetLog("Detail Insert Start");
 
             if (cnt == 0)
             {
@@ -66,7 +67,6 @@ namespace UniformityCalculator2.DB
                     con.Open();
                     // con.BeginTransaction();
                     cmd.ExecuteNonQueryAsync();
-                    con.Close();
                 }
                 LogManager.SetLog($"Detail 입력됨({cnt}건)");
                 ProgressManager.AddProgress(cnt);

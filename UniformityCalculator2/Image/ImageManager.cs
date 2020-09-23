@@ -62,7 +62,6 @@ namespace UniformityCalculator2.Image
                         {
                             ProcessImage(kernel, psfMat, lineCount, pinmirrorGap, ref dataInput);
                         }
-
                         dbDetail.InsertDetail(dataInput, (double)pinmirrorWidth, (double)pinmirrorHeight, false, ref cnt, ref sb);
                     }
                     GC.Collect();
@@ -133,7 +132,7 @@ namespace UniformityCalculator2.Image
                 {
 
                     mask.SetTo(Scalar.Black);
-                    mask.FillPoly(new Point[1][] { pts }, Scalar.Red, LineTypes.AntiAlias); //마스크 영역 생성
+                    mask.FillPoly(new Point[1][] { pts }, Scalar.Blue, LineTypes.AntiAlias); //마스크 영역 생성
 
                     double min, max;
                     Point minPt, maxPt;
@@ -170,7 +169,7 @@ namespace UniformityCalculator2.Image
                 //resultMat.PutText($"MeanDev : {dataInput.MeanDev}", new Point(0, 160), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
                 //resultMat.PutText($"LumperDegree(Max) : {dataInput.LumperDegree}", new Point(0, 180), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
                 //resultMat.PutText($"LumperDegree(Avg) : {dataInput.LumperDegree_Avg}", new Point(0, 200), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-                ////resultMat.PutText($"Real Efficiency : {light * (pinmirrorSize.Width / pinmirrorSize.Height)}%", new Point(0, 220), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+                //resultMat.PutText($"Real Efficiency : {light * (pinmirrorSize.Width / pinmirrorSize.Height)}%", new Point(0, 220), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
 
                 //resultMat.SaveImage("new_resultMat.png");
 
