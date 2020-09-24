@@ -12,6 +12,7 @@ namespace UniformityViewer2.Viewer
     {
         DB.DBMaster master = new DB.DBMaster();
         DB.DBDetail detail = new DB.DBDetail();
+        DB.DBMtfchart mtfchart = new DB.DBMtfchart();
         DataParser parser = new DataParser();
         CtlChartRenderer chartRenderer;
 
@@ -26,11 +27,17 @@ namespace UniformityViewer2.Viewer
             mirrorShapeComboBox.SelectedIndex = 0;
             mirrorShapeComboBox.SelectedIndexChanged += MirrorShapeComboBox_SelectedIndexChanged;
 
-            SetupContextMenu(); // ?
+            SetupContextMenu();
 
             ctlHistLegend1.OnMinMaxValueChanged += CtlHistLegend1_OnMinMaxValueChanged;
 
             // masterValueListView.Controls.Add(contextMenuStrip1);
+        }
+
+        private void SetMtfInfo()
+        {
+            mtf_dLabel.Text = mtfchart.GetMtfData("mtf_d");
+            mtf_rLabel.Text = mtfchart.GetMtfData("mtf_r");
         }
 
         private void CtlHistLegend1_OnMinMaxValueChanged()
@@ -122,6 +129,7 @@ namespace UniformityViewer2.Viewer
             // chartRenderer.ClearChart(); 
 
             groupBox1.Enabled = true;
+            SetMtfInfo();
 
             int masterIdx = int.Parse(masterValueListView.SelectedItems[0].Text);
 
@@ -313,7 +321,8 @@ namespace UniformityViewer2.Viewer
 
             double pinmirrorGap = UniformityCalculator2.Data.CalcValues.GetPinMirrorGap(detailInfo.Light, detailInfo.pinMirrorSize.Height);
 
-            toolStripStatusLabel1.Text = $"광효율:{detailInfo.Light}% 동공크기:{detailInfo.Pupil}mm 핀미러크기:{detailInfo.pinMirrorSize}mm  핀미러간격:{pinmirrorGap}mm Max-Avg:{MaxAvg:0.0000} Min-Avg:{MinAvg:0.0000} 표준편차:{MeanDev:0.0000} 각도당휘도(Max):{LumDegreeMax:0.0000} 각도당휘도(Avg):{LumDegreeAvg:0.0000}";
+            toolStripStatusLabel1.Text = $"광효율:{detailInfo.Light}% 동공크기:{detailInfo.Pupil}mm 핀미러크기:{detailInfo.pinMirrorSize}mm 핀미러간격:{pinmirrorGap}mm " +
+                $"Max-Avg:{MaxAvg:0.0000} Min-Avg:{MinAvg:0.0000} 표준편차:{MeanDev:0.0000} 각도당휘도(Max):{LumDegreeMax:0.0000} 각도당휘도(Avg):{LumDegreeAvg:0.0000}";
         }
 
         private void pinmirrorWidthValueComboBox_SelectedIndexChanged(object sender, EventArgs e)

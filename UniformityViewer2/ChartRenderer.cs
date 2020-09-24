@@ -77,7 +77,7 @@ namespace UniformityViewer2
 
         private int CalcSearchPos(object sender, int position)
         {
-            Rectangle rect = ((LinePictureBox)sender).GetImageRect();
+            Rectangle rect = ((Controls.LinePictureBox)sender).GetImageRect();
 
             if (mLineType == LineView.LineType.Vertical)
             {

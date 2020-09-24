@@ -130,8 +130,17 @@ namespace UniformityViewer2.Viewer
             m *= 255;
             m.ConvertTo(resultMat, MatType.CV_8U);
 
-            mtfchart.DrawChart(chartWidth, pinmirrorSize, Math.Truncate(pinmirrorGap * 10) / 10);
+            string str = mtfchart.DrawChart(chartWidth, pinmirrorSize, Math.Truncate(pinmirrorGap * 10) / 10);
             picPsf.Image = ret.Result[roi].Resize(new OpenCvSharp.Size(600, 600));
+
+
+            string[] mtfValues = str.Split(',');
+
+            mtf_d.Text = "mtf_d : "+mtfValues[0];
+            mtf_r.Text = "mtf_r : "+mtfValues[1];
+            // label3.Text = mtfValues[2];
+
+            // pinmirrorGap, pinmirrorSize
     
             CreateCharts(resultMat.Clone());
 

@@ -15,7 +15,7 @@ namespace UniformityViewer2
 
         public bool ShowLine { get; set; } = true;
 
-        protected LinePictureBox mParent;
+        protected Controls.LinePictureBox mParent;
 
         public enum LineType { Vertical, Horizon }
         public LineType lineType = LineType.Vertical;
@@ -31,7 +31,7 @@ namespace UniformityViewer2
             mParent.LineMove(lineType, position);
         }
 
-        public LineView(LinePictureBox parent, LineType type) { mParent = parent; this.lineType = type; }
+        public LineView(Controls.LinePictureBox parent, LineType type) { mParent = parent; this.lineType = type; }
 
         public void OnMouseMove(MouseEventArgs e)
         {
@@ -136,7 +136,7 @@ namespace UniformityViewer2
     {
         int Position = -1;
 
-        public LineHorizon(LinePictureBox parent) : base(parent, LineType.Horizon) { }
+        public LineHorizon(Controls.LinePictureBox parent) : base(parent, LineType.Horizon) { }
 
         public override int GetLineCoordinate()
         {
@@ -232,7 +232,7 @@ namespace UniformityViewer2
     {
         int Position = -1;
 
-        public LineVertical(LinePictureBox parent) : base(parent, LineType.Vertical) { }
+        public LineVertical(Controls.LinePictureBox parent) : base(parent, LineType.Vertical) { }
 
         public override int GetLineCoordinate()
         {

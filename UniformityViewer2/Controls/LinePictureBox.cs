@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace UniformityViewer2
+namespace UniformityViewer2.Controls
 {
     public class LinePictureBox : PictureBox
     {
