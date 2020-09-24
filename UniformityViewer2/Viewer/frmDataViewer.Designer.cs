@@ -42,18 +42,18 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.picPinmirror = new System.Windows.Forms.PictureBox();
+            this.picPsf = new UniformityViewer2.Controls.LinePictureBox();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.chartTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.mtf_r = new System.Windows.Forms.Label();
+            this.mtf_d = new System.Windows.Forms.Label();
             this.chartWidth = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.MMperLightChartHorizon = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.MMperLightChartVertical = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.mtf_d = new System.Windows.Forms.Label();
-            this.mtf_r = new System.Windows.Forms.Label();
-            this.picPsf = new UniformityViewer2.Controls.LinePictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -63,6 +63,7 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picPinmirror)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picPsf)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
@@ -74,7 +75,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.MMperLightChartHorizon)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MMperLightChartVertical)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPsf)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -122,6 +122,17 @@
             this.picPinmirror.TabIndex = 0;
             this.picPinmirror.TabStop = false;
             // 
+            // picPsf
+            // 
+            this.picPsf.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picPsf.Image = null;
+            this.picPsf.Location = new System.Drawing.Point(0, 0);
+            this.picPsf.Name = "picPsf";
+            this.picPsf.Size = new System.Drawing.Size(382, 223);
+            this.picPsf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picPsf.TabIndex = 1;
+            this.picPsf.TabStop = false;
+            // 
             // splitContainer3
             // 
             this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -164,6 +175,26 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "MTF Chart";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // mtf_r
+            // 
+            this.mtf_r.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.mtf_r.AutoSize = true;
+            this.mtf_r.Location = new System.Drawing.Point(315, 175);
+            this.mtf_r.Name = "mtf_r";
+            this.mtf_r.Size = new System.Drawing.Size(29, 12);
+            this.mtf_r.TabIndex = 2;
+            this.mtf_r.Text = "크기";
+            // 
+            // mtf_d
+            // 
+            this.mtf_d.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.mtf_d.AutoSize = true;
+            this.mtf_d.Location = new System.Drawing.Point(315, 156);
+            this.mtf_d.Name = "mtf_d";
+            this.mtf_d.Size = new System.Drawing.Size(29, 12);
+            this.mtf_d.TabIndex = 1;
+            this.mtf_d.Text = "간격";
             // 
             // chartWidth
             // 
@@ -261,35 +292,6 @@
             this.textBox1.Size = new System.Drawing.Size(414, 223);
             this.textBox1.TabIndex = 0;
             // 
-            // mtf_d
-            // 
-            this.mtf_d.AutoSize = true;
-            this.mtf_d.Location = new System.Drawing.Point(315, 156);
-            this.mtf_d.Name = "mtf_d";
-            this.mtf_d.Size = new System.Drawing.Size(35, 12);
-            this.mtf_d.TabIndex = 1;
-            this.mtf_d.Text = "mtf_d";
-            // 
-            // mtf_r
-            // 
-            this.mtf_r.AutoSize = true;
-            this.mtf_r.Location = new System.Drawing.Point(317, 175);
-            this.mtf_r.Name = "mtf_r";
-            this.mtf_r.Size = new System.Drawing.Size(32, 12);
-            this.mtf_r.TabIndex = 2;
-            this.mtf_r.Text = "mtf_r";
-            // 
-            // picPsf
-            // 
-            this.picPsf.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picPsf.Image = null;
-            this.picPsf.Location = new System.Drawing.Point(0, 0);
-            this.picPsf.Name = "picPsf";
-            this.picPsf.Size = new System.Drawing.Size(382, 223);
-            this.picPsf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picPsf.TabIndex = 1;
-            this.picPsf.TabStop = false;
-            // 
             // frmDataViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -307,6 +309,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picPinmirror)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picPsf)).EndInit();
             this.splitContainer3.Panel1.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
             this.splitContainer3.Panel2.PerformLayout();
@@ -320,7 +323,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.MMperLightChartHorizon)).EndInit();
             this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.MMperLightChartVertical)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPsf)).EndInit();
             this.ResumeLayout(false);
 
         }

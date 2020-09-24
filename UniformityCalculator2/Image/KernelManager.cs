@@ -13,16 +13,16 @@ namespace UniformityCalculator2.Image
 
             switch (selectedIndex)
             {
-                case 1:
+                case 0:
                     type = Data.PinMirrorShape.Circle;
                     break;
-                case 2:
+                case 1:
                     type = Data.PinMirrorShape.Circle_Circle;
                     break;
-                case 3:
+                case 2:
                     type = Data.PinMirrorShape.Hexa;
                     break;
-                case 4:
+                case 3:
                     type = Data.PinMirrorShape.Hexa_Circle;
                     break;
             }

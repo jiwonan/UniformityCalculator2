@@ -588,9 +588,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(6, 17);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(54, 12);
+            this.label4.Size = new System.Drawing.Size(29, 12);
             this.label4.TabIndex = 0;
-            this.label4.Text = "Distance";
+            this.label4.Text = "간격";
             // 
             // mtf_dLabel
             // 
@@ -607,9 +607,9 @@
             this.label7.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
             this.label7.Location = new System.Drawing.Point(6, 60);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(41, 12);
+            this.label7.Size = new System.Drawing.Size(29, 12);
             this.label7.TabIndex = 2;
-            this.label7.Text = "Range";
+            this.label7.Text = "크기";
             // 
             // mtf_rLabel
             // 

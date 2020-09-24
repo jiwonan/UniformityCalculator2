@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace UniformityViewer2.DB
@@ -14,7 +15,10 @@ namespace UniformityViewer2.DB
             var targetSeries = targetChart.Series["MTF_" + mtfType];
             targetSeries.Points.Clear();
 
-            string qry = $"SELECT CPD, value FROM uniform_mtfchart WHERE mtf_d = {Math.Truncate(mtfdistance * 10) / 10} AND mtf_r = {Math.Truncate(mtfradius * 10) / 10} AND mtftype = '{mtfType}' ORDER BY CPD";
+            double value = 0;
+
+            // string qry = $"SELECT CPD, value FROM uniform_mtfchart WHERE mtf_d = {Math.Round(mtfdistance * 10, 2) / 10} AND mtf_r = {Math.Round(mtfradius * 10, 2) / 10} AND mtftype = '{mtfType}' ORDER BY CPD";
+            string qry = $"SELECT CPD, value FROM uniform_mtfchart WHERE mtf_d = {mtfdistance} AND mtf_r = {mtfradius} AND mtftype = '{mtfType}' ORDER BY CPD";
 
             using (MySqlCommand cmd = new MySqlCommand(qry, con))
             {
@@ -23,22 +27,30 @@ namespace UniformityViewer2.DB
                 while (reader.Read())
                 {
                     targetSeries.Points.AddXY(reader.GetDouble(0), reader.GetDouble(1));
+
+                    value = reader.GetDouble(0);
+                    
                 }
+                //targetChart.ChartAreas[0].AxisX.Maximum = value;
+                targetChart.ChartAreas[0].AxisX.IsMarginVisible = false;
             }
+            
+
+
             con.Close();
         }
 
         public string DrawChart(Chart chartWidth, SizeF pinmirrorSize, double pinmirrorGap)
         {
-            DrawChart(chartWidth, pinmirrorGap, pinmirrorSize.Width, "S");
-            DrawChart(chartWidth, pinmirrorGap, pinmirrorSize.Height, "T");
+            DrawChart(chartWidth, pinmirrorGap, Math.Truncate(pinmirrorSize.Width * 100)/100, "S");
+            DrawChart(chartWidth, pinmirrorGap, Math.Truncate(pinmirrorSize.Height * 100) / 100, "T");
 
-            double mtf_d = Math.Truncate(pinmirrorGap * 10) / 10;
+            /*double mtf_d = Math.Round(pinmirrorGap * 10, 2) / 10;
 
-            double mtf_r_w = Math.Truncate(pinmirrorSize.Width * 10) / 10;
+            double mtf_r_w = Math.Round(pinmirrorSize.Width * 10, 2) / 10;
             double mtf_r_h = Math.Truncate(pinmirrorSize.Height * 10) / 10;
-
-            return string.Join(",", mtf_d, mtf_r_w, mtf_r_h);
+*/
+            return string.Join(",", pinmirrorGap, pinmirrorSize.Width);
 
             //drawChart(chartHeight, pinmirrorGap, pinmirrorSize.Height, "S");
             //drawChart(chartHeight, pinmirrorGap, pinmirrorSize.Height, "T");

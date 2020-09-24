@@ -68,8 +68,8 @@
     public enum PinMirrorShape
     {
         Circle,
-        Hexa,
         Circle_Circle,
+        Hexa,
         Hexa_Circle
     }
 }

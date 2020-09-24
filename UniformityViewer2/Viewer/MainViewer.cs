@@ -31,6 +31,8 @@ namespace UniformityViewer2.Viewer
 
             ctlHistLegend1.OnMinMaxValueChanged += CtlHistLegend1_OnMinMaxValueChanged;
 
+            SetMtfInfo();
+
             // masterValueListView.Controls.Add(contextMenuStrip1);
         }
 
@@ -53,6 +55,7 @@ namespace UniformityViewer2.Viewer
 
             if (parser.SetData(SelectedMaster, mirrorShapeComboBox.SelectedIndex))
             {
+                Console.WriteLine(mirrorShapeComboBox.SelectedIndex);
                 if (baseItemComboBox.SelectedIndex >= 0)
                 {
                     baseItemComboBox_SelectedIndexChanged(sender, e);
@@ -129,7 +132,6 @@ namespace UniformityViewer2.Viewer
             // chartRenderer.ClearChart(); 
 
             groupBox1.Enabled = true;
-            SetMtfInfo();
 
             int masterIdx = int.Parse(masterValueListView.SelectedItems[0].Text);
 
@@ -146,6 +148,8 @@ namespace UniformityViewer2.Viewer
             {
                 item.BackColor = Color.White;
             }
+
+            mirrorShapeComboBox.SelectedIndex = -1;
 
             masterValueListView.SelectedItems[0].BackColor = Color.Red;
 

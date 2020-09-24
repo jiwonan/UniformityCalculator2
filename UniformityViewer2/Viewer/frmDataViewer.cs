@@ -90,6 +90,15 @@ namespace UniformityViewer2.Viewer
             splitContainer3.SplitterDistance = splitContainer3.Height / 2;
         }
 
+        private double CalcImageHeight(Mat m)
+        {
+            return /*ratio = */(double)m.Height / 600;
+
+/*            Console.WriteLine(m.Height + " // " + m.Width / ratio);
+
+            return Math.Round(m.Width / ratio);*/
+        }
+
         public void LoadResultData(DB.DetailInfo detailInfo, Tuple<int, double> lineAndInnerPercent, string shapeType)
         {
             double light = 0, pupil = 0;
@@ -119,10 +128,11 @@ namespace UniformityViewer2.Viewer
 
             OpenCvSharp.Rect roi = new OpenCvSharp.Rect(Math.Max(0, ret.Result.Width / 2 - 500), Math.Max(0, ret.Result.Height / 2 - 500), Math.Min(1000, ret.Result.Width), Math.Min(1000, ret.Result.Height));
 
-            Mat resultMat = ret.Result[roi].Resize(new OpenCvSharp.Size(600, 600));
-            Mat mirrorMat = ret.MirrorImage[roi].Resize(new OpenCvSharp.Size(600, 600));
+            double ratio = CalcImageHeight(ret.MirrorImage[roi]);
 
-            
+            Mat resultMat = ret.Result[roi].Resize(new OpenCvSharp.Size(ret.Result[roi].Width / ratio, ret.Result[roi].Height / ratio));
+            Mat mirrorMat = ret.MirrorImage[roi].Resize(new OpenCvSharp.Size(ret.MirrorImage[roi].Width / ratio, ret.MirrorImage[roi].Height / ratio));
+
             mirrorMat.ConvertTo(mirrorMat, MatType.CV_8U);
             picPinmirror.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(mirrorMat);
 
@@ -130,22 +140,18 @@ namespace UniformityViewer2.Viewer
             m *= 255;
             m.ConvertTo(resultMat, MatType.CV_8U);
 
-            string str = mtfchart.DrawChart(chartWidth, pinmirrorSize, Math.Truncate(pinmirrorGap * 10) / 10);
-            picPsf.Image = ret.Result[roi].Resize(new OpenCvSharp.Size(600, 600));
+            string str = mtfchart.DrawChart(chartWidth, pinmirrorSize, Math.Truncate(pinmirrorGap * 100) / 100);
+            picPsf.Image = ret.Result[roi].Resize(new OpenCvSharp.Size(ret.Result[roi].Width / ratio, ret.Result[roi].Height / ratio));
 
 
             string[] mtfValues = str.Split(',');
 
-            mtf_d.Text = "mtf_d : "+mtfValues[0];
-            mtf_r.Text = "mtf_r : "+mtfValues[1];
-            // label3.Text = mtfValues[2];
+            mtf_d.Text = "간격 : " + mtfValues[0];
+            mtf_r.Text = "크기 : " + mtfValues[1]; // 소수점 2자리
 
-            // pinmirrorGap, pinmirrorSize
-    
             CreateCharts(resultMat.Clone());
 
-
-            Mat show = UniformityCalculator2.Image.ImageManager.GetInstance().DrawHexagon(ret.Result)[roi].Resize(new OpenCvSharp.Size(600, 600));
+            Mat show = UniformityCalculator2.Image.ImageManager.GetInstance().DrawHexagon(ret.Result)[roi].Resize(new OpenCvSharp.Size(ret.Result[roi].Width / ratio, ret.Result[roi].Height / ratio));
 
             m = show.Split()[0];
             m *= 255;
@@ -175,8 +181,10 @@ namespace UniformityViewer2.Viewer
 
         public void LoadResultData(Mat mirrorMat, Mat resultMat, UniformityCalculator2.Image.ImageManager.ProcessImageResult ret, frmTester.PinInfo info)
         {
+            double ratio = CalcImageHeight(mirrorMat);
+
             mirrorMat.ConvertTo(mirrorMat, MatType.CV_8U);
-            mirrorMat = mirrorMat.Resize(new OpenCvSharp.Size(600, 600));
+            mirrorMat = mirrorMat.Resize(new OpenCvSharp.Size(mirrorMat.Width / ratio, mirrorMat.Height / ratio));
             picPinmirror.Image = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(mirrorMat);
 
             Mat show = resultMat.Clone();
@@ -185,8 +193,8 @@ namespace UniformityViewer2.Viewer
             m *= 255;
             m.ConvertTo(resultMat, MatType.CV_8U);
 
-            mtfchart.DrawChart(chartWidth, info.pinmrSize, Math.Truncate(info.pinmrGap * 10) / 10);
-            picPsf.Image = resultMat.Resize(new OpenCvSharp.Size(600, 600));
+            mtfchart.DrawChart(chartWidth, info.pinmrSize, Math.Truncate(info.pinmrGap * 100) / 100);
+            picPsf.Image = resultMat.Resize(new OpenCvSharp.Size(resultMat.Width / ratio, resultMat.Height / ratio));
 
             CreateCharts(resultMat.Clone());
 
