@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace UniformityViewer2
+namespace UniformityViewer2.Charting
 {
     public class MMperLightChartVertical : MMperLightChartRenderer
     {
-        public MMperLightChartVertical(Chart chart, Mat lightImage) : base(chart, lightImage, LineView.LineType.Vertical) { }
+        public MMperLightChartVertical(Chart chart, Mat lightImage) : base(chart, lightImage, Controls.Lines.LineView.LineType.Vertical) { }
 
         protected override int GetLength()
         {

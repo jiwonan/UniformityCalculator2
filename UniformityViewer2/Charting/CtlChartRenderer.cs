@@ -2,7 +2,7 @@
 using OpenCvSharp.Extensions;
 using System;
 
-namespace UniformityViewer2
+namespace UniformityViewer2.Charting
 {
     public class CtlChartRenderer
     {

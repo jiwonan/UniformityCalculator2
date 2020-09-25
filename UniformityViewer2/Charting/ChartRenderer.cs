@@ -7,17 +7,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace UniformityViewer2
+namespace UniformityViewer2.Charting
 {
     public abstract class ChartRenderer
     {
         protected Mat mLightImage;
         protected Chart mChart;
-        protected LineView.LineType mLineType;
+        protected Controls.Lines.LineView.LineType mLineType;
 
         protected Dictionary<int, Series> seriesData = new Dictionary<int, Series>();
 
-        public ChartRenderer(Chart chart, Mat lightImage, LineView.LineType lineType)
+        public ChartRenderer(Chart chart, Mat lightImage, Controls.Lines.LineView.LineType lineType)
         {
             this.mChart = chart;
             this.mLightImage = lightImage;
@@ -42,7 +42,7 @@ namespace UniformityViewer2
             mChart.ChartAreas["Draw"].AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
         }
 
-        public void DrawChart(object sender, int position, LineView.LineType type)
+        public void DrawChart(object sender, int position, Controls.Lines.LineView.LineType type)
         {
             if (mLineType != type) return;
 
@@ -79,7 +79,7 @@ namespace UniformityViewer2
         {
             Rectangle rect = ((Controls.LinePictureBox)sender).GetImageRect();
 
-            if (mLineType == LineView.LineType.Vertical)
+            if (mLineType == Controls.Lines.LineView.LineType.Vertical)
             {
                 int originalCols = mLightImage.Cols - 1;
                 int resizedCols = rect.Width;

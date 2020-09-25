@@ -14,7 +14,7 @@ namespace UniformityViewer2.Viewer
         public static bool HasInstance => mInstance != null;
 
         DB.DBMtfchart mtfchart = new DB.DBMtfchart();
-        List<ChartRenderer> charts;
+        List<Charting.ChartRenderer> charts;
 
         public static frmDataViewer GetInstance()
         {
@@ -37,12 +37,12 @@ namespace UniformityViewer2.Viewer
             //4분할 화면 유지
             ResizeSpliter();
 
-            charts = new List<ChartRenderer>();
+            charts = new List<Charting.ChartRenderer>();
 
             picPsf.OnLineMove += PicPsf_OnLineMove;
         }
 
-        private void PicPsf_OnLineMove(object sender, LineView.LineType lineType, int position)
+        private void PicPsf_OnLineMove(object sender, Controls.Lines.LineView.LineType lineType, int position)
         {
             foreach (var chart in charts)
             {
@@ -55,14 +55,14 @@ namespace UniformityViewer2.Viewer
         {
             charts.Clear();
 
-            charts.Add(new MMperLightChartHorizon(MMperLightChartHorizon, lightImage));
-            charts.Add(new MMperLightChartVertical(MMperLightChartVertical, lightImage));
+            charts.Add(new Charting.MMperLightChartHorizon(MMperLightChartHorizon, lightImage));
+            charts.Add(new Charting.MMperLightChartVertical(MMperLightChartVertical, lightImage));
 
             charts[0].CreateChart();
             charts[1].CreateChart();
-
-            charts[0].DrawChart(picPsf, picPsf.Height / 2, LineView.LineType.Horizon);
-            charts[1].DrawChart(picPsf, picPsf.Width / 2, LineView.LineType.Vertical);
+            
+            charts[0].DrawChart(picPsf, picPsf.Height / 2, UniformityViewer2.Controls.Lines.LineView.LineType.Horizon);
+            charts[1].DrawChart(picPsf, picPsf.Width / 2, UniformityViewer2.Controls.Lines.LineView.LineType.Vertical);
         }
 
         private void FrmDataViewer_FormClosed(object sender, FormClosedEventArgs e)
@@ -101,12 +101,9 @@ namespace UniformityViewer2.Viewer
 
         public void LoadResultData(DB.DetailInfo detailInfo, Tuple<int, double> lineAndInnerPercent, string shapeType)
         {
-            double light = 0, pupil = 0;
-            SizeF pinmirrorSize;
-
-            light = detailInfo.Light;
-            pupil = detailInfo.Pupil;
-            pinmirrorSize = detailInfo.pinMirrorSize;
+            double light = detailInfo.Light;
+            double pupil = detailInfo.Pupil;
+            SizeF pinmirrorSize = detailInfo.pinMirrorSize;
 
             int lines = lineAndInnerPercent.Item1;
             double innerPercent = lineAndInnerPercent.Item2;
@@ -127,6 +124,8 @@ namespace UniformityViewer2.Viewer
             double zoom = 600d / ret.Result.Width * 100;
 
             OpenCvSharp.Rect roi = new OpenCvSharp.Rect(Math.Max(0, ret.Result.Width / 2 - 500), Math.Max(0, ret.Result.Height / 2 - 500), Math.Min(1000, ret.Result.Width), Math.Min(1000, ret.Result.Height));
+
+
 
             double ratio = CalcImageHeight(ret.MirrorImage[roi]);
 
@@ -176,8 +175,6 @@ namespace UniformityViewer2.Viewer
             m.Dispose();
             mirrorMat.Dispose();
         }
-
-        
 
         public void LoadResultData(Mat mirrorMat, Mat resultMat, UniformityCalculator2.Image.ImageManager.ProcessImageResult ret, frmTester.PinInfo info)
         {

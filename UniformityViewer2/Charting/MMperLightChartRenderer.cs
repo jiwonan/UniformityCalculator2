@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace UniformityViewer2
+namespace UniformityViewer2.Charting
 {
     public abstract class MMperLightChartRenderer : ChartRenderer
     {
-        public MMperLightChartRenderer(Chart chart, Mat lightImage, LineView.LineType lineType) : base(chart, lightImage, lineType) { }
+        public MMperLightChartRenderer(Chart chart, Mat lightImage, Controls.Lines.LineView.LineType lineType) : base(chart, lightImage, lineType) { }
 
         // public override int AxisInterval { get; set; } = 15;
         protected override void SetChartMinMax()

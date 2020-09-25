@@ -14,13 +14,13 @@ namespace UniformityViewer2.Viewer
         DB.DBDetail detail = new DB.DBDetail();
         DB.DBMtfchart mtfchart = new DB.DBMtfchart();
         DataParser parser = new DataParser();
-        CtlChartRenderer chartRenderer;
+        Charting.CtlChartRenderer chartRenderer;
 
         public MainViewer()
         {
             InitializeComponent();
 
-            chartRenderer = new CtlChartRenderer(ctlHistLegend1);
+            chartRenderer = new Charting.CtlChartRenderer(ctlHistLegend1);
 
             master.LoadMasterData(masterValueListView);
 

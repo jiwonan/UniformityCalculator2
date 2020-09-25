@@ -28,9 +28,9 @@ namespace UniformityViewer2.Controls
             }
         }
 
-        List<LineView> controls;
+        List<Lines.LineView> controls;
 
-        public delegate void OnLineMoveDelegate(object sender, LineView.LineType lineType, int position);
+        public delegate void OnLineMoveDelegate(object sender, Lines.LineView.LineType lineType, int position);
         public event OnLineMoveDelegate OnLineMove;
 
         public LinePictureBox()
@@ -40,9 +40,9 @@ namespace UniformityViewer2.Controls
             this.MouseUp += LinePictureBox_MouseUp;
             this.MouseDoubleClick += LinePictureBox_MouseDoubleClick;
 
-            controls = new List<LineView>();
-            controls.Add(new LineVertical(this));
-            controls.Add(new LineHorizon(this));
+            controls = new List<Lines.LineView>();
+            controls.Add(new Lines.LineVertical(this));
+            controls.Add(new Lines.LineHorizon(this));
         }
 
         private void LinePictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -124,14 +124,14 @@ namespace UniformityViewer2.Controls
             }
         }
 
-        public void LineMove(LineView.LineType lineType, int position)
+        public void LineMove(Lines.LineView.LineType lineType, int position)
         {
             OnLineMove?.Invoke(this, lineType, position);
 
             this.Invalidate();
         }
 
-        public void TabLine(LineView.LineType type, double gap, int count, int length, double pos, int num)
+        public void TabLine(Lines.LineView.LineType type, double gap, int count, int length, double pos, int num)
         {
             foreach (var control in controls)
             {
@@ -143,8 +143,8 @@ namespace UniformityViewer2.Controls
         {
             Rectangle rect = GetImageRect();
 
-            int lineV = ((LineVertical)controls[0]).GetLineCoordinate() - rect.X;
-            int lineH = ((LineHorizon)controls[1]).GetLineCoordinate() - rect.Y;
+            int lineV = ((Lines.LineVertical)controls[0]).GetLineCoordinate() - rect.X;
+            int lineH = ((Lines.LineHorizon)controls[1]).GetLineCoordinate() - rect.Y;
 
             return $"V : {Math.Round(lineV * UniformityCalculator2.Data.CalcValues.MMperPixel, 2)}mm, H : {Math.Round(lineH * UniformityCalculator2.Data.CalcValues.MMperPixel, 2)}mm |";
         }
