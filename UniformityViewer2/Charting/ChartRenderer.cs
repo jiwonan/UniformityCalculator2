@@ -73,6 +73,7 @@ namespace UniformityViewer2.Charting
 
         protected abstract int GetLength();
 
+        protected abstract void GetDetailData(int searchPos, Controls.Lines.LineView.LineType type);
 
         private int CalcSearchPos(object sender, int position)
         {

@@ -193,7 +193,7 @@ namespace UniformityViewer2.Viewer
                 viewer = new frmDataViewer();
             }
 
-            viewer.LoadResultData(mirrorMat.Clone(), resultMat.Clone(), ret, info, resultMat.Clone());
+            viewer.LoadResultData(mirrorMat.Clone(), resultMat.Clone(), ret, info, resultMat.Clone(), mirrorShapeCB.SelectedIndex);
             viewer.Show();
         }
 

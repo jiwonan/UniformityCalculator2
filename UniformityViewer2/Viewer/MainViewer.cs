@@ -410,9 +410,7 @@ namespace UniformityViewer2.Viewer
                     {
                         resultViewer = frmDataViewer.GetInstance();
                     }
-                    resultViewer.LoadResultData(detailInfo, master.GetSelectedPinLinesAndInnerPercent(SelectedMaster), mirrorShapeComboBox.SelectedIndex == 0 ? "Circle" :
-                                                                                                                       mirrorShapeComboBox.SelectedIndex == 1 ? "Circle_Circle" :
-                                                                                                                       mirrorShapeComboBox.SelectedIndex == 2 ? "Hexa" : "Hexa_Circle");
+                    resultViewer.LoadResultData(detailInfo, master.GetSelectedPinLinesAndInnerPercent(SelectedMaster), mirrorShapeComboBox.SelectedIndex);
                     resultViewer.Show();
                 }
                 else
@@ -420,9 +418,7 @@ namespace UniformityViewer2.Viewer
                     if (frmDataViewer.HasInstance)
                     {
                         resultViewer = frmDataViewer.GetInstance();
-                        resultViewer.LoadResultData(detailInfo, master.GetSelectedPinLinesAndInnerPercent(SelectedMaster), mirrorShapeComboBox.SelectedIndex == 0 ? "Circle" :
-                                                                                                                           mirrorShapeComboBox.SelectedIndex == 1 ? "Circle_Circle" :
-                                                                                                                           mirrorShapeComboBox.SelectedIndex == 2 ? "Hexa" : "Hexa_Circle");
+                        resultViewer.LoadResultData(detailInfo, master.GetSelectedPinLinesAndInnerPercent(SelectedMaster), mirrorShapeComboBox.SelectedIndex);
                         resultViewer.Show();
                     }
                 }

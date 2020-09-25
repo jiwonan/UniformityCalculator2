@@ -53,7 +53,6 @@
             this.MMperLightChartHorizon = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.MMperLightChartVertical = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -66,7 +65,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.picPsf)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
-            this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
             this.chartTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -143,10 +141,6 @@
             // splitContainer3.Panel1
             // 
             this.splitContainer3.Panel1.Controls.Add(this.chartTabControl);
-            // 
-            // splitContainer3.Panel2
-            // 
-            this.splitContainer3.Panel2.Controls.Add(this.textBox1);
             this.splitContainer3.Size = new System.Drawing.Size(414, 450);
             this.splitContainer3.SplitterDistance = 223;
             this.splitContainer3.TabIndex = 0;
@@ -282,16 +276,6 @@
             this.MMperLightChartVertical.TabIndex = 0;
             this.MMperLightChartVertical.Text = "chart1";
             // 
-            // textBox1
-            // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(0, 0);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(414, 223);
-            this.textBox1.TabIndex = 0;
-            // 
             // frmDataViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -311,8 +295,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.picPinmirror)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPsf)).EndInit();
             this.splitContainer3.Panel1.ResumeLayout(false);
-            this.splitContainer3.Panel2.ResumeLayout(false);
-            this.splitContainer3.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
             this.chartTabControl.ResumeLayout(false);
@@ -341,7 +323,6 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.DataVisualization.Charting.Chart MMperLightChartHorizon;
         private System.Windows.Forms.DataVisualization.Charting.Chart MMperLightChartVertical;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label mtf_r;
         private System.Windows.Forms.Label mtf_d;
     }

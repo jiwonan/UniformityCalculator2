@@ -95,7 +95,29 @@ namespace UniformityViewer2.Viewer
             return (double)m.Height / 600;
         }
 
-        public void LoadResultData(DB.DetailInfo detailInfo, Tuple<int, double> lineAndInnerPercent, string shapeType)
+        private string GetShapeType(int idx)
+        {
+            string type = "";
+            switch (idx)
+            {
+                case 0:
+                    type = "Circle";
+                    break;
+                case 1:
+                    type = "Circle_Circle";
+                    break;
+                case 2:
+                    type = "Hexa";
+                    break;
+                case 3:
+                    type = "Hexa_Circle";
+                    break;
+            }
+
+            return type;
+        }
+
+        public void LoadResultData(DB.DetailInfo detailInfo, Tuple<int, double> lineAndInnerPercent, int shapeType)
         {
             int lines = lineAndInnerPercent.Item1;
             double innerPercent = lineAndInnerPercent.Item2;
@@ -122,9 +144,8 @@ namespace UniformityViewer2.Viewer
             Mat show = UniformityCalculator2.Image.ImageManager.GetInstance().DrawHexagon(ret.Result.Clone())[roi].Resize(new OpenCvSharp.Size(ret.Result[roi].Width / ratio, ret.Result[roi].Height / ratio));
 
             show.PutText($"Zoom : {zoom:0.00}%", new Point(0, 20), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            show.PutText($"ShapeType : {shapeType}", new Point(0, 40), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
 
-            LoadResultData(ret.MirrorImage[roi], ret.Result[roi], ret, info, show, 40);
+            LoadResultData(ret.MirrorImage[roi], ret.Result[roi], ret, info, show, shapeType, 20);
         }
 
         private Bitmap GetMirrorImage(Mat mirrorMat, double ratio)
@@ -151,22 +172,23 @@ namespace UniformityViewer2.Viewer
             CreateCharts(resultMat.Clone());
         }
 
-        private Mat GetResultImage(Mat show, frmTester.PinInfo info, UniformityCalculator2.Image.ImageManager.ProcessImageResult ret, int pos)
+        private Mat GetResultImage(Mat show, frmTester.PinInfo info, UniformityCalculator2.Image.ImageManager.ProcessImageResult ret, int shapeType, int pos)
         {
-            show.PutText($"Efficiency : {info.light}% pupilSize : {info.pupil}mm", new Point(0, 20 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            show.PutText($"pinmirrorSize : {info.pinmrSize}mm", new Point(0, 40 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            show.PutText($"pinmirror_Gap : {info.pinmrGap}mm", new Point(0, 60 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            show.PutText($"Max-Avg : {ret.MaxAvg}", new Point(0, 80 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            show.PutText($"Min-Avg : {ret.MinAvg}", new Point(0, 100 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            show.PutText($"MeanDev : {ret.MeanDev}", new Point(0, 120 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            show.PutText($"LumperDegree(Max) : {ret.LumDegreeMax}", new Point(0, 140 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            show.PutText($"LumperDegree(Avg) : {ret.LumDegreeAvg}", new Point(0, 160 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            show.PutText($"Real Efficiency : {info.light * (info.pinmrWidth / info.pinmrHeight)}%", new Point(0, 180 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"ShapeType : {GetShapeType(shapeType)}", new Point(0, 20+pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"Efficiency : {info.light}% pupilSize : {info.pupil}mm", new Point(0, 40 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"pinmirrorSize : {info.pinmrSize}mm", new Point(0, 60 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"pinmirror_Gap : {info.pinmrGap}mm", new Point(0, 80 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"Max-Avg : {ret.MaxAvg}", new Point(0, 100 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"Min-Avg : {ret.MinAvg}", new Point(0, 120 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"MeanDev : {ret.MeanDev}", new Point(0, 140 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"LumperDegree(Max) : {ret.LumDegreeMax}", new Point(0, 160 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"LumperDegree(Avg) : {ret.LumDegreeAvg}", new Point(0, 180 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
+            show.PutText($"Real Efficiency : {info.light * (info.pinmrWidth / info.pinmrHeight)}%", new Point(0, 200 + pos), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
 
             return show;
         }
 
-        public void LoadResultData(Mat mirrorMat, Mat resultMat, UniformityCalculator2.Image.ImageManager.ProcessImageResult ret, frmTester.PinInfo info, Mat show, int pos = 0)
+        public void LoadResultData(Mat mirrorMat, Mat resultMat, UniformityCalculator2.Image.ImageManager.ProcessImageResult ret, frmTester.PinInfo info, Mat show, int shapeType, int pos = 0)
         {
             double ratio = CalcImageHeight(mirrorMat);
 
@@ -178,7 +200,7 @@ namespace UniformityViewer2.Viewer
             m *= 255;
             m.ConvertTo(show, MatType.CV_8U);
 
-            picPsf.Image = GetResultImage(show, info, ret, pos);
+            picPsf.Image = GetResultImage(show, info, ret, shapeType,pos);
 
             resultMat.Dispose();
             show.Dispose();
