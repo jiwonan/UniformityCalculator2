@@ -1,10 +1,6 @@
 ﻿using OpenCvSharp;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace UniformityViewer2.Charting
@@ -44,7 +40,10 @@ namespace UniformityViewer2.Charting
 
         public void DrawChart(object sender, int position, Controls.Lines.LineView.LineType type)
         {
-            if (mLineType != type) return;
+            if (mLineType != type)
+            {
+                return;
+            }
 
             int searchPos = CalcSearchPos(sender, position);
 

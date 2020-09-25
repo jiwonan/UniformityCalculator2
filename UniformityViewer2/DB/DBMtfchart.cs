@@ -1,7 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace UniformityViewer2.DB
@@ -29,12 +28,12 @@ namespace UniformityViewer2.DB
                     targetSeries.Points.AddXY(reader.GetDouble(0), reader.GetDouble(1));
 
                     value = reader.GetDouble(0);
-                    
+
                 }
                 //targetChart.ChartAreas[0].AxisX.Maximum = value;
                 targetChart.ChartAreas[0].AxisX.IsMarginVisible = false;
             }
-            
+
 
 
             con.Close();
@@ -42,7 +41,7 @@ namespace UniformityViewer2.DB
 
         public string DrawChart(Chart chartWidth, SizeF pinmirrorSize, double pinmirrorGap)
         {
-            DrawChart(chartWidth, pinmirrorGap, Math.Truncate(pinmirrorSize.Width * 100)/100, "S");
+            DrawChart(chartWidth, pinmirrorGap, Math.Truncate(pinmirrorSize.Width * 100) / 100, "S");
             DrawChart(chartWidth, pinmirrorGap, Math.Truncate(pinmirrorSize.Height * 100) / 100, "T");
 
             /*double mtf_d = Math.Round(pinmirrorGap * 10, 2) / 10;

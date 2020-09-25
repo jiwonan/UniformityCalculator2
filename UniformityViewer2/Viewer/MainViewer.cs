@@ -355,10 +355,10 @@ namespace UniformityViewer2.Viewer
 
         private void ShowDetail(int xLoc, int yLoc, MouseButtons button, System.Drawing.Point curMouse, bool show = true)
         {
-/*            if (baseItemComboBox.SelectedIndex == -1 || baseValueComboBox.SelectedIndex == -1 || mirrorShapeComboBox.SelectedIndex == -1)
-            {
-                return;
-            }*/
+            /*            if (baseItemComboBox.SelectedIndex == -1 || baseValueComboBox.SelectedIndex == -1 || mirrorShapeComboBox.SelectedIndex == -1)
+                        {
+                            return;
+                        }*/
 
             Mat m = parser.GetChart(baseItemComboBox.SelectedIndex, double.Parse(baseValueComboBox.Text), double.Parse(pinmirrorWidthValueComboBox.Text.Replace("+", "")));
 

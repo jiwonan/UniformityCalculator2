@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace UniformityViewer2.Controls.Lines
@@ -60,7 +56,10 @@ namespace UniformityViewer2.Controls.Lines
 
         public void OnMouseDown(MouseEventArgs e)
         {
-            if (IsClicked(e)) isMouseButtonDown = true;
+            if (IsClicked(e))
+            {
+                isMouseButtonDown = true;
+            }
         }
 
         protected abstract bool IsClicked(MouseEventArgs e);
@@ -90,8 +89,9 @@ namespace UniformityViewer2.Controls.Lines
             DrawLines(g);
 
             if (prevImageRect.Width != mParent.Image.Width || prevImageRect.Height != mParent.Image.Height)
+            {
                 ReplaceStuff();
-
+            }
         }
 
         protected abstract void DrawLines(Graphics g);
@@ -107,7 +107,10 @@ namespace UniformityViewer2.Controls.Lines
 
         private void ReplaceStuff()
         {
-            if (prevImageRect.IsEmpty) prevImageRect = mParent.GetImageRect();
+            if (prevImageRect.IsEmpty)
+            {
+                prevImageRect = mParent.GetImageRect();
+            }
 
             Rectangle curImageRect = mParent.GetImageRect();
 

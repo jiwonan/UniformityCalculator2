@@ -17,8 +17,15 @@ namespace UniformityViewer2.Controls.Lines
 
         protected override void CheckBounds(MouseEventArgs e)
         {
-            if (Position >= mParent.Width) Position = mParent.Width;
-            if (Position < 0) Position = 0;
+            if (Position >= mParent.Width)
+            {
+                Position = mParent.Width;
+            }
+
+            if (Position < 0)
+            {
+                Position = 0;
+            }
         }
 
         protected override void DrawLines(Graphics g)
@@ -39,7 +46,10 @@ namespace UniformityViewer2.Controls.Lines
 
                 return true;
             }
-            else return false;
+            else
+            {
+                return false;
+            }
         }
 
         protected override bool IsHover(MouseEventArgs e)
@@ -50,7 +60,10 @@ namespace UniformityViewer2.Controls.Lines
                 return true;
             }
             if (mParent.Cursor == Cursors.VSplit)
+            {
                 mParent.Cursor = Cursors.Arrow;
+            }
+
             return false;
         }
 
@@ -83,20 +96,29 @@ namespace UniformityViewer2.Controls.Lines
 
             Position = (int)(curImageRect.Left + pos / wRatio + gap / (TAB_GAP * 2) / wRatio * (num * TAB_GAP + v++));
 
-            if (v == TAB_GAP + 1) v = 0;
+            if (v == TAB_GAP + 1)
+            {
+                v = 0;
+            }
 
             return Position;
         }
 
         protected override void UpdateCenter()
         {
-            if (Position == -1) Position = mParent.Width / 2;
+            if (Position == -1)
+            {
+                Position = mParent.Width / 2;
+            }
         }
 
         protected override int SetLineCenter(MouseEventArgs e)
         {
             if (IsClicked(e))
+            {
                 return this.Position = mParent.Width / 2;
+            }
+
             return Position;
         }
     }

@@ -2,10 +2,7 @@
 using System;
 using System.Drawing;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
-// using UniformityCalculator2;
-using Point = OpenCvSharp.Point;
 
 namespace UniformityViewer2.Viewer
 {
@@ -97,15 +94,7 @@ namespace UniformityViewer2.Viewer
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            Mat resultMat, mirrorMat;
-            GetImageMat(out resultMat, out mirrorMat);
-
-            // Console.WriteLine((double)resultMat.Height / resultMat.Width);
-
-            /*this.Viewer.Resize(resultMat.Width, resultMat.Height);
-            this.Viewer.ShowImage(resultMat);
-            this.Viewer2.Resize(mirrorMat.Width, mirrorMat.Height);
-            this.Viewer2.ShowImage(mirrorMat);*/
+            ShowDataViewer();
         }
 
 
@@ -178,18 +167,12 @@ namespace UniformityViewer2.Viewer
             }
         }
 
-        private void GetImageMat(out Mat resultMat, out Mat mirrorMat)
+        private void ShowDataViewer()
         {
-            PinInfo info = new PinInfo((double)leS.Value, (double)psS.Value, (double)pisS.Value, (double)pisE.Value, (double)lg.Value);
-
-            Mat kernel = UniformityCalculator2.Image.KernelManager.GetKernel((decimal)info.pinmrWidth, (decimal)info.pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
-
-            UniformityCalculator2.Image.ImageManager.ProcessImageResult ret = UniformityCalculator2.Image.ImageManager.GetInstance().ProcessImage((int)pinLines.Value, info.pinmrGap, info.pupil, kernel, 0, false, chkInvert.Checked);
-            //Viewer.ShowImage(ret.Result);
-
-            resultMat = ImageProcessor.Instance.GetResultMat(ret, (double)eyeReliefTextBox.Value, (double)horizonFOVTextBox.Value, (double)verticalFOVTextBox.Value);
-
-            mirrorMat = ImageProcessor.Instance.GetMirrorMat(ret);
+            Mat resultMat, mirrorMat;
+            PinInfo info;
+            UniformityCalculator2.Image.ImageManager.ProcessImageResult ret;
+            GetImageMat(out mirrorMat, out resultMat, out info, out ret);
 
             if (string.IsNullOrWhiteSpace(txtImagePath.Text) == false && File.Exists(txtImagePath.Text))
             {
@@ -205,35 +188,44 @@ namespace UniformityViewer2.Viewer
             {
                 viewer = frmDataViewer.GetInstance();
             }
+            else
             {
                 viewer = new frmDataViewer();
             }
 
-            viewer.LoadResultData(mirrorMat.Clone(), resultMat.Clone(), ret, info);
+            viewer.LoadResultData(mirrorMat.Clone(), resultMat.Clone(), ret, info, resultMat.Clone());
             viewer.Show();
+        }
 
-            /*resultMat.PutText($"Efficiency : {light}%", new Point(0, 20), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"pupilSize : {pupil}mm", new Point(0, 40), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"pinmirrorSize : {pinmrWidth}mm", new Point(0, 60), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"pinmirror_Gap : {pinmirrorGap}mm", new Point(0, 80), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"Max-Avg : {ret.MaxAvg}", new Point(0, 100), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"Min-Avg : {ret.MinAvg}", new Point(0, 120), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"MeanDev : {ret.MeanDev}", new Point(0, 140), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"LumperDegree(Max) : {ret.LumDegreeMax}", new Point(0, 160), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);
-            resultMat.PutText($"LumperDegree(Avg) : {ret.LumDegreeAvg}", new Point(0, 180), HersheyFonts.HersheyDuplex, 0.5, Scalar.Red);*/
+        private void GetImageMat(out Mat resultMat)
+        {
+            Mat m;
+            PinInfo info;
+            UniformityCalculator2.Image.ImageManager.ProcessImageResult ret;
+            GetImageMat(out m, out resultMat, out info, out ret);
+
+            m.Dispose();
+            ret.Dispose();
+        }
+
+        private void GetImageMat(out Mat mirrorMat, out Mat resultMat, out PinInfo info, out UniformityCalculator2.Image.ImageManager.ProcessImageResult ret)
+        {
+            info = new PinInfo(0, (double)psS.Value, (double)pisS.Value, (double)pisE.Value, (double)lg.Value);
+
+            Mat kernel = UniformityCalculator2.Image.KernelManager.GetKernel((decimal)info.pinmrWidth, (decimal)info.pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
+
+            ret = UniformityCalculator2.Image.ImageManager.GetInstance().ProcessImage((int)pinLines.Value, info.pinmrGap, info.pupil, kernel, 0, false);
+
+            mirrorMat = ImageProcessor.Instance.GetMirrorMat(ret);
+
+            resultMat = ImageProcessor.Instance.GetResultMat(ret, (double)eyeReliefTextBox.Value, (double)horizonFOVTextBox.Value, (double)verticalFOVTextBox.Value);
         }
 
         private bool SaveImage(out Mat img)
         {
-            PinInfo info = new PinInfo(0, (double)psS.Value, (double)pisS.Value, (double)pisE.Value, (double)lg.Value);
+            Mat resultMat;
 
-            Mat kernel = UniformityCalculator2.Image.KernelManager.GetKernel((decimal)info.pinmrWidth, (decimal)info.pinmrHeight, 33, mirrorShapeCB.SelectedIndex);
-
-            var ret = UniformityCalculator2.Image.ImageManager.GetInstance().ProcessImage((int)pinLines.Value, info.pinmrGap, info.pupil, kernel, 0, false);
-
-            Viewer.ShowImage(ret.Result); // Original Data
-
-            Mat resultMat = ImageProcessor.Instance.GetResultMat(ret, (double)eyeReliefTextBox.Value, (double)horizonFOVTextBox.Value, (double)verticalFOVTextBox.Value);
+            GetImageMat(out resultMat);
 
             if (string.IsNullOrWhiteSpace(txtImagePath.Text) == false && File.Exists(txtImagePath.Text))
             {
@@ -296,5 +288,6 @@ namespace UniformityViewer2.Viewer
             lg.Enabled = true;
             leS.Enabled = false;
         }
+
     }
 }

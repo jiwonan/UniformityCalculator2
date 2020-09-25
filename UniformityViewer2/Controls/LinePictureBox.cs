@@ -3,9 +3,6 @@ using OpenCvSharp.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace UniformityViewer2.Controls
@@ -16,7 +13,11 @@ namespace UniformityViewer2.Controls
         public new Mat Image {
             get { return mImage; }
             set {
-                if (value == null) return;
+                if (value == null)
+                {
+                    return;
+                }
+
                 mImage = value.Clone();
 
                 using (Mat m = new Mat())
@@ -55,7 +56,10 @@ namespace UniformityViewer2.Controls
 
         private void LinePictureBox_MouseUp(object sender, MouseEventArgs e)
         {
-            if (this.Image == null) return;
+            if (this.Image == null)
+            {
+                return;
+            }
 
             foreach (var control in controls)
             {
@@ -65,7 +69,10 @@ namespace UniformityViewer2.Controls
 
         private void LinePictureBox_MouseDown(object sender, MouseEventArgs e)
         {
-            if (this.Image == null) return;
+            if (this.Image == null)
+            {
+                return;
+            }
 
             foreach (var control in controls)
             {
@@ -75,7 +82,10 @@ namespace UniformityViewer2.Controls
 
         private void LinePictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-            if (this.Image == null) return;
+            if (this.Image == null)
+            {
+                return;
+            }
 
             foreach (var control in controls)
             {
@@ -102,7 +112,10 @@ namespace UniformityViewer2.Controls
         {
             base.OnPaint(pe);
 
-            if (this.Image == null) return;
+            if (this.Image == null)
+            {
+                return;
+            }
 
             Graphics g = pe.Graphics;
 
@@ -116,7 +129,10 @@ namespace UniformityViewer2.Controls
         {
             base.OnResize(e);
 
-            if (this.Image == null) return;
+            if (this.Image == null)
+            {
+                return;
+            }
 
             foreach (var control in controls)
             {
