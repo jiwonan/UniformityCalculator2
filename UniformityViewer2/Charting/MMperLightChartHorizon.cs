@@ -1,22 +1,23 @@
 ﻿using OpenCvSharp;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms.DataVisualization.Charting;
+using UniformityViewer2.Controls.Lines;
 
 namespace UniformityViewer2.Charting
 {
     public class MMperLightChartHorizon : MMperLightChartRenderer
     {
-        public MMperLightChartHorizon(Chart chart, Mat lightImage) : base(chart, lightImage, Controls.Lines.LineView.LineType.Horizon) { }
+        public MMperLightChartHorizon(Chart chart, Mat lightImage) : base(chart, lightImage, LineView.LineType.Horizon) { }
 
-        protected override void GetDetailData(int searchPos, Controls.Lines.LineView.LineType type)
+        protected override IEnumerable<string> GetDetailData(int searchPos)
         {
-            if (type == mLineType)
+            yield return $"Horizon Pos : {searchPos * UniformityCalculator2.Data.CalcValues.MMperPixel}mm";
+            for (int col = 0; col < mLightImage.Cols; col++)
             {
-                for (int col = 0; col < mLightImage.Cols; col++)
-                {
-                    Console.WriteLine($"{col * UniformityCalculator2.Data.CalcValues.MMperPixel}mm : {mLightImage.Get<byte>(searchPos, col)}");
-                }
+                yield return $"{col * UniformityCalculator2.Data.CalcValues.MMperPixel}mm : {mLightImage.Get<byte>(searchPos, col)}";
             }
+            yield break;
         }
 
         protected override int GetLength()

@@ -30,7 +30,7 @@ namespace UniformityViewer2.Controls.Lines
 
         protected override void DrawLines(Graphics g)
         {
-            g.DrawLine(Pens.Red, new System.Drawing.Point(0, Position), new System.Drawing.Point(mParent.Width, Position));
+            g.DrawLine(Pens.Red, new System.Drawing.Point(mParent.GetImageRect().X, Position), new System.Drawing.Point(mParent.GetImageRect().X + mParent.GetImageRect().Width, Position));
         }
 
         protected override LineType GetLineType()

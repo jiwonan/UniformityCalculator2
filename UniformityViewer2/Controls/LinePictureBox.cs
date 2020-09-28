@@ -162,7 +162,7 @@ namespace UniformityViewer2.Controls
             int lineV = ((Lines.LineVertical)controls[0]).GetLineCoordinate() - rect.X;
             int lineH = ((Lines.LineHorizon)controls[1]).GetLineCoordinate() - rect.Y;
 
-            return $"V : {Math.Round(lineV * UniformityCalculator2.Data.CalcValues.MMperPixel, 2)}mm, H : {Math.Round(lineH * UniformityCalculator2.Data.CalcValues.MMperPixel, 2)}mm |";
+            return $"H : {Math.Round(lineH * UniformityCalculator2.Data.CalcValues.MMperPixel, 2)}mm, V : {Math.Round(lineV * UniformityCalculator2.Data.CalcValues.MMperPixel, 2)}mm";
         }
     }
 }

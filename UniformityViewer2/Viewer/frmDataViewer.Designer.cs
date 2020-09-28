@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
@@ -42,7 +43,6 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.picPinmirror = new System.Windows.Forms.PictureBox();
-            this.picPsf = new UniformityViewer2.Controls.LinePictureBox();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.chartTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -53,6 +53,12 @@
             this.MMperLightChartHorizon = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.MMperLightChartVertical = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.horizonValueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.verticalValueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.linePosToolStripLabel = new System.Windows.Forms.ToolStripLabel();
+            this.picPsf = new UniformityViewer2.Controls.LinePictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -62,7 +68,6 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picPinmirror)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPsf)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.SuspendLayout();
@@ -73,6 +78,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.MMperLightChartHorizon)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MMperLightChartVertical)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picPsf)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -106,6 +114,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.picPsf);
+            this.splitContainer2.Panel2.Controls.Add(this.toolStrip1);
             this.splitContainer2.Size = new System.Drawing.Size(382, 450);
             this.splitContainer2.SplitterDistance = 223;
             this.splitContainer2.TabIndex = 0;
@@ -119,17 +128,6 @@
             this.picPinmirror.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picPinmirror.TabIndex = 0;
             this.picPinmirror.TabStop = false;
-            // 
-            // picPsf
-            // 
-            this.picPsf.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picPsf.Image = null;
-            this.picPsf.Location = new System.Drawing.Point(0, 0);
-            this.picPsf.Name = "picPsf";
-            this.picPsf.Size = new System.Drawing.Size(382, 223);
-            this.picPsf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picPsf.TabIndex = 1;
-            this.picPsf.TabStop = false;
             // 
             // splitContainer3
             // 
@@ -276,6 +274,57 @@
             this.MMperLightChartVertical.TabIndex = 0;
             this.MMperLightChartVertical.Text = "chart1";
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.horizonValueToolStripMenuItem,
+            this.verticalValueToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 70);
+            // 
+            // horizonValueToolStripMenuItem
+            // 
+            this.horizonValueToolStripMenuItem.Name = "horizonValueToolStripMenuItem";
+            this.horizonValueToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.horizonValueToolStripMenuItem.Text = "Horizon Value";
+            this.horizonValueToolStripMenuItem.Click += new System.EventHandler(this.horizonValueToolStripMenuItem_Click);
+            // 
+            // verticalValueToolStripMenuItem
+            // 
+            this.verticalValueToolStripMenuItem.Name = "verticalValueToolStripMenuItem";
+            this.verticalValueToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.verticalValueToolStripMenuItem.Text = "Vertical Value";
+            this.verticalValueToolStripMenuItem.Click += new System.EventHandler(this.verticalValueToolStripMenuItem_Click);
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.linePosToolStripLabel});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 198);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(382, 25);
+            this.toolStrip1.TabIndex = 2;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // linePosToolStripLabel
+            // 
+            this.linePosToolStripLabel.Name = "linePosToolStripLabel";
+            this.linePosToolStripLabel.Size = new System.Drawing.Size(52, 22);
+            this.linePosToolStripLabel.Text = "Line Pos";
+            // 
+            // picPsf
+            // 
+            this.picPsf.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picPsf.Image = null;
+            this.picPsf.Location = new System.Drawing.Point(0, 0);
+            this.picPsf.Name = "picPsf";
+            this.picPsf.Size = new System.Drawing.Size(382, 198);
+            this.picPsf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picPsf.TabIndex = 1;
+            this.picPsf.TabStop = false;
+            this.picPsf.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picPsf_MouseClick);
+            // 
             // frmDataViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -290,10 +339,10 @@
             this.splitContainer1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
+            this.splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picPinmirror)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPsf)).EndInit();
             this.splitContainer3.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
@@ -305,6 +354,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.MMperLightChartHorizon)).EndInit();
             this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.MMperLightChartVertical)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picPsf)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -325,5 +378,10 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart MMperLightChartVertical;
         private System.Windows.Forms.Label mtf_r;
         private System.Windows.Forms.Label mtf_d;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem horizonValueToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem verticalValueToolStripMenuItem;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripLabel linePosToolStripLabel;
     }
 }

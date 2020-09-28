@@ -485,7 +485,6 @@ namespace UniformityViewer2.Viewer
             pictureBox1.GetXYLocation(m, e.Location, out xLoc, out yLoc);
             LastSelectedCoord = new System.Drawing.Point((int)xLoc, (int)yLoc);
             ShowDetail(e.Button, e.Location);
-
         }
 
         private void viewer를새창으로ToolStripMenuItem_Click(object sender, EventArgs e)

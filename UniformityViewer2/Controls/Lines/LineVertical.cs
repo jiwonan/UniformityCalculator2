@@ -30,7 +30,7 @@ namespace UniformityViewer2.Controls.Lines
 
         protected override void DrawLines(Graphics g)
         {
-            g.DrawLine(Pens.Red, new System.Drawing.Point(Position, 0), new System.Drawing.Point(Position, mParent.Height));
+            g.DrawLine(Pens.Red, new Point(Position, mParent.GetImageRect().Y), new Point(Position, mParent.GetImageRect().Y + mParent.GetImageRect().Height));
         }
 
         protected override LineType GetLineType()
@@ -42,7 +42,7 @@ namespace UniformityViewer2.Controls.Lines
         {
             if (Math.Abs(Position - e.X) <= MOUSE_GAP && ShowLine)
             {
-                TargetLine = this.lineType;
+                TargetLine = lineType;
 
                 return true;
             }

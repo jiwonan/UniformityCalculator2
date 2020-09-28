@@ -1,7 +1,9 @@
 ﻿using OpenCvSharp;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text;
 using System.Windows.Forms.DataVisualization.Charting;
+using UniformityViewer2.Controls.Lines;
 
 namespace UniformityViewer2.Charting
 {
@@ -38,7 +40,7 @@ namespace UniformityViewer2.Charting
             mChart.ChartAreas["Draw"].AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dash;
         }
 
-        public void DrawChart(object sender, int position, Controls.Lines.LineView.LineType type)
+        public void DrawChart(object sender, int position, LineView.LineType type)
         {
             if (mLineType != type)
             {
@@ -67,19 +69,34 @@ namespace UniformityViewer2.Charting
             seriesData.Clear();
         }
 
+        public string GetFileData(object sender, LineView.LineType type, int position)
+        {
+            if (type != mLineType) return null;
+
+            position = CalcSearchPos(sender, position);
+
+            StringBuilder sb = new StringBuilder();
+            foreach (string data in GetDetailData(position))
+            {
+                sb.Append(data).Append("\r\n");
+            }
+
+            return sb.ToString();
+        }
+
         protected abstract void SetChartMinMax();
 
         protected abstract Series GetSeriesData(Series data, int searchPos);
 
         protected abstract int GetLength();
 
-        protected abstract void GetDetailData(int searchPos, Controls.Lines.LineView.LineType type);
+        protected abstract IEnumerable<string> GetDetailData(int searchPos);
 
-        private int CalcSearchPos(object sender, int position)
+        public int CalcSearchPos(object sender, int position)
         {
             Rectangle rect = ((Controls.LinePictureBox)sender).GetImageRect();
 
-            if (mLineType == Controls.Lines.LineView.LineType.Vertical)
+            if (mLineType == LineView.LineType.Vertical)
             {
                 int originalCols = mLightImage.Cols - 1;
                 int resizedCols = rect.Width;

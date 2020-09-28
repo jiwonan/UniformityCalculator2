@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
+using UniformityViewer2.Controls.Lines;
 using Point = OpenCvSharp.Point;
 
 namespace UniformityViewer2.Viewer
@@ -42,13 +45,25 @@ namespace UniformityViewer2.Viewer
             picPsf.OnLineMove += PicPsf_OnLineMove;
         }
 
-        private void PicPsf_OnLineMove(object sender, Controls.Lines.LineView.LineType lineType, int position)
+
+        private void PicPsf_OnLineMove(object sender, LineView.LineType lineType, int position)
         {
             foreach (var chart in charts)
             {
                 chart.DrawChart(sender, position, lineType);
             }
-            // get Row value.
+
+            ShowLinePosition(sender, lineType, position);
+        }
+
+        private void ShowLinePosition(object sender, LineView.LineType lineType, int position)
+        {
+            if (lineType == LineView.LineType.Horizon)
+                posH = charts[0].CalcSearchPos(sender, position);
+            else
+                posV = charts[1].CalcSearchPos(sender, position);
+
+            linePosToolStripLabel.Text = $"H : {Math.Round(posH * UniformityCalculator2.Data.CalcValues.MMperPixel, 2)}mm, V : {Math.Round(posV * UniformityCalculator2.Data.CalcValues.MMperPixel, 2)}mm";
         }
 
         private void CreateCharts(Mat lightImage)
@@ -61,8 +76,13 @@ namespace UniformityViewer2.Viewer
             charts[0].CreateChart();
             charts[1].CreateChart();
 
-            charts[0].DrawChart(picPsf, picPsf.Height / 2, UniformityViewer2.Controls.Lines.LineView.LineType.Horizon);
-            charts[1].DrawChart(picPsf, picPsf.Width / 2, UniformityViewer2.Controls.Lines.LineView.LineType.Vertical);
+            charts[0].DrawChart(picPsf, picPsf.Height / 2, LineView.LineType.Horizon);
+            charts[1].DrawChart(picPsf, picPsf.Width / 2, LineView.LineType.Vertical);
+
+            posH = lightImage.Height / 2;
+            posV = lightImage.Width / 2;
+
+            linePosToolStripLabel.Text = $"H : {Math.Round(posH * UniformityCalculator2.Data.CalcValues.MMperPixel, 2)}mm, V : {Math.Round(posV * UniformityCalculator2.Data.CalcValues.MMperPixel, 2)}mm";
         }
 
         private void FrmDataViewer_FormClosed(object sender, FormClosedEventArgs e)
@@ -208,5 +228,44 @@ namespace UniformityViewer2.Viewer
             mirrorMat.Dispose();
         }
 
+        private int posV, posH;
+
+        private void picPsf_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                contextMenuStrip1.Show(picPsf, e.X, e.Y);
+            }
+        }
+
+        private void horizonValueToolStripMenuItem_Click(object sender, EventArgs e) // 0
+        {
+            SavePosData(picPsf, LineView.LineType.Horizon, charts[0], posH);
+        }
+
+        private void verticalValueToolStripMenuItem_Click(object sender, EventArgs e) // 1
+        {
+            SavePosData(picPsf, LineView.LineType.Vertical, charts[1], posV);
+        }
+
+        private void SavePosData(object sender, LineView.LineType type, Charting.ChartRenderer chart, int position)
+        {
+            string data = chart.GetFileData(sender, type, position);
+
+            if(data == null)
+            {
+                MessageBox.Show("파일 저장 실패");
+            }
+
+            using (SaveFileDialog dig = new SaveFileDialog())
+            {
+                dig.Filter = "txt파일...일까요?|*.txt";
+                if(dig.ShowDialog() == DialogResult.OK)
+                {
+                    string path = Path.GetFullPath(dig.FileName);
+                    File.WriteAllText(path, data);
+                }
+            }
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace UniformityViewer2.Controls.Lines
             mParent.LineMove(lineType, position);
         }
 
-        public LineView(Controls.LinePictureBox parent, LineType type) { mParent = parent; this.lineType = type; }
+        public LineView(LinePictureBox parent, LineType type) { mParent = parent; this.lineType = type; }
 
         public void OnMouseMove(MouseEventArgs e)
         {
