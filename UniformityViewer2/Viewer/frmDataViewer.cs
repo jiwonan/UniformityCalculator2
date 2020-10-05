@@ -259,11 +259,13 @@ namespace UniformityViewer2.Viewer
 
             using (SaveFileDialog dig = new SaveFileDialog())
             {
-                dig.Filter = "txt파일...일까요?|*.txt";
+                dig.Filter = "txt파일|*.txt";
                 if(dig.ShowDialog() == DialogResult.OK)
                 {
                     string path = Path.GetFullPath(dig.FileName);
                     File.WriteAllText(path, data);
+
+                    System.Diagnostics.Process.Start(dig.FileName, path);
                 }
             }
         }

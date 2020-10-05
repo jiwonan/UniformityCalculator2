@@ -73,8 +73,6 @@ namespace UniformityViewer2.Charting
         {
             if (type != mLineType) return null;
 
-            position = CalcSearchPos(sender, position);
-
             StringBuilder sb = new StringBuilder();
             foreach (string data in GetDetailData(position))
             {

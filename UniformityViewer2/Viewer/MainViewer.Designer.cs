@@ -630,7 +630,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(45, 16);
             this.label6.TabIndex = 7;
-            this.label6.Text = "Ver.2";
+            this.label6.Text = "Ver.3";
             // 
             // MainViewer
             // 
