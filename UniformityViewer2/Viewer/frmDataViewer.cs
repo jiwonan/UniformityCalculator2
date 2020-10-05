@@ -255,6 +255,7 @@ namespace UniformityViewer2.Viewer
             if(data == null)
             {
                 MessageBox.Show("파일 저장 실패");
+                return;
             }
 
             using (SaveFileDialog dig = new SaveFileDialog())

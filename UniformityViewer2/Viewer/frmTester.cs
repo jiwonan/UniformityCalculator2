@@ -55,11 +55,11 @@ namespace UniformityViewer2.Viewer
         // [DllImport("user32.dll", SetLastError = true)]
         // static extern bool GetWindowRect(IntPtr hwnd, out RECT lpRect);
 
-        private Window mViewer = null;
-        private Window mViewer2 = null;
+       /* private Window mViewer = null;
+        private Window mViewer2 = null;*/
         private Window mViewer3 = null;
 
-        public Window Viewer {
+/*        public Window Viewer {
             get {
                 if (mViewer == null)
                 {
@@ -80,7 +80,7 @@ namespace UniformityViewer2.Viewer
                 return mViewer2;
             }
         }
-
+*/
         public Window Viewer3 {
             get {
                 if (mViewer3 == null)

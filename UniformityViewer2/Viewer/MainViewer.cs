@@ -325,7 +325,7 @@ namespace UniformityViewer2.Viewer
 
             double pinmirrorGap = UniformityCalculator2.Data.CalcValues.GetPinMirrorGap(detailInfo.Light, detailInfo.pinMirrorSize.Height);
 
-            toolStripStatusLabel1.Text = $"광효율:{detailInfo.Light}% 동공크기:{detailInfo.Pupil}mm 핀미러크기:{detailInfo.pinMirrorSize}mm 핀미러간격:{pinmirrorGap}mm " +
+            toolStripStatusLabel1.Text = $"광효율:{detailInfo.Light}% 동공크기:{detailInfo.Pupil}mm 핀미러크기:{detailInfo.pinMirrorSize}mm 핀미러간격:{pinmirrorGap:0.0000}mm " +
                 $"Max-Avg:{MaxAvg:0.0000} Min-Avg:{MinAvg:0.0000} 표준편차:{MeanDev:0.0000} 각도당휘도(Max):{LumDegreeMax:0.0000} 각도당휘도(Avg):{LumDegreeAvg:0.0000}";
         }
 
